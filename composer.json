@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "drupal/backup_migrate": "^5.0.0-rc2",
+        "drupal/backup_migrate": "^5.0.0-rc2@dev",
         "drupal/ctools": "^3.4",
         "drupal/field_group": "^3.1",
         "drupal/pathauto": "^1.8",
