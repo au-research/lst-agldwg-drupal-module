@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - taxonomy
+  enforced:
+    module:
+      - x1
+id: registry_item_status_
+label: 'Registry item status '
+type: 'canonical_entities:taxonomy_term'
+pattern: '/reg-status/[term:name]'
+selection_criteria:
+  7cbe8026-0129-4b4b-a069-fd7c4e77c39f:
+    id: 'entity_bundle:taxonomy_term'
+    bundles:
+      registry_item_status: registry_item_status
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    uuid: 7cbe8026-0129-4b4b-a069-fd7c4e77c39f
+selection_logic: and
+weight: -5
+relationships: {}

@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_publisher
+    - node.type.linkset
+    - node.type.organisation
+id: node.linkset.field_publisher
+field_name: field_publisher
+entity_type: node
+bundle: linkset
+label: Publisher
+description: "The Organisation that publishes this Resource.\r\n\r\ndct:publisher"
+required: true
+translatable: true
+default_value: {}
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organisation: organisation
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

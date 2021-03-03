@@ -1,0 +1,7 @@
+name: X1 Module
+description: Node types for the X1 project.
+package: Custom
+
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9

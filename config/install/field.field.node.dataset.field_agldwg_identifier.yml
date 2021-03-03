@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agldwg_identifier
+    - node.type.dataset
+id: node.dataset.field_agldwg_identifier
+field_name: field_agldwg_identifier
+entity_type: node
+bundle: dataset
+label: 'AGLDWG Identifier'
+description: 'The persistent identifier, issued by the Australian Government Linked Data Working Group, for this Resource. Datasets must start /dataset/, Linksets, /linkset/, ontologies & vocabularies, /def/ and other items as per the AGLDWG''s Guidelines (see http://www.linked.data.gov.au/governance).'
+required: true
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: string

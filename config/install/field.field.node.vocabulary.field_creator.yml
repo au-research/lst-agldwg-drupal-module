@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_creator
+    - node.type.organisation
+    - node.type.vocabulary
+id: node.vocabulary.field_creator
+field_name: field_creator
+entity_type: node
+bundle: vocabulary
+label: Creator
+description: 'The Organisation that created this Resource. This field is mapped to dcterms:creator. The creator might not be the same as the Organisation applying for the URI or the Publisher. '
+required: true
+translatable: true
+default_value: {}
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organisation: organisation
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

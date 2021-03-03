@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_alternative_names
+    - node.type.organisation
+id: node.organisation.field_alternative_names
+field_name: field_alternative_names
+entity_type: node
+bundle: organisation
+label: 'Alternative names'
+description: 'Alternative names (labels) for this Organisation. May include acronyms and contractions and past names when the Organisation has remained unchanged otherwise'
+required: false
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: string

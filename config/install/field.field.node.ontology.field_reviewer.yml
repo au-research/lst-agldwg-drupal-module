@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_reviewer
+    - node.type.ontology
+  content:
+    - 'user:user:3532f918-1141-425e-a45c-ce009b97229d'
+id: node.ontology.field_reviewer
+field_name: field_reviewer
+entity_type: node
+bundle: ontology
+label: Reviewer
+description: 'An AGLDWG member who reviewed this Resource before a status of "accepted" was conferred. When first submittd, just set to "admin".'
+required: true
+translatable: true
+default_value:
+  - target_uuid: 3532f918-1141-425e-a45c-ce009b97229d
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: true
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: name
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

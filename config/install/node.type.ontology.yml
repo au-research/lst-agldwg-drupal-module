@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+  enforced:
+    module:
+      - x1
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Ontology
+type: ontology
+description: "In computer science and information science, an ontology encompasses a representation, formal naming, and definition of the categories, properties, and relations between the concepts, data, and entities that substantiate one, many, or all domains.\r\n\r\nIn this catalogue, ontologies are to be presented using Semantic Web technologies which usually means using the Resource Description Framework (RDF) and related systems such as RDFS & OWL."
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

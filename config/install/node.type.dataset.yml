@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+  enforced:
+    module:
+      - x1
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Dataset
+type: dataset
+description: "A collection of Linked Data data, published or curated by a single agent, and available for access or download in one or more representations.\r\n\r\nThis catalogue only contains Linked Data Datasets, not Datasets in general."
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

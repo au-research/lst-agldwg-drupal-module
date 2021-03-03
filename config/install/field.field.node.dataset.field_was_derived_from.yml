@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_was_derived_from
+    - node.type.dataset
+  module:
+    - link
+id: node.dataset.field_was_derived_from
+field_name: field_was_derived_from
+entity_type: node
+bundle: dataset
+label: 'Was Derived From'
+description: "This Resource was derived from another catalogued resource. Was Derived From is taken from the Provenance Ontology (https://www.w3.org/TR/prov-o/).\r\n\r\nhttp://www.w3.org/ns/prov#wasDerivedFrom"
+required: false
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

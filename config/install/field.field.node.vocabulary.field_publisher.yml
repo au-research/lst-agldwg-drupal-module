@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_publisher
+    - node.type.organisation
+    - node.type.vocabulary
+id: node.vocabulary.field_publisher
+field_name: field_publisher
+entity_type: node
+bundle: vocabulary
+label: Publisher
+description: 'The Organisation that publishes this Resource. This field is mapped to dcterms:publisher. The creator might not be the same as the Organisation applying for the URI or the Creator. '
+required: true
+translatable: true
+default_value: {}
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organisation: organisation
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

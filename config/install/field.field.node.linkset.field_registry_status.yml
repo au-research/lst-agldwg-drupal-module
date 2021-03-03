@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_registry_status
+    - node.type.linkset
+    - taxonomy.vocabulary.registry_item_status
+  content:
+    - 'taxonomy_term:registry_item_status:0ba03a46-b3af-4721-af0c-7e59b46881e7'
+id: node.linkset.field_registry_status
+field_name: field_registry_status
+entity_type: node
+bundle: linkset
+label: 'Registry Status'
+description: "The status of this resource within this catalogue\r\n\r\nhttp://purl.org/linked-data/registry#status"
+required: true
+translatable: true
+default_value:
+  - target_uuid: 0ba03a46-b3af-4721-af0c-7e59b46881e7
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      registry_item_status: registry_item_status
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

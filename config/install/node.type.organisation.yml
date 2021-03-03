@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+  enforced:
+    module:
+      - x1
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Organisation
+type: organisation
+description: "Generally the definition of \"Organization\" from The Organization Ontology (https://www.w3.org/TR/vocab-org/) applies:\r\n\r\n\"Represents a collection of people organized together into a community or other social, commercial or political structure. The group has some common purpose or reason for existence which goes beyond the set of people belonging to it and can act as an Agent. Organizations are often decomposable into hierarchical structures.\"\r\n\r\nIn this system, we require organisational units that publish Linked Data resources to be charactarised as an Organisation here. This will include government Departments, private companies, educational instaitutions or a well-known part of them."
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

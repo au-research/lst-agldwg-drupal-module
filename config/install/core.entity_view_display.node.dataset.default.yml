@@ -1,0 +1,119 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.dataset.body
+    - field.field.node.dataset.field_agldwg_identifier
+    - field.field.node.dataset.field_contact_person
+    - field.field.node.dataset.field_creator
+    - field.field.node.dataset.field_dataset_review_uri
+    - field.field.node.dataset.field_date_accepted
+    - field.field.node.dataset.field_publisher
+    - field.field.node.dataset.field_registry_status
+    - field.field.node.dataset.field_reviewer
+    - field.field.node.dataset.field_was_derived_from
+    - node.type.dataset
+  module:
+    - datetime
+    - link
+    - text
+    - user
+id: node.dataset.default
+targetEntityType: node
+bundle: dataset
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 2
+    settings: {}
+    third_party_settings: {}
+    region: content
+  field_agldwg_identifier:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {}
+    type: string
+    region: content
+  field_contact_person:
+    weight: 5
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {}
+    type: entity_reference_label
+    region: content
+  field_creator:
+    weight: 3
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {}
+    type: entity_reference_label
+    region: content
+  field_dataset_review_uri:
+    weight: 6
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {}
+    type: link
+    region: content
+  field_date_accepted:
+    weight: 10
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {}
+    type: datetime_default
+    region: content
+  field_publisher:
+    weight: 4
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {}
+    type: entity_reference_label
+    region: content
+  field_registry_status:
+    weight: 9
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {}
+    type: entity_reference_label
+    region: content
+  field_reviewer:
+    weight: 8
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {}
+    type: entity_reference_label
+    region: content
+  field_was_derived_from:
+    weight: 7
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {}
+    type: link
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {}
+    third_party_settings: {}
+hidden: {}

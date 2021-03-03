@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_accepted
+    - node.type.dataset
+  module:
+    - datetime
+id: node.dataset.field_date_accepted
+field_name: field_date_accepted
+entity_type: node
+bundle: dataset
+label: 'Date Accepted'
+description: 'If this Resource has a Register Status of "accepted", the date of that status'' conferral must be recorded.'
+required: false
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: datetime

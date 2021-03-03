@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_crs_identifier
+    - node.type.organisation
+id: node.organisation.field_crs_identifier
+field_name: field_crs_identifier
+entity_type: node
+bundle: organisation
+label: 'CRS identifier'
+description: 'The Commonwealth Record Series (CRS) Organisation or Agency identifier (see http://linked.data.gov.au/def/crs) for this Organisation, if it has one.'
+required: false
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: string

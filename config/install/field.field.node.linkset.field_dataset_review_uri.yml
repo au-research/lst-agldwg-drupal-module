@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_dataset_review_uri
+    - node.type.linkset
+  module:
+    - link
+id: node.linkset.field_dataset_review_uri
+field_name: field_dataset_review_uri
+entity_type: node
+bundle: linkset
+label: 'Linkset Review URI'
+description: 'If this Linkset is already online and able to be reviewed for potential acceptance in this Registry, this property should record the URI it is available from.'
+required: false
+translatable: true
+default_value: {}
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

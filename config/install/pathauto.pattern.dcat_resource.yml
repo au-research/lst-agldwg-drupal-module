@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  enforced:
+    module:
+      - x1
+id: dcat_resource
+label: 'DCAT Resource'
+type: 'canonical_entities:node'
+pattern: '/resource/[node:nid]'
+selection_criteria:
+  ff65ee7f-6543-46a6-a6b5-c1a75ff65764:
+    id: node_type
+    bundles:
+      dataset: dataset
+      linkset: linkset
+      ontology: ontology
+      vocabulary: vocabulary
+    negate: false
+    context_mapping:
+      node: node
+    uuid: ff65ee7f-6543-46a6-a6b5-c1a75ff65764
+selection_logic: and
+weight: -5
+relationships: {}

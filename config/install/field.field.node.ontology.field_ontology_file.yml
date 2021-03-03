@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ontology_file
+    - node.type.ontology
+  module:
+    - file
+id: node.ontology.field_ontology_file
+field_name: field_ontology_file
+entity_type: node
+bundle: ontology
+label: 'Ontology file'
+description: 'This is a copy of the ontology, as an RDF document, that must be present for review before status can be changed to "accepted".'
+required: true
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'rdf ttl owl'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {}
+field_type: file
