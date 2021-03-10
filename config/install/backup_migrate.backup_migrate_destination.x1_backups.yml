@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: x1_backups
+label: 'X1 backups directory'
+type: Directory
+config:
+  directory: /set/me/to/a/suitable/value
