@@ -11,7 +11,7 @@ dependencies:
 id: addcontenttypes
 theme: agldwg
 region: sidebar_first
-weight: -3
+weight: 5
 provider: null
 plugin: 'block_content:5b41702c-e3c5-47eb-b729-e7ea45bf6ca7'
 settings:
