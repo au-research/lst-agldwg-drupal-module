@@ -11,3 +11,4 @@ dependencies:
   - pathauto:pathauto
   - diff:diff
   - structure_sync:structure_sync
+  - backup_migrate:backup_migrate
