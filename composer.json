@@ -18,5 +18,6 @@
         "drupal/structure_sync": "^2.0",
         "drush/drush": "^10.3",
         "ardc/x1-custom-theme-agldwg": "^0.1"
+        "ardc/x1-custom-module-x1-block-content": "^0.1"
     }
 }
