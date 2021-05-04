@@ -2,24 +2,22 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.linkset.body
-    - field.field.node.linkset.field_agldwg_identifier
-    - field.field.node.linkset.field_contact_person
-    - field.field.node.linkset.field_creator
-    - field.field.node.linkset.field_dataset_review_uri
-    - field.field.node.linkset.field_date_accepted
-    - field.field.node.linkset.field_publisher
-    - field.field.node.linkset.field_registry_status
-    - field.field.node.linkset.field_reviewer
-    - node.type.linkset
+    - field.field.node.register.body
+    - field.field.node.register.field_agldwg_identifier
+    - field.field.node.register.field_contact_person
+    - field.field.node.register.field_creator
+    - field.field.node.register.field_date_accepted
+    - field.field.node.register.field_publisher
+    - field.field.node.register.field_registry_status
+    - field.field.node.register.field_reviewer
+    - node.type.register
   module:
     - datetime
-    - link
     - path
     - text
-id: node.linkset.default
+id: node.register.default
 targetEntityType: node
-bundle: linkset
+bundle: register
 mode: default
 content:
   body:
@@ -38,7 +36,7 @@ content:
     settings: {}
     third_party_settings: {}
   field_agldwg_identifier:
-    weight: 5
+    weight: 7
     settings:
       size: 60
       placeholder: ''
@@ -63,16 +61,8 @@ content:
     third_party_settings: {}
     type: entity_reference_autocomplete
     region: content
-  field_dataset_review_uri:
-    weight: 12
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {}
-    type: link_default
-    region: content
   field_date_accepted:
-    weight: 15
+    weight: 12
     settings: {}
     third_party_settings: {}
     type: datetime_default
@@ -87,13 +77,16 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_registry_status:
-    weight: 14
-    settings: {}
+    weight: 13
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {}
-    type: options_select
+    type: entity_reference_autocomplete
     region: content
   field_reviewer:
-    weight: 13
+    weight: 14
     settings:
       match_operator: CONTAINS
       size: 60
@@ -103,7 +96,7 @@ content:
     region: content
   path:
     type: path
-    weight: 6
+    weight: 5
     region: content
     settings: {}
     third_party_settings: {}
@@ -118,7 +111,7 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 7
+    weight: 6
     region: content
     third_party_settings: {}
   sticky:

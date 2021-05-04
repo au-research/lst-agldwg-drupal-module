@@ -2,15 +2,19 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.teaser
     - field.storage.node.field_registry_status
+    - node.type.dataset
+    - node.type.ontology
+    - node.type.register
     - node.type.vocabulary
     - taxonomy.vocabulary.registry_item_status
   module:
     - node
     - taxonomy
     - user
-id: vocabularies
-label: 'Resources: Vocabularies'
+id: duplicate_of_resources_all
+label: 'Resources: All'
 module: views
 description: ''
 tag: ''
@@ -69,8 +73,31 @@ display:
             offset_label: Offset
       style:
         type: table
+        options:
+          grouping: {}
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            title: title
+          info:
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
       row:
-        type: fields
+        type: 'entity:node'
+        options:
+          view_mode: teaser
       fields:
         title:
           id: title
@@ -78,6 +105,7 @@ display:
           field: title
           entity_type: node
           entity_field: title
+          label: ''
           alter:
             alter_text: false
             make_link: false
@@ -95,7 +123,6 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Title
           exclude: false
           element_type: ''
           element_class: ''
@@ -198,8 +225,42 @@ display:
           id: type
           table: node_field_data
           field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
           value:
+            dataset: dataset
+            ontology: ontology
+            register: register
             vocabulary: vocabulary
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {}
+            group_items: {}
           entity_type: node
           entity_field: type
           plugin_id: bundle
@@ -278,7 +339,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: standard
-      title: Vocabularies
+      title: 'All Resources'
       header: {}
       footer: {}
       empty: {}
@@ -306,14 +367,14 @@ display:
     position: 1
     display_options:
       display_extenders: {}
-      path: vocabularies
+      path: resources
       menu:
         type: normal
-        title: Vocabularies
+        title: All Resources
         description: ""
         expanded: false
         parent: ""
-        weight: 40
+        weight: 10
         context: "0"
         menu_name: main
     cache_metadata:

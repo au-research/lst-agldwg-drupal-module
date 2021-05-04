@@ -3,13 +3,13 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_date_accepted
-    - node.type.linkset
+    - node.type.register
   module:
     - datetime
-id: node.linkset.field_date_accepted
+id: node.register.field_date_accepted
 field_name: field_date_accepted
 entity_type: node
-bundle: linkset
+bundle: register
 label: 'Date Accepted'
 description: 'If this Resource has a Register Status of "accepted", the date of that status'' conferral must be recorded.'
 required: false

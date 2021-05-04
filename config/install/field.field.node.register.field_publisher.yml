@@ -3,14 +3,14 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_publisher
-    - node.type.linkset
     - node.type.organisation
-id: node.linkset.field_publisher
+    - node.type.register
+id: node.register.field_publisher
 field_name: field_publisher
 entity_type: node
-bundle: linkset
+bundle: register
 label: Publisher
-description: "The Organisation that publishes this Resource.\r\n\r\ndct:publisher"
+description: "The Organisation that publishes this Resource. This field is mapped to dcterms:publisher.\r\n\r\nThe creator might not be the same as the Organisation applying for the URI or the Creator."
 required: true
 translatable: true
 default_value: {}
@@ -21,7 +21,8 @@ settings:
     target_bundles:
       organisation: organisation
     sort:
-      field: _none
+      field: title
+      direction: ASC
     auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

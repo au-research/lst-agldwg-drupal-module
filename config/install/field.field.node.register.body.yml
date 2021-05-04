@@ -3,13 +3,13 @@ status: true
 dependencies:
   config:
     - field.storage.node.body
-    - node.type.linkset
+    - node.type.register
   module:
     - text
-id: node.linkset.body
+id: node.register.body
 field_name: body
 entity_type: node
-bundle: linkset
+bundle: register
 label: Description
 description: "A free-text account of the item.\r\n\r\ndct:description"
 required: true

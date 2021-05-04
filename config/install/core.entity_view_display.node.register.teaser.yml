@@ -3,14 +3,14 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.linkset.body
-    - node.type.linkset
+    - field.field.node.register.body
+    - node.type.register
   module:
     - text
     - user
-id: node.linkset.teaser
+id: node.register.teaser
 targetEntityType: node
-bundle: linkset
+bundle: register
 mode: teaser
 content:
   body:

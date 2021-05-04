@@ -1,6 +1,6 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies: {}
 id: daily_db_backup
 label: 'Daily DB backup'
 enabled: true

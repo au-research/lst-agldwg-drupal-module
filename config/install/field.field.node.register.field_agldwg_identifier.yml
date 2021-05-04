@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agldwg_identifier
+    - node.type.register
+id: node.register.field_agldwg_identifier
+field_name: field_agldwg_identifier
+entity_type: node
+bundle: register
+label: 'AGLDWG Identifier'
+description: 'The persistent identifier, issued by the Australian Government Linked Data Working Group, for this Register, i.e. its persistent IRI. See http://www.linked.data.gov.au/governance.'
+required: true
+translatable: true
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: string

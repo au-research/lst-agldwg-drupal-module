@@ -3,11 +3,11 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_contact_person
-    - node.type.linkset
-id: node.linkset.field_contact_person
+    - node.type.register
+id: node.register.field_contact_person
 field_name: field_contact_person
 entity_type: node
-bundle: linkset
+bundle: register
 label: 'Contact Person'
 description: 'An AGLDWG member who is the contact point for this catalogue''s information about the Resource'
 required: true

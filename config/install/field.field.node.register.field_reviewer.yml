@@ -3,13 +3,13 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_reviewer
-    - node.type.linkset
+    - node.type.register
   content:
     - 'user:user:3532f918-1141-425e-a45c-ce009b97229d'
-id: node.linkset.field_reviewer
+id: node.register.field_reviewer
 field_name: field_reviewer
 entity_type: node
-bundle: linkset
+bundle: register
 label: Reviewer
 description: 'An AGLDWG member who reviewed this Resource before a status of "accepted" was conferred. When first submittd, just set to "admin".'
 required: true
@@ -25,6 +25,7 @@ settings:
       type: _none
     target_bundles: null
     sort:
-      field: _none
+      field: name
+      direction: ASC
     auto_create: false
 field_type: entity_reference
