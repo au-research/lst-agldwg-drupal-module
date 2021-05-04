@@ -10,5 +10,6 @@ dependencies:
   - field_group:field_group
   - pathauto:pathauto
   - diff:diff
+  - rest:rest
   - structure_sync:structure_sync
   - backup_migrate:backup_migrate
