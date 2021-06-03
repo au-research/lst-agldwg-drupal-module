@@ -25,7 +25,7 @@
     "extra": {
         "patches": {
             "drupal/core": {
-                "On tracker pages, add space between link and status": "3095533-18.patch"
+                "On tracker pages, add space between link and status": "https://www.drupal.org/files/issues/2020-05-06/3095533-18.patch"
             }
         }
     }
