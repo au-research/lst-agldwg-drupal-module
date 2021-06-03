@@ -11,6 +11,8 @@ dependencies:
   - pathauto:pathauto
   - field_permissions:field_permissions
   - diff:diff
+  - mimemail:mimemail
+  - rules:rules
   - tracker:tracker
   - rest:rest
   - structure_sync:structure_sync

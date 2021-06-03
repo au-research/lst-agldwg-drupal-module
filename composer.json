@@ -19,6 +19,9 @@
         "drupal/diff": "^1.0",
         "drupal/structure_sync": "^2.0",
         "drush/drush": "^10.3",
+        "drupal/mimemail": "1.x-dev#e72b92ec",
+        "drupal/typed_data": "1.x-dev#27555f47",
+        "drupal/rules": "3.x-dev#cc5ba050",
         "ardc/x1-custom-theme-agldwg": ">=0.1",
         "ardc/x1-custom-module-x1-block-content": ">=0.1"
     },
@@ -26,6 +29,9 @@
         "patches": {
             "drupal/core": {
                 "On tracker pages, add space between link and status": "https://www.drupal.org/files/issues/2020-05-06/3095533-18.patch"
+            },
+            "drupal/rules": {
+                "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2021-04-23/2471481-145.integrate-typed-data-widgets.patch"
             }
         }
     }
