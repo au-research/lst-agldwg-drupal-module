@@ -11,6 +11,7 @@ dependencies:
   - pathauto:pathauto
   - field_permissions:field_permissions
   - diff:diff
+  - tracker:tracker
   - rest:rest
   - structure_sync:structure_sync
   - backup_migrate:backup_migrate

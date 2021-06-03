@@ -1,0 +1,33 @@
+diff --git a/core/modules/tracker/js/tracker-history.es6.js b/core/modules/tracker/js/tracker-history.es6.js
+index dd79f15b93..0f8c295666 100644
+--- a/core/modules/tracker/js/tracker-history.es6.js
++++ b/core/modules/tracker/js/tracker-history.es6.js
+@@ -19,7 +19,7 @@
+       if (timestamp > lastViewTimestamp) {
+         const message =
+           lastViewTimestamp === 0 ? newNodeString : updatedNodeString;
+-        $(placeholder).append(`<span class="marker">${message}</span>`);
++        $(placeholder).append('&nbsp;<span class="marker">${message}</span>');
+       }
+     });
+   }
+diff --git a/core/modules/tracker/js/tracker-history.js b/core/modules/tracker/js/tracker-history.js
+index dcfa946d3c..e8f768859b 100644
+--- a/core/modules/tracker/js/tracker-history.js
++++ b/core/modules/tracker/js/tracker-history.js
+@@ -16,7 +16,7 @@
+ 
+       if (timestamp > lastViewTimestamp) {
+         var message = lastViewTimestamp === 0 ? newNodeString : updatedNodeString;
+-        $(placeholder).append("<span class=\"marker\">".concat(message, "</span>"));
++        $(placeholder).append('&nbsp;<span class="marker">' + message + '</span>');
+       }
+     });
+   }
+@@ -102,4 +102,4 @@
+       });
+     }
+   };
+-})(jQuery, Drupal, window);
+\ No newline at end of file
++})(jQuery, Drupal, window);

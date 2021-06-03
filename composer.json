@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "cweagans/composer-patches": "~1.0",
         "drupal/backup_migrate": "^5.0.0-rc2@rc",
         "drupal/ctools": "^3.4",
         "drupal/field_group": "^3.1",
@@ -20,5 +21,12 @@
         "drush/drush": "^10.3",
         "ardc/x1-custom-theme-agldwg": ">=0.1",
         "ardc/x1-custom-module-x1-block-content": ">=0.1"
+    },
+    "extra": {
+        "patches": {
+            "drupal/core": {
+                "On tracker pages, add space between link and status": "3095533-18.patch"
+            }
+        }
     }
 }
