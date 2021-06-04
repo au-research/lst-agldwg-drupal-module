@@ -18,6 +18,7 @@
         "drupal/field_permissions": "^1.1",
         "drupal/diff": "^1.0",
         "drupal/structure_sync": "^2.0",
+        "drupal/environment_indicator": "^4.0",
         "drush/drush": "^10.3",
         "drupal/mimemail": "^1.0",
         "drupal/typed_data": "^1.0",

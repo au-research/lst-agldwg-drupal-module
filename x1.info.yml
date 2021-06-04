@@ -11,6 +11,7 @@ dependencies:
   - pathauto:pathauto
   - field_permissions:field_permissions
   - diff:diff
+  - environment_indicator:environment_indicator
   - mimemail:mimemail
   - rules:rules
   - tracker:tracker
