@@ -1,0 +1,63 @@
+uuid: 7da45f4f-1e58-4e71-bba8-b29eb7be9eba
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html_email
+  module:
+    - ckeditor
+format: full_html_email
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Bold
+            - Italic
+            - Strike
+            - Superscript
+            - Subscript
+            - '-'
+            - RemoveFormat
+        -
+          name: Linking
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+        -
+          name: Media
+          items:
+            - Blockquote
+            - DrupalImage
+            - Table
+            - HorizontalRule
+        -
+          name: 'Block Formatting'
+          items:
+            - Format
+        -
+          name: Tools
+          items:
+            - ShowBlocks
+            - Source
+  plugins:
+    language:
+      language_list: un
+    stylescombo:
+      styles: ''
+image_upload:
+  status: true
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null
