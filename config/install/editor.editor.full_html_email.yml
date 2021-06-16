@@ -1,4 +1,3 @@
-uuid: 7da45f4f-1e58-4e71-bba8-b29eb7be9eba
 langcode: en
 status: true
 dependencies:
@@ -11,9 +10,7 @@ editor: ckeditor
 settings:
   toolbar:
     rows:
-      -
-        -
-          name: Formatting
+      - - name: Formatting
           items:
             - Bold
             - Italic
@@ -22,29 +19,24 @@ settings:
             - Subscript
             - '-'
             - RemoveFormat
-        -
-          name: Linking
+        - name: Linking
           items:
             - DrupalLink
             - DrupalUnlink
-        -
-          name: Lists
+        - name: Lists
           items:
             - BulletedList
             - NumberedList
-        -
-          name: Media
+        - name: Media
           items:
             - Blockquote
             - DrupalImage
             - Table
             - HorizontalRule
-        -
-          name: 'Block Formatting'
+        - name: 'Block Formatting'
           items:
             - Format
-        -
-          name: Tools
+        - name: Tools
           items:
             - ShowBlocks
             - Source
