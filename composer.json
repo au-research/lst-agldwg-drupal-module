@@ -23,6 +23,7 @@
         "drupal/mimemail": "^1.0",
         "drupal/typed_data": "^1.0",
         "drupal/rules": "^3.0",
+        "drupal/tr_rulez": "^1.0",
         "ardc/x1-custom-theme-agldwg": ">=0.1",
         "ardc/x1-custom-module-x1-block-content": ">=0.1"
     },
