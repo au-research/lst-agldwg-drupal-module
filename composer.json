@@ -33,7 +33,7 @@
                 "On tracker pages, add space between link and status": "https://www.drupal.org/files/issues/2020-05-06/3095533-18.patch"
             },
             "drupal/rules": {
-                "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2021-04-23/2471481-145.integrate-typed-data-widgets.patch"
+                "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2021-06-22/2471481-146.integrate-typed-data-widgets.patch"
             }
         }
     }
