@@ -15,6 +15,7 @@ dependencies:
   - mimemail:mimemail
   - rules:rules
   - tr_rulez:tr_rulez
+  - require_revision_log_message:require_revision_log_message
   - tracker:tracker
   - rest:rest
   - structure_sync:structure_sync
