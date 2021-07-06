@@ -10,7 +10,7 @@ field_name: field_publisher
 entity_type: node
 bundle: ontology
 label: Publisher
-description: 'The Organisation that publishes this Resource. This field is mapped to dcterms:publisher. The creator might not be the same as the Organisation applying for the URI or the Creator. '
+description: "The Organisation that publishes this Resource. This field is mapped to dcterms:publisher. \r\n\r\nThe creator might not be the same as the Organisation applying for the URI or the Creator. \r\n\r\nIf the organisation you wish to link to doesn't appear in the list, you will need to ask the AGLDWG co-chairs to register that organisation for you first."
 required: true
 translatable: true
 default_value: {}

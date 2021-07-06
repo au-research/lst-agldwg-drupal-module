@@ -56,12 +56,9 @@ content:
     region: content
   field_creator:
     weight: 9
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+    settings: {}
     third_party_settings: {}
-    type: entity_reference_autocomplete
+    type: options_select
     region: content
   field_date_accepted:
     weight: 15
@@ -78,12 +75,9 @@ content:
     region: content
   field_publisher:
     weight: 10
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+    settings: {}
     third_party_settings: {}
-    type: entity_reference_autocomplete
+    type: options_select
     region: content
   field_registry_status:
     weight: 14
