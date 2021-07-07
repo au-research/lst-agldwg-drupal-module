@@ -2,18 +2,18 @@ langcode: en
 status: true
 dependencies:
   config:
-    - comment.type.comment
+    - comment.type.workflow
     - field.storage.comment.field_comment_type
   module:
     - options
-id: comment.comment.field_comment_type
+id: comment.workflow.field_comment_type
 field_name: field_comment_type
 entity_type: comment
-bundle: comment
+bundle: workflow
 label: 'Comment type'
 description: ''
 required: true
-translatable: false
+translatable: true
 default_value: {}
 default_value_callback: ''
 settings: {}

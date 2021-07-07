@@ -2,18 +2,18 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.comment
-    - node.type.ontology
+    - field.storage.node.field_workflow
+    - node.type.vocabulary
   module:
     - comment
-id: node.ontology.comment
-field_name: comment
+id: node.vocabulary.field_workflow
+field_name: field_workflow
 entity_type: node
-bundle: ontology
-label: Comments
+bundle: vocabulary
+label: Workflow
 description: ''
 required: false
-translatable: true
+translatable: false
 default_value:
   - status: 2
     cid: 0

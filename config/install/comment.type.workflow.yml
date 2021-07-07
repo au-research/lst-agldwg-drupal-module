@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {enforced: {module: [x1]}}
+id: workflow
+label: Workflow
+target_entity_type_id: node
+description: 'Workflow requests and responses'

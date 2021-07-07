@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.workflow
+    - field.field.comment.workflow.comment_body
+    - field.field.comment.workflow.field_comment_type
+  module:
+    - options
+    - text
+id: comment.workflow.default
+targetEntityType: comment
+bundle: workflow
+mode: default
+content:
+  comment_body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {}
+    third_party_settings: {}
+    region: content
+  field_comment_type:
+    weight: 101
+    label: above
+    settings: {}
+    third_party_settings: {}
+    type: list_default
+    region: content
+  links:
+    weight: 100
+    settings: {}
+    third_party_settings: {}
+    region: content
+hidden: {}
