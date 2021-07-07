@@ -13,25 +13,12 @@ filters:
     status: true
     weight: 8
     settings: {}
-  filter_autop:
-    id: filter_autop
-    provider: filter
-    status: true
-    weight: 13
-    settings: {}
   filter_caption:
     id: filter_caption
     provider: filter
     status: true
     weight: 9
     settings: {}
-  filter_url:
-    id: filter_url
-    provider: filter
-    status: true
-    weight: 12
-    settings:
-      filter_url_length: 120
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
