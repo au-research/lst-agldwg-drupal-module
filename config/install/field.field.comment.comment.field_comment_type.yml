@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment
+    - field.storage.comment.field_comment_type
+  module:
+    - options
+id: comment.comment.field_comment_type
+field_name: field_comment_type
+entity_type: comment
+bundle: comment
+label: 'Comment type'
+description: ''
+required: true
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: list_string
