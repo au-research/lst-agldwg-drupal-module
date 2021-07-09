@@ -1,6 +1,9 @@
 langcode: en
 status: true
-dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - x1
 name: 'Plain text email'
 format: plain_text_email
 weight: 4

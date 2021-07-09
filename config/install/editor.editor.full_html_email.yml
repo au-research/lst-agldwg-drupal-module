@@ -5,6 +5,9 @@ dependencies:
     - filter.format.full_html_email
   module:
     - ckeditor
+  enforced:
+    module:
+      - x1
 format: full_html_email
 editor: ckeditor
 settings:

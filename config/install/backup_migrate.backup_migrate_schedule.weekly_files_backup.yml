@@ -1,6 +1,9 @@
 langcode: en
 status: true
-dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - x1
 id: weekly_files_backup
 label: 'Weekly files backup'
 enabled: true

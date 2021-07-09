@@ -1,6 +1,9 @@
 langcode: en
 status: true
-dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - x1
 id: x1_backups
 label: 'X1 backups directory'
 type: Directory
