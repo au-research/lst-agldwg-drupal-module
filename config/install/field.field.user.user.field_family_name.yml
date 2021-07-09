@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_family_name
+  module:
+    - user
+  enforced:
+    module:
+      - x1
+id: user.user.field_family_name
+field_name: field_family_name
+entity_type: user
+bundle: user
+label: 'Family Name'
+description: "The name inherited by a person from their family. In European cultures, this is usually a person's last name. \r\n\r\nhttps://schema.org/familyName"
+required: true
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: string

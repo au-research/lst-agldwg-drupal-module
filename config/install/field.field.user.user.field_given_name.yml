@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_given_name
+  module:
+    - user
+  enforced:
+    module:
+      - x1
+id: user.user.field_given_name
+field_name: field_given_name
+entity_type: user
+bundle: user
+label: 'Given Name'
+description: "The personal name. In European cultures, the first name of a Person. \r\n\r\nhttps://schema.org/givenName"
+required: true
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: string
