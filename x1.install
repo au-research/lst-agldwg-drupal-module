@@ -7,30 +7,154 @@
  * @ingroup x1
  */
 
-// use Drupal\Core\Entity\Entity\EntityFormDisplay;
-
 /**
  * Implements hook_install().
  */
 function x1_install($is_syncing) {
-  if ($is_syncing) {
-    // For sync, nothing to do.
-  } else {
-    // TODO: install views into the system menu.
-    // TODO: hmm, install status vocab terms here?
-  }
+    // For my info: this is invoked after the module's custom
+    // configuration has been imported.
+    if ($is_syncing) {
+        // For sync, nothing to do.
+    } else {
+        // Add custom user fields to form and view.
+        $config_factory = \Drupal::configFactory();
+        // First, the form.
+        $config = $config_factory->getEditable(
+            'core.entity_form_display.user.user.default');
+        $dependenciesConfig = $config->get('dependencies.config');
+        $dependenciesConfig = $dependenciesConfig +
+            array('field.field.user.user.field_family_name',
+                  'field.field.user.user.field_given_name',
+                  'field.field.user.user.field_member_of');
+        $config->set('dependencies.config', $dependenciesConfig);
+        $config->set('content.field_family_name',
+                     array(
+                         'weight' => 33,
+                         'settings' => array('size' => 60, 'placeholder' => ''),
+                         'third_party_settings' => array(),
+                         'type' => 'string_textfield',
+                         'region' => 'content'
+                     )
+        );
+        $config->set('content.field_given_name',
+                     array(
+                         'weight' => 32,
+                         'settings' => array('size' => 60, 'placeholder' => ''),
+                         'third_party_settings' => array(),
+                         'type' => 'string_textfield',
+                         'region' => 'content'
+                     )
+        );
+        $config->set('content.field_member_of',
+                     array(
+                         'weight' => 31,
+                         'settings' => array(),
+                         'third_party_settings' => array(),
+                         'type' => 'options_select',
+                         'region' => 'content'
+                     )
+        );
+        $hiddenConfig = $config->get('hidden');
+        $hiddenConfig = array_diff_key($hiddenConfig,
+            array('field_family_name' => true,
+                  'field_given_name' => true,
+                  'field_member_of' => true)
+        );
+        $config->set('hidden', $hiddenConfig);
+        $config->save();
 
+        // Then, the view.
+        $config = $config_factory->getEditable(
+            'core.entity_view_display.user.user.default');
+        $dependenciesConfig = $config->get('dependencies.config');
+        $dependenciesConfig = $dependenciesConfig +
+            array('field.field.user.user.field_family_name',
+                  'field.field.user.user.field_given_name',
+                  'field.field.user.user.field_member_of');
+        $config->set('dependencies.config', $dependenciesConfig);
+        $config->set('content.field_family_name',
+                     array(
+                         'weight' => 8,
+                         'label' => 'above',
+                         'settings' => array('link_to_entity' => false),
+                         'third_party_settings' => array(),
+                         'type' => 'string',
+                         'region' => 'content'
+                     )
+        );
+        $config->set('content.field_given_name',
+                     array(
+                         'weight' => 7,
+                         'label' => 'above',
+                         'settings' => array('link_to_entity' => false),
+                         'third_party_settings' => array(),
+                         'type' => 'string',
+                         'region' => 'content'
+                     )
+        );
+        $config->set('content.field_member_of',
+                     array(
+                         'weight' => 6,
+                         'label' => 'above',
+                         'settings' => array('link' => true),
+                         'third_party_settings' => array(),
+                         'type' => 'entity_reference_label',
+                         'region' => 'content'
+                     )
+        );
+        $hiddenConfig = $config->get('hidden');
+        $hiddenConfig = array_diff_key($hiddenConfig,
+            array('field_family_name' => true,
+                  'field_given_name' => true,
+                  'field_member_of' => true)
+        );
+        $config->set('hidden', $hiddenConfig);
+        $config->save();
 
+       // TODO: install views into the system menu.
+        // TODO: hmm, install status vocab terms here?
+   }
 }
 
 /**
  * Implements hook_uninstall().
  */
 function x1_uninstall($is_syncing) {
-  if ($is_syncing) {
-    // For sync, nothing to do.
-  } else {
-    // TODO: remove views from the system menu.
+    if ($is_syncing) {
+        // For sync, nothing to do.
+    } else {
+        // Remove custom user fields from form and view.
+        $config_factory = \Drupal::configFactory();
+        // First, the form.
+        $config = $config_factory->getEditable(
+            'core.entity_form_display.user.user.default');
+        $dependenciesConfig = $config->get('dependencies.config');
+        $dependenciesConfig = array_diff($dependenciesConfig,
+            array('field.field.user.user.field_family_name',
+                  'field.field.user.user.field_given_name',
+                  'field.field.user.user.field_member_of')
+        );
+        $config->set('dependencies.config', $dependenciesConfig);
+        $config->clear('content.field_family_name');
+        $config->clear('content.field_given_name');
+        $config->clear('content.field_field_member_of');
+        $config->save();
+        // Then, the view.
+        $config = $config_factory->getEditable(
+            'core.entity_view_display.user.user.default');
+        $dependenciesConfig = $config->get('dependencies.config');
+        $dependenciesConfig = array_diff($dependenciesConfig,
+            array('field.field.user.user.field_family_name',
+                  'field.field.user.user.field_given_name',
+                  'field.field.user.user.field_member_of')
+        );
+        $config->set('dependencies.config', $dependenciesConfig);
+        $config->clear('content.field_family_name');
+        $config->clear('content.field_given_name');
+        $config->clear('content.field_field_member_of');
+        $config->save();
+
+        // TODO: remove views from the system menu.
 
 /* // Remove content of our custom node types.
   // Delete custom_type nodes when uninstalling.
