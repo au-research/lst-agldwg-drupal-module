@@ -14,7 +14,7 @@ field_name: field_member_of
 entity_type: user
 bundle: user
 label: 'Member Of'
-description: 'This person works for/represents an Organisation'
+description: "This person works for/represents an Organisation. \r\n\r\nYou may make multiple selections. \r\n\r\nIf the organisation you wish to link to doesn't appear in the list, you will need to ask the AGLDWG co-chairs to register that organisation for you first."
 required: true
 translatable: false
 default_value: {}
