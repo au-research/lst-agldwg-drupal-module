@@ -18,7 +18,7 @@ function x1_install($is_syncing) {
     } else {
         // Add custom user fields to form and view.
         $config_factory = \Drupal::configFactory();
-        // First, the form.
+        // First, add to the form.
         $config = $config_factory->getEditable(
             'core.entity_form_display.user.user.default');
         $dependenciesConfig = $config->get('dependencies.config');
@@ -27,33 +27,37 @@ function x1_install($is_syncing) {
                   'field.field.user.user.field_given_name',
                   'field.field.user.user.field_member_of');
         $config->set('dependencies.config', $dependenciesConfig);
-        $config->set('content.field_family_name',
+        // Sigh, can't use $config->set('content.field_family_name', ...)
+        // because that appends to 'content', rather than inserting
+        // in the correct (sorted) place.
+        $content = $config->get('content');
+        $content['field_family_name'] =
                      array(
                          'weight' => 33,
                          'settings' => array('size' => 60, 'placeholder' => ''),
                          'third_party_settings' => array(),
                          'type' => 'string_textfield',
                          'region' => 'content'
-                     )
-        );
-        $config->set('content.field_given_name',
+                     );
+        $content['field_given_name'] =
                      array(
                          'weight' => 32,
                          'settings' => array('size' => 60, 'placeholder' => ''),
                          'third_party_settings' => array(),
                          'type' => 'string_textfield',
                          'region' => 'content'
-                     )
-        );
-        $config->set('content.field_member_of',
+                     );
+        $content['field_member_of'] =
                      array(
                          'weight' => 31,
                          'settings' => array(),
                          'third_party_settings' => array(),
                          'type' => 'options_select',
                          'region' => 'content'
-                     )
-        );
+                     );
+        // Sigh, we have to do our own sorting (by keys).
+        ksort($content);
+        $config->set('content', $content);
         $hiddenConfig = $config->get('hidden');
         $hiddenConfig = array_diff_key($hiddenConfig,
             array('field_family_name' => true,
@@ -63,7 +67,7 @@ function x1_install($is_syncing) {
         $config->set('hidden', $hiddenConfig);
         $config->save();
 
-        // Then, the view.
+        // Then, add to the view.
         $config = $config_factory->getEditable(
             'core.entity_view_display.user.user.default');
         $dependenciesConfig = $config->get('dependencies.config');
@@ -72,7 +76,11 @@ function x1_install($is_syncing) {
                   'field.field.user.user.field_given_name',
                   'field.field.user.user.field_member_of');
         $config->set('dependencies.config', $dependenciesConfig);
-        $config->set('content.field_family_name',
+        // Sigh, can't use $config->set('content.field_family_name', ...)
+        // because that appends to 'content', rather than inserting
+        // in the correct (sorted) place.
+        $content = $config->get('content');
+        $content['field_family_name'] =
                      array(
                          'weight' => 8,
                          'label' => 'above',
@@ -80,9 +88,8 @@ function x1_install($is_syncing) {
                          'third_party_settings' => array(),
                          'type' => 'string',
                          'region' => 'content'
-                     )
-        );
-        $config->set('content.field_given_name',
+                     );
+        $content['field_given_name'] =
                      array(
                          'weight' => 7,
                          'label' => 'above',
@@ -90,9 +97,8 @@ function x1_install($is_syncing) {
                          'third_party_settings' => array(),
                          'type' => 'string',
                          'region' => 'content'
-                     )
-        );
-        $config->set('content.field_member_of',
+                     );
+        $content['field_member_of'] =
                      array(
                          'weight' => 6,
                          'label' => 'above',
@@ -100,8 +106,10 @@ function x1_install($is_syncing) {
                          'third_party_settings' => array(),
                          'type' => 'entity_reference_label',
                          'region' => 'content'
-                     )
-        );
+                     );
+        // Sigh, we have to do our own sorting (by keys).
+        ksort($content);
+        $config->set('content', $content);
         $hiddenConfig = $config->get('hidden');
         $hiddenConfig = array_diff_key($hiddenConfig,
             array('field_family_name' => true,
