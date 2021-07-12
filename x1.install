@@ -148,7 +148,7 @@ function x1_uninstall($is_syncing) {
         $config->set('dependencies.config', $dependenciesConfig);
         $config->clear('content.field_family_name');
         $config->clear('content.field_given_name');
-        $config->clear('content.field_field_member_of');
+        $config->clear('content.field_member_of');
         $config->save();
         // Then, the view.
         $config = $config_factory->getEditable(
@@ -165,7 +165,7 @@ function x1_uninstall($is_syncing) {
         $config->set('dependencies.config', $dependenciesConfig);
         $config->clear('content.field_family_name');
         $config->clear('content.field_given_name');
-        $config->clear('content.field_field_member_of');
+        $config->clear('content.field_member_of');
         $config->save();
 
         // TODO: remove views from the system menu.
