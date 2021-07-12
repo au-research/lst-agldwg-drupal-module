@@ -137,11 +137,14 @@ function x1_uninstall($is_syncing) {
         $config = $config_factory->getEditable(
             'core.entity_form_display.user.user.default');
         $dependenciesConfig = $config->get('dependencies.config');
-        $dependenciesConfig = array_diff($dependenciesConfig,
+        // Use array_values() to renumber the array indexing to start
+        // at 0.  If we don't use array_values(), the remaining array
+        // indexes appear in subsequently-exported YAML!
+        $dependenciesConfig = array_values(array_diff($dependenciesConfig,
             array('field.field.user.user.field_family_name',
                   'field.field.user.user.field_given_name',
                   'field.field.user.user.field_member_of')
-        );
+        ));
         $config->set('dependencies.config', $dependenciesConfig);
         $config->clear('content.field_family_name');
         $config->clear('content.field_given_name');
@@ -151,11 +154,14 @@ function x1_uninstall($is_syncing) {
         $config = $config_factory->getEditable(
             'core.entity_view_display.user.user.default');
         $dependenciesConfig = $config->get('dependencies.config');
-        $dependenciesConfig = array_diff($dependenciesConfig,
+        // Use array_values() to renumber the array indexing to start
+        // at 0.  If we don't use array_values(), the remaining array
+        // indexes appear in subsequently-exported YAML!
+        $dependenciesConfig = array_values(array_diff($dependenciesConfig,
             array('field.field.user.user.field_family_name',
                   'field.field.user.user.field_given_name',
                   'field.field.user.user.field_member_of')
-        );
+        ));
         $config->set('dependencies.config', $dependenciesConfig);
         $config->clear('content.field_family_name');
         $config->clear('content.field_given_name');
