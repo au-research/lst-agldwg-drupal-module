@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - datetime
+    - field_permissions
     - node
   enforced:
     module:
@@ -20,3 +21,6 @@ translatable: true
 indexes: {}
 persist_with_no_fields: false
 custom_storage: false
+third_party_settings:
+  field_permissions:
+    permission_type: custom
