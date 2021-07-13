@@ -11,8 +11,10 @@ dependencies:
     - field.field.node.ontology.field_publisher
     - field.field.node.ontology.field_registry_status
     - field.field.node.ontology.field_reviewer
+    - field.field.node.ontology.field_workflow
     - node.type.ontology
   module:
+    - comment
     - datetime
     - file
     - path
@@ -93,6 +95,12 @@ content:
       placeholder: ''
     third_party_settings: {}
     type: entity_reference_autocomplete
+    region: content
+  field_workflow:
+    weight: 26
+    settings: {}
+    third_party_settings: {}
+    type: comment_default
     region: content
   path:
     type: path
