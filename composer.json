@@ -25,6 +25,7 @@
         "drupal/rules": "^3.0",
         "drupal/tr_rulez": "^1.0",
         "drupal/require_revision_log_message": "^1.0",
+        "drupal/contact_storage": "^1.1",
         "ardc/x1-custom-theme-agldwg": ">=0.1",
         "ardc/x1-custom-module-x1-block-content": ">=0.1"
     },
@@ -36,6 +37,9 @@
             },
             "drupal/rules": {
                 "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2021-06-22/2471481-146.integrate-typed-data-widgets.patch"
+            },
+            "drupal/contact_storage": {
+                "Error while field storage definition": "https://www.drupal.org/files/issues/2020-09-28/3053497-8.patch"
             }
         }
     }
