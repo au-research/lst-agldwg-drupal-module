@@ -1,0 +1,25 @@
+langcode: en
+status: false
+dependencies: {}
+id: after_save_new_user
+label: 'After save new user'
+events:
+  - event_name: 'rules_entity_insert:user'
+description: 'User creates new Drupal user.'
+tags:
+  - user
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: 9670c7f1-714b-4a04-9157-91e1a9181490
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: cef9d4df-bb03-4f98-924b-9686ec832914
+    weight: 0
+    conditions: {}
+  actions:
+    id: rules_action_set
+    uuid: 16a086b9-8b29-4807-8ccb-5a432bb84935
+    weight: 0
+    actions: {}

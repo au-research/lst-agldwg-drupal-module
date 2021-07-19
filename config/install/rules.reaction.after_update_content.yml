@@ -1,0 +1,109 @@
+langcode: en
+status: true
+dependencies: {}
+id: after_update_content
+label: 'After update content'
+events:
+  - event_name: 'rules_entity_update:node'
+description: 'Update to a register item''s descriptive metadata (not the registry status field, but, e.g., the description)'
+tags:
+  - notification
+  - content
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: 80fbed72-5a3b-4ad5-b595-0fe51df352cc
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: f1b4f506-3d32-44c9-8f39-6e369111f7d2
+    weight: 0
+    conditions:
+      - id: rules_condition
+        uuid: b68a2651-2347-4636-b5e6-7944c9aedaa3
+        weight: 0
+        context_values:
+          types:
+            - dataset
+            - ontology
+            - organisation
+            - register
+            - vocabulary
+        context_mapping:
+          node: node
+        context_processors:
+          types:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_node_is_of_type
+        negate: false
+      - id: rules_condition
+        uuid: 1a83b90c-1dfc-45fd-9b88-a536fa67fee9
+        weight: 1
+        context_values:
+          operation: '=='
+          value: '{{node_unchanged.field_registry_status.target_id}}'
+        context_mapping:
+          data: node.field_registry_status.target_id
+        context_processors:
+          operation:
+            rules_tokens: {}
+          value:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_data_comparison
+        negate: false
+  actions:
+    id: rules_action_set
+    uuid: 45397440-88fd-4d8a-b6ba-d540d75e36f0
+    weight: 0
+    actions:
+      - id: rules_action
+        uuid: 8c8ddc54-9721-41fb-b996-82d63160963b
+        weight: 0
+        context_values:
+          to:
+            - '{{ node.uid.entity.mail.value }}'
+            - '{{ node.field_contact_person.entity.mail.value }}'
+          subject: 'Updated register item'
+          message: "Updated register item:<br />\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\nRevision log message: {{ node.revision_log.value | format_text('plain_text_email') }}"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          to:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_send_email
+      - id: rules_action
+        uuid: 84a4b441-9960-4264-9d93-187f7ad1d81c
+        weight: 0
+        context_values:
+          roles:
+            - control_body
+          subject: 'Updated register item'
+          message: "Updated register item:<br />\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\nRevision log message: {{ node.revision_log.value | format_text('plain_text_email') }}"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          roles:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_email_to_users_of_role

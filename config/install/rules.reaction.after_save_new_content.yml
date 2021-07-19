@@ -1,0 +1,93 @@
+langcode: en
+status: true
+dependencies: {}
+id: after_save_new_content
+label: 'After save new content'
+events:
+  - event_name: 'rules_entity_insert:node'
+description: 'New register item created'
+tags:
+  - notification
+  - content
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: d0f65c08-160a-47af-ab4d-fb060a7a7893
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: d7efd259-a3f1-4bf1-b207-a9069869a222
+    weight: 0
+    conditions:
+      - id: rules_condition
+        uuid: 55dbbd3a-e00a-4165-9d64-9621dca7d021
+        weight: 0
+        context_values:
+          types:
+            - dataset
+            - ontology
+            - organisation
+            - register
+            - vocabulary
+        context_mapping:
+          node: node
+        context_processors:
+          types:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_node_is_of_type
+        negate: false
+  actions:
+    id: rules_action_set
+    uuid: 5b9afecc-7a26-4302-aa59-96a718b95035
+    weight: 0
+    actions:
+      - id: rules_action
+        uuid: 53421cce-f34b-4d03-8e46-b8121070a998
+        weight: 0
+        context_values:
+          to:
+            - '{{ node.uid.entity.mail.value }}'
+            - '{{ node.field_contact_person.entity.mail.value }}'
+          subject: 'New register item created'
+          message: "New register item created.\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('full_html') }}</a><br />"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          to:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_send_email
+      - id: rules_action
+        uuid: 46754d11-7b98-4e0d-a29c-efefefcecc22
+        weight: 0
+        context_values:
+          roles:
+            - control_body
+          subject: 'New register item created'
+          message: "New register item created.\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('full_html') }}</a><br />"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          roles:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_email_to_users_of_role

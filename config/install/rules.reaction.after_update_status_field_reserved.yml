@@ -1,0 +1,42 @@
+langcode: en
+status: false
+dependencies: {}
+id: after_update_status_field_reserved
+label: 'After update status field reserved'
+events:
+  - event_name: 'rules_entity_update:node'
+description: 'Change to a register item''s registry status field. The value of the registry status field has been changed to "reserved".'
+tags: {}
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: 737bee9b-740e-4c9f-9af7-0198a9199382
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: 57a75daa-987f-47ad-a9ae-bc4d2323a8f2
+    weight: 0
+    conditions:
+      - id: rules_condition
+        uuid: 3e0cbe79-69da-4237-b8d1-c632c5024224
+        weight: 0
+        context_values:
+          types:
+            - dataset
+            - ontology
+            - organisation
+            - register
+            - vocabulary
+        context_mapping:
+          node: node
+        context_processors:
+          types:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_node_is_of_type
+        negate: false
+  actions:
+    id: rules_action_set
+    uuid: 70892942-aba7-4fde-bdd8-775e8ad44bb2
+    weight: 0
+    actions: {}

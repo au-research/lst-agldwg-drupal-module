@@ -1,0 +1,42 @@
+langcode: en
+status: false
+dependencies: {}
+id: after_update_status_field_deprecated
+label: 'After update status field deprecated'
+events:
+  - event_name: 'rules_entity_update:node'
+description: 'Change to a register item''s registry status field. The value of the registry status field has been changed to "deprecated".'
+tags: {}
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: 896463cc-d612-4f8f-b415-5216e4e540b9
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: 3d371811-a453-44ba-be04-191bd14a3ef4
+    weight: 0
+    conditions:
+      - id: rules_condition
+        uuid: 6a8f3c57-0569-4f5c-b81a-46581965f391
+        weight: 0
+        context_values:
+          types:
+            - dataset
+            - ontology
+            - organisation
+            - register
+            - vocabulary
+        context_mapping:
+          node: node
+        context_processors:
+          types:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_node_is_of_type
+        negate: false
+  actions:
+    id: rules_action_set
+    uuid: 4e2456ce-a4ef-48ad-9a62-7f269b9fe1ee
+    weight: 0
+    actions: {}

@@ -1,0 +1,126 @@
+langcode: en
+status: true
+dependencies: {}
+id: after_update_status_field_invalid
+label: 'After update status field invalid'
+events:
+  - event_name: 'rules_entity_update:node'
+description: 'Change to a register item''s registry status field. The value of the registry status field has been changed to "invalid".'
+tags:
+  - notification
+  - content
+  - status
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: d28feaf1-308e-4188-8001-1af6984e80d6
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: c3000506-2d93-4c92-b646-44dfcec1f2c3
+    weight: 0
+    conditions:
+      - id: rules_condition
+        uuid: b6bf2eb9-2550-4b1f-bc9b-7a2439727e9b
+        weight: 0
+        context_values:
+          types:
+            - dataset
+            - ontology
+            - organisation
+            - register
+            - vocabulary
+        context_mapping:
+          node: node
+        context_processors:
+          types:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_node_is_of_type
+        negate: false
+      - id: rules_condition
+        uuid: 2ef565a1-e068-4cc3-968c-edabf8b773b9
+        weight: 1
+        context_values:
+          operation: '=='
+          value: '{{ node_unchanged.field_registry_status.target_id }}'
+        context_mapping:
+          data: node.field_registry_status.target_id
+        context_processors:
+          operation:
+            rules_tokens: {}
+          value:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_data_comparison
+        negate: true
+      - id: rules_condition
+        uuid: b63672b2-97da-4f0d-a259-5a6be75b4ece
+        weight: 1
+        context_values:
+          operation: '=='
+          value: '9'
+        context_mapping:
+          data: node.field_registry_status.target_id
+        context_processors:
+          operation:
+            rules_tokens: {}
+          value:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_data_comparison
+        negate: false
+  actions:
+    id: rules_action_set
+    uuid: 89fd2b2a-6d69-47a4-b94b-232dc0d01e2b
+    weight: 0
+    actions:
+      - id: rules_action
+        uuid: fe9409f1-5925-445a-ab89-e51a287dcb0e
+        weight: 0
+        context_values:
+          to:
+            - '{{ node.uid.entity.mail.value }}'
+            - '{{ node.field_contact_person.entity.mail.value }}'
+          subject: 'Status changed to invalid'
+          message: "Updated registry status field to invalid:<br />\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\n<b>old</b> status: {{ node_unchanged.field_registry_status.entity.name.value | default('No status') }}<br />\r\nRevision log message: {{ node.revision_log.value | format_text('plain_text_email') }}"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          to:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_send_email
+      - id: rules_action
+        uuid: 75cf7b8d-1834-4197-8b90-536abc0d2763
+        weight: 0
+        context_values:
+          roles:
+            - control_body
+          subject: 'Status changed to invalid'
+          message: "Updated registry status field to invalid:<br />\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\n<b>old</b> status: {{ node_unchanged.field_registry_status.entity.name.value | default('No status') }}<br />\r\nRevision log message: {{ node.revision_log.value | format_text('plain_text_email') }}"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          roles:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_email_to_users_of_role

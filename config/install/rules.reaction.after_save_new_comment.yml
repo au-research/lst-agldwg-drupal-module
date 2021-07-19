@@ -1,0 +1,77 @@
+langcode: en
+status: true
+dependencies: {}
+id: after_save_new_comment
+label: 'After save new comment'
+events:
+  - event_name: 'rules_entity_insert:comment--workflow'
+description: 'User adds a workflow comment to an existing register item.'
+tags:
+  - notification
+  - comment
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: 2e1fa3d4-23e2-45dd-a37b-551c53fa531f
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: d78e60a8-5ecf-40be-a5a0-4daf0b774080
+    weight: 0
+    conditions: {}
+  actions:
+    id: rules_action_set
+    uuid: d03c3e93-c726-43b8-adba-538a57d1b267
+    weight: 0
+    actions:
+      - id: rules_action
+        uuid: e188ddb9-8e6e-4175-b9aa-09e5ed6c476b
+        weight: 0
+        context_values:
+          to:
+            - '{{ node.uid.entity.mail.value }}'
+            - '{{ node.field_contact_person.entity.mail.value }}'
+            - '{{ comment.pid.entity.uid.entity.mail.value }}'
+            - '{{ comment.pid.entity.pid.entity.uid.entity.mail.value }}'
+          subject: 'Workflow comment added'
+          message: "A comment was added: <a href=\"{{ comment | entity_url }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a>\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}\r\n \r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}\r\nComment body:\r\n{{ comment.comment_body.value | raw }}"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          to:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_send_email
+      - id: rules_action
+        uuid: 96c193d4-ae4b-4be6-8c4b-6af83c64868b
+        weight: 0
+        context_values:
+          roles:
+            - control_body
+          subject: 'Workflow comment added'
+          message: "A comment was added: <a href=\"{{ comment | entity_url }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a>\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}\r\n \r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}\r\nComment body:\r\n{{ comment.comment_body.value | raw }}"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          roles:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_email_to_users_of_role

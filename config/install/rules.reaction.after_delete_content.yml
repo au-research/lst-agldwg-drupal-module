@@ -1,0 +1,93 @@
+langcode: en
+status: true
+dependencies: {}
+id: after_delete_content
+label: 'After delete content'
+events:
+  - event_name: 'rules_entity_delete:node'
+description: 'Register item deleted.'
+tags:
+  - notification
+  - content
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: a14bfde2-f227-451b-a2e2-118975c88615
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: 5e9e1657-d924-44be-9e49-53cc85751b33
+    weight: 0
+    conditions:
+      - id: rules_condition
+        uuid: 9b0dd228-bb80-44f2-a4a7-03a162a3dbcf
+        weight: 0
+        context_values:
+          types:
+            - dataset
+            - ontology
+            - organisation
+            - register
+            - vocabulary
+        context_mapping:
+          node: node
+        context_processors:
+          types:
+            rules_tokens: {}
+        provides_mapping: {}
+        condition_id: rules_node_is_of_type
+        negate: false
+  actions:
+    id: rules_action_set
+    uuid: 5fda82ca-8671-4087-ae1d-ab94d4df332b
+    weight: 0
+    actions:
+      - id: rules_action
+        uuid: fb4177df-77d4-4fd9-babc-33eb90c840a1
+        weight: 0
+        context_values:
+          to:
+            - '{{ node.uid.entity.mail.value }}'
+            - '{{ node.field_contact_person.entity.mail.value }}'
+          subject: 'Register item deleted'
+          message: "A register item was deleted.\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('full_html') }}</a><br />"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          to:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_send_email
+      - id: rules_action
+        uuid: a899efd9-0a85-4e64-871f-4bbfd738d07d
+        weight: 0
+        context_values:
+          roles:
+            - control_body
+          subject: 'Register item deleted'
+          message: "A register item was deleted.\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('full_html') }}</a><br />"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          roles:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_email_to_users_of_role

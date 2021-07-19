@@ -1,0 +1,77 @@
+langcode: en
+status: true
+dependencies: {}
+id: after_update_comment
+label: 'After update comment'
+events:
+  - event_name: 'rules_entity_update:comment--workflow'
+description: 'User edits an existing workflow comment to an existing register item.'
+tags:
+  - notification
+  - comment
+config_version: '3'
+expression:
+  id: rules_rule
+  uuid: bfda1e84-f807-43e4-9c09-6b1550e38dd2
+  weight: 0
+  conditions:
+    id: rules_and
+    uuid: 5379f995-8d0a-4442-9730-f4c6617787d2
+    weight: 0
+    conditions: {}
+  actions:
+    id: rules_action_set
+    uuid: 3703ecd6-2d2f-4d56-a24f-9210cd0aa9e0
+    weight: 0
+    actions:
+      - id: rules_action
+        uuid: fd5a76b8-4175-4c9d-bb25-bd8ff4c92948
+        weight: 0
+        context_values:
+          to:
+            - '{{ node.uid.entity.mail.value }}'
+            - '{{ node.field_contact_person.entity.mail.value }}'
+            - '{{ comment.pid.entity.uid.entity.mail.value }}'
+            - '{{ comment.pid.entity.pid.entity.uid.entity.mail.value }}'
+          subject: 'Workflow comment updated'
+          message: "A comment was updated: <a href=\"{{ comment | entity_url }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a>\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}\r\n \r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}\r\nComment body:\r\n{{ comment.comment_body.value | raw }}"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          to:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_send_email
+      - id: rules_action
+        uuid: 899129b7-d458-4cd8-83fb-32a26087d41f
+        weight: 0
+        context_values:
+          roles:
+            - control_body
+          subject: 'Workflow comment updated'
+          message: "A comment was updated: <a href=\"{{ comment | entity_url }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a>\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}\r\n \r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}\r\nComment body:\r\n{{ comment.comment_body.value | raw }}"
+          reply: null
+          language: null
+        context_mapping: {}
+        context_processors:
+          roles:
+            rules_tokens: {}
+          subject:
+            rules_tokens: {}
+          message:
+            rules_tokens: {}
+          reply:
+            rules_tokens: {}
+          language:
+            rules_tokens: {}
+        provides_mapping: {}
+        action_id: rules_email_to_users_of_role
