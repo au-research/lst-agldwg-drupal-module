@@ -29,12 +29,12 @@ expression:
         weight: 0
         context_values:
           to:
-            - '{{ node.uid.entity.mail.value }}'
-            - '{{ node.field_contact_person.entity.mail.value }}'
+            - '{{ comment.entity_id.entity.uid.entity.mail.value }}'
+            - '{{ comment.entity_id.entity.field_contact_person.entity.mail.value }}'
             - '{{ comment.pid.entity.uid.entity.mail.value }}'
             - '{{ comment.pid.entity.pid.entity.uid.entity.mail.value }}'
-          subject: 'Workflow comment added'
-          message: "A comment was added: <a href=\"{{ comment | entity_url }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a>\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}\r\n \r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}\r\nComment body:\r\n{{ comment.comment_body.value | raw }}"
+          subject: '[LD Registry] Comment added to {{comment.entity_id.entity.title.value | format_text(''plain_text_email'') }} {{ comment.entity_id.entity.type }}'
+          message: "A comment was added:<br />\r\nComment: <a href=\"{{ comment | entity_url }}#comment-{{ comment.cid.value }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a><br />\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}</a><br />\r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}<br />\r\nComment body:<br />\r\n{{ comment.comment_body.value | raw }}"
           reply: null
           language: null
         context_mapping: {}
@@ -57,8 +57,8 @@ expression:
         context_values:
           roles:
             - control_body
-          subject: 'Workflow comment added'
-          message: "A comment was added: <a href=\"{{ comment | entity_url }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a>\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}\r\n \r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}\r\nComment body:\r\n{{ comment.comment_body.value | raw }}"
+          subject: '[LD Registry] Workflow comment added'
+          message: "A comment was added:<br />\r\nComment: <a href=\"{{ comment | entity_url }}#comment-{{ comment.cid.value }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a><br />\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}</a><br />\r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}<br />\r\nComment body:<br />\r\n{{ comment.comment_body.value | raw }}"
           reply: null
           language: null
         context_mapping: {}

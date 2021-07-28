@@ -81,7 +81,7 @@ expression:
           to:
             - '{{ node.uid.entity.mail.value }}'
             - '{{ node.field_contact_person.entity.mail.value }}'
-          subject: 'Status changed to not accepted'
+          subject: '[LD Registry] Status changed to not accepted'
           message: "Updated registry status field to not accepted:<br />\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\n<b>old</b> status: {{ node_unchanged.field_registry_status.entity.name.value | default('No status') }}<br />\r\nRevision log message: {{ node.revision_log.value | format_text('plain_text_email') }}"
           reply: null
           language: null
@@ -105,7 +105,7 @@ expression:
         context_values:
           roles:
             - control_body
-          subject: 'Status changed to not accepted'
+          subject: '[LD Registry] Status changed to not accepted'
           message: "Updated registry status field to not accepted:<br />\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\n<b>old</b> status: {{ node_unchanged.field_registry_status.entity.name.value | default('No status') }}<br />\r\nRevision log message: {{ node.revision_log.value | format_text('plain_text_email') }}"
           reply: null
           language: null

@@ -64,8 +64,8 @@ expression:
           to:
             - '{{ node.uid.entity.mail.value }}'
             - '{{ node.field_contact_person.entity.mail.value }}'
-          subject: 'Updated register item'
-          message: "Updated register item:<br />\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\nRevision log message: {{ node.revision_log.value | format_text('plain_text_email') }}"
+          subject: '[LD Registry] {{node.title.value | format_text(''plain_text_email'') }} {{ node.type }} descriptive metadata was updated'
+          message: "Updated descriptive metadata of register item:<br />\r\nTitle: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\nChanged by: {{ node.revision_uid.entity.name.value }}<br />\r\nRegister item creator: {{ node.field_creator.entity.title.value }}<br />\r\nRegister item publisher: {{ node.field_publisher.entity.title.value }}<br />\r\nStatus: {{ node.field_registry_status.entity.name.value | default('No status') }}<br />\r\nRevision log message:<br />\r\n{{ node.revision_log.value | format_text('plain_text_email') }}<br />"
           reply: null
           language: null
         context_mapping: {}
@@ -88,8 +88,8 @@ expression:
         context_values:
           roles:
             - control_body
-          subject: 'Updated register item'
-          message: "Updated register item:<br />\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\nRevision log message: {{ node.revision_log.value | format_text('plain_text_email') }}"
+          subject: '[LD Registry] {{node.title.value | format_text(''plain_text_email'') }} {{ node.type }} descriptive metadata was updated'
+          message: "Updated descriptive metadata of register item:<br />\r\nTitle: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\nChanged by: {{ node.revision_uid.entity.name.value }}<br />\r\nRegister item creator: {{ node.field_creator.entity.title.value }}<br />\r\nRegister item publisher: {{ node.field_publisher.entity.title.value }}<br />\r\nStatus: {{ node.field_registry_status.entity.name.value | default('No status') }}<br />\r\nRevision log message:<br />\r\n{{ node.revision_log.value | format_text('plain_text_email') }}<br />"
           reply: null
           language: null
         context_mapping: {}

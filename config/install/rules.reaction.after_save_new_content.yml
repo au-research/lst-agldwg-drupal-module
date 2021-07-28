@@ -49,8 +49,8 @@ expression:
           to:
             - '{{ node.uid.entity.mail.value }}'
             - '{{ node.field_contact_person.entity.mail.value }}'
-          subject: 'New register item created'
-          message: "New register item created.\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('full_html') }}</a><br />"
+          subject: '[LD Registry] New {{ node.type }} register item created'
+          message: "New {{ node.type }} register item created:<br />\r\n<a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\nSubmitted by: {{ node.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nCreator: {{ node.field_creator.entity.title.value | format_text('plain_text_email') }}<br />\r\nPublisher: {{ node.field_publisher.entity.title.value | format_text('plain_text_email') }}<br />\r\nStatus: {{ node.field_registry_status.entity.name.value | default('No status') }}<br />"
           reply: null
           language: null
         context_mapping: {}
@@ -73,8 +73,8 @@ expression:
         context_values:
           roles:
             - control_body
-          subject: 'New register item created'
-          message: "New register item created.\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('full_html') }}</a><br />"
+          subject: '[LD Registry] New {{ node.type }} register item created'
+          message: "New {{ node.type }} register item created:<br />\r\n<a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('plain_text_email') }}</a><br />\r\nSubmitted by: {{ node.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nCreator: {{ node.field_creator.entity.title.value | format_text('plain_text_email') }}<br />\r\nPublisher: {{ node.field_publisher.entity.title.value | format_text('plain_text_email') }}<br />\r\nStatus: {{ node.field_registry_status.entity.name.value | default('No status') }}<br />"
           reply: null
           language: null
         context_mapping: {}
