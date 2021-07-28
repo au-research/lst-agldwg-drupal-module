@@ -44,7 +44,7 @@ bundle: organisation
 mode: default
 content:
   body:
-    label: hidden
+    label: above
     type: text_default
     weight: 2
     settings: {}
