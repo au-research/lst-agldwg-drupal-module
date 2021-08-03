@@ -33,7 +33,7 @@ expression:
             - '{{ comment.entity_id.entity.field_contact_person.entity.mail.value }}'
             - '{{ comment.pid.entity.uid.entity.mail.value }}'
             - '{{ comment.pid.entity.pid.entity.uid.entity.mail.value }}'
-          subject: '[LD Registry] Comment added to {{comment.entity_id.entity.title.value | format_text(''plain_text_email'') }} {{ comment.entity_id.entity.type }}'
+          subject: 'Comment added to {{comment.entity_id.entity.title.value | format_text(''plain_text_email'') }} {{ comment.entity_id.entity.type }}'
           message: "A comment was added:<br />\r\nComment: <a href=\"{{ comment | entity_url }}#comment-{{ comment.cid.value }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a><br />\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}</a><br />\r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}<br />\r\nComment body:<br />\r\n{{ comment.comment_body.value | raw }}"
           reply: null
           language: null
@@ -57,7 +57,7 @@ expression:
         context_values:
           roles:
             - control_body
-          subject: '[LD Registry] Workflow comment added'
+          subject: 'Workflow comment added'
           message: "A comment was added:<br />\r\nComment: <a href=\"{{ comment | entity_url }}#comment-{{ comment.cid.value }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a><br />\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}</a><br />\r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}<br />\r\nComment body:<br />\r\n{{ comment.comment_body.value | raw }}"
           reply: null
           language: null

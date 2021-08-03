@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * mail_alter hook function for X1.
+ *
+ * @ingroup x1
+ */
+
+/**
+ * Implements hook_mail_alter to prepend '[LD-Registry] ' to
+ * the subject line of all outgoing emails.
+ */
+function x1_mail_alter(&$message) {
+    if (isset($message['subject'])) {
+        $message['subject'] = '[LD Registry] ' . $message['subject'];
+    } else {
+        $message['subject'] = '[LD Registry]';
+    }
+}

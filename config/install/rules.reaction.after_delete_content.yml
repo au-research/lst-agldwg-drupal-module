@@ -49,7 +49,7 @@ expression:
           to:
             - '{{ node.uid.entity.mail.value }}'
             - '{{ node.field_contact_person.entity.mail.value }}'
-          subject: '[LD Registry] Register item deleted'
+          subject: 'Register item deleted'
           message: "A register item was deleted.\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('full_html') }}</a><br />"
           reply: null
           language: null
@@ -73,7 +73,7 @@ expression:
         context_values:
           roles:
             - control_body
-          subject: '[LD Registry] Register item deleted'
+          subject: 'Register item deleted'
           message: "A register item was deleted.\r\nRegister item: <a href=\"{{ node | entity_url }}\">{{node.title.value | format_text('full_html') }}</a><br />"
           reply: null
           language: null
