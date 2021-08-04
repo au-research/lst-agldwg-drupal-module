@@ -10,7 +10,7 @@ field_name: field_creator
 entity_type: node
 bundle: dataset
 label: Creator
-description: "The Organisation that created this Resource. This field is mapped to dcterms:creator.\r\n\r\nThe creator might not be the same as the Organisation applying for the URI or the Publisher.\r\n\r\nIf the organisation you wish to link to doesn't appear in the list, you will need to ask the AGLDWG co-chairs to register that organisation for you first."
+description: "The Organisation that created this Resource. This field is mapped to dcterms:creator.\r\n\r\nThe creator might not be the same as the Organisation applying for the URI or the Publisher.\r\n\r\nIf the organisation you wish to link to doesn't appear in the list, please contact the AGLDWG using the <a href=\"[site:url]contact?subject=Organisation+registration+request\" target=\"_blank\">Contact form</a> to register that organisation for you first."
 required: true
 translatable: false
 default_value: {}
