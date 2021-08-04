@@ -2,7 +2,7 @@
 
 /**
  * @file
- * mail_alter hook function for X1.
+ * feedback form_alter and mail_alter hook functions for X1.
  *
  * @ingroup x1
  */
@@ -16,5 +16,17 @@ function x1_mail_alter(&$message) {
         $message['subject'] = '[LD Registry] ' . $message['subject'];
     } else {
         $message['subject'] = '[LD Registry]';
+    }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter to support prefilling subject
+ * on the contact form when a query parameter 'subject' is supplied.
+ */
+function x1_form_contact_message_feedback_form_alter(&$form, $form_state,
+                                                     $form_id) {
+    if (!empty($_GET['subject'])) {
+        $form['subject']['widget'][0]['value']['#default_value'] =
+            $_GET['subject'];
     }
 }
