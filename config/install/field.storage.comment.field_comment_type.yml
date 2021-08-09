@@ -17,10 +17,16 @@ entity_type: comment
 type: list_string
 settings:
   allowed_values:
-    - value: key1
-      label: 'This is label 1'
-    - value: key2
-      label: 'This is label 2'
+    - value: request_update_rewrite
+      label: 'Request update to rewrite rules'
+    - value: request_deletion
+      label: 'Request register item deletion'
+    - value: request_other
+      label: 'Other request'
+    - value: response_general
+      label: 'General response (registry manager use only)'
+    - value: response_governance
+      label: 'General response (control body use only)'
   allowed_values_function: ''
 module: options
 locked: false
