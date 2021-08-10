@@ -34,7 +34,7 @@ expression:
             - '{{ comment | comment_parent_email }}'
             - '{{ comment | comment_grandparent_email }}'
           subject: 'Comment added to {{comment.entity_id.entity.title.value | format_text(''plain_text_email'') }} {{ comment.entity_id.entity.type }}'
-          message: "A comment was added:<br />\r\nComment: <a href=\"{{ comment | entity_url }}#comment-{{ comment.cid.value }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a><br />\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}</a><br />\r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}<br />\r\nComment body:<br />\r\n{{ comment.comment_body.value | raw }}"
+          message: "A comment was added:<br />\r\nComment: <a href=\"{{ comment | entity_url }}#comment-{{ comment.cid.value }}\">{{ comment | entity_url | format_text('plain_text_email') }}#comment-{{ comment.cid.value }}</a><br />\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}</a><br />\r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}<br />\r\nComment body:<br />\r\n{{ comment.comment_body.value | raw }}"
           reply: null
           language: null
         context_mapping: {}
@@ -58,7 +58,7 @@ expression:
           roles:
             - control_body
           subject: 'Workflow comment added'
-          message: "A comment was added:<br />\r\nComment: <a href=\"{{ comment | entity_url }}#comment-{{ comment.cid.value }}\">{{ comment | entity_url | format_text('plain_text_email') }}</a><br />\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}</a><br />\r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}<br />\r\nComment body:<br />\r\n{{ comment.comment_body.value | raw }}"
+          message: "A comment was added:<br />\r\nComment: <a href=\"{{ comment | entity_url }}#comment-{{ comment.cid.value }}\">{{ comment | entity_url | format_text('plain_text_email') }}#comment-{{ comment.cid.value }}</a><br />\r\nRegister item: <a href=\"{{ comment.entity_id.entity | entity_url }}\">{{ comment.entity_id.entity.title.value | format_text('plain_text_email') }}</a><br />\r\nComment user: {{ comment.uid.entity.name.value | format_text('plain_text_email') }}<br />\r\nComment subject: {{ comment.subject.value | format_text('plain_text_email') }}<br />\r\nComment body:<br />\r\n{{ comment.comment_body.value | raw }}"
           reply: null
           language: null
         context_mapping: {}
