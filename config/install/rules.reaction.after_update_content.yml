@@ -26,7 +26,6 @@ expression:
           types:
             - dataset
             - ontology
-            - register
             - vocabulary
         context_mapping:
           node: node
