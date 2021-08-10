@@ -21,8 +21,8 @@ content:
     third_party_settings: {}
     region: content
   field_comment_type:
-    weight: 101
-    label: above
+    weight: -1
+    label: inline
     settings: {}
     third_party_settings: {}
     type: list_default
