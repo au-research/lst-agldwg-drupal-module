@@ -26,6 +26,7 @@
         "drupal/tr_rulez": "^1.0",
         "drupal/require_revision_log_message": "^1.0",
         "drupal/contact_storage": "^1.1",
+        "drupal/readonlymode": "^1.1",
         "ardc/x1-custom-theme-agldwg": ">=0.1",
         "ardc/x1-custom-module-x1-block-content": ">=0.1"
     },
@@ -41,6 +42,9 @@
             },
             "drupal/contact_storage": {
                 "Error while field storage definition": "https://www.drupal.org/files/issues/2020-09-28/3053497-8.patch"
+            },
+            "drupal/readonlymode": {
+                "Got fatal error when running this module: string, not array": "https://www.drupal.org/files/issues/2020-12-23/readonlymode-string_not_array-3115119-9.patch"
             }
         }
     }
