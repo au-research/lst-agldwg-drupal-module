@@ -27,6 +27,7 @@
         "drupal/require_revision_log_message": "^1.0",
         "drupal/contact_storage": "^1.1",
         "drupal/readonlymode": "^1.1",
+        "drupal/token_filter": "^1.2",
         "ardc/x1-custom-theme-agldwg": ">=0.1",
         "ardc/x1-custom-module-x1-block-content": ">=0.1"
     },
