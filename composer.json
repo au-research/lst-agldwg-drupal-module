@@ -37,6 +37,9 @@
                 "On tracker pages, add space between link and status": "https://www.drupal.org/files/issues/2020-05-06/3095533-18.patch",
                 "Improve styling for select and add styling to select[multiple]": "https://www.drupal.org/files/issues/2020-08-19/2491725-31-multiple-select.patch"
             },
+            "drush/drush": {
+                "Support utf8mb4 on drush site-install": "https://github.com/drush-ops/drush/pull/4810.patch"
+            },
             "drupal/rules": {
                 "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2021-06-22/2471481-146.integrate-typed-data-widgets.patch",
                 "Support upcasting entity IDs to full entity contexts": "https://www.drupal.org/files/issues/2021-04-29/2800749-88.upcast.patch"
