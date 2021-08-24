@@ -40,7 +40,7 @@
             "drush/drush": {
                 "Support utf8mb4 on drush site-install": "https://github.com/drush-ops/drush/pull/4810.patch"
             },
-            "drush/backup_migrate": {
+            "drupal/backup_migrate": {
                 "Don't try to read directory entries as files during backup": "https://www.drupal.org/files/issues/2021-08-24/bam_empty_dirs.patch"
             },
             "drupal/rules": {
