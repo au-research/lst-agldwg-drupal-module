@@ -1,0 +1,39 @@
+diff --git a/contact_storage.install b/contact_storage.install
+index 688db13..bd72333 100644
+--- a/contact_storage.install
++++ b/contact_storage.install
+@@ -12,9 +12,12 @@ use Drupal\Core\Config\FileStorage;
+ use Drupal\Core\Field\BaseFieldDefinition;
+ 
+ /**
+- * Implements hook_install().
++ * Implements hook_module_preinstall().
+  */
+-function contact_storage_install() {
++function contact_storage_module_preinstall($module) {
++  if ($module !== 'contact_storage') {
++    return;
++  }
+   $entity_definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+   $original_contact_message = $entity_definition_update_manager->getEntityType('contact_message');
+   $original_contact_form = \Drupal::entityTypeManager()->getDefinition('contact_form');
+diff --git a/tests/src/Kernel/ContactStorageFieldTest.php b/tests/src/Kernel/ContactStorageFieldTest.php
+index ed8b787..8e26a29 100644
+--- a/tests/src/Kernel/ContactStorageFieldTest.php
++++ b/tests/src/Kernel/ContactStorageFieldTest.php
+@@ -25,12 +25,12 @@ class ContactStorageFieldTest extends KernelTestBase {
+   }
+ 
+   /**
+-   * Covers contact_storage_install().
++   * Covers contact_storage_mode_preinstall().
+    */
+   public function testContactIdFieldIsCreated() {
+     $this->container->get('module_installer')->install(['contact_storage']);
+-    // There should be no updates as contact_storage_install() should have
+-    // applied the new field.
++    // There should be no updates as contact_storage_module_pre_install() should
++    // have applied the new field.
+     $this->assertTrue(empty($this->container->get('entity.definition_update_manager')->needsUpdates()['contact_message']));
+     $this->assertTrue(!empty($this->container->get('entity_field.manager')->getFieldStorageDefinitions('contact_message')['id']));
+   }

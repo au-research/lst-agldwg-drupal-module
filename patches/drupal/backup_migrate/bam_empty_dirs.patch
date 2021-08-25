@@ -1,0 +1,16 @@
+diff --git a/src/Core/Service/TarArchiveWriter.php b/src/Core/Service/TarArchiveWriter.php
+index c9c2539..30fce1f 100644
+--- a/src/Core/Service/TarArchiveWriter.php
++++ b/src/Core/Service/TarArchiveWriter.php
+@@ -45,6 +45,11 @@ class TarArchiveWriter implements ArchiveWriterInterface {
+ 
+     $this->writeHeader($real_path, $new_path);
+ 
++    // Only the header is needed for links and directories.
++    if (@is_link($real_path) || @is_dir($real_path)) {
++      return;
++    }
++
+     $fp = @fopen($real_path, "rb");
+     while (($v_buffer = fread($fp, 512)) != '') {
+       $v_binary_data = pack("a512", "$v_buffer");
