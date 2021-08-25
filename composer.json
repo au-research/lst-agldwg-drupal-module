@@ -34,24 +34,24 @@
     "extra": {
         "patches": {
             "drupal/core": {
-                "On tracker pages, add space between link and status": "patches/drupal/core/3095533-18.patch",
-                "Improve styling for select and add styling to select[multiple]": "patches/drupal/core/2491725-31-multiple-select.patch"
+                "On tracker pages, add space between link and status": "patches/drupal/core/3095533-18.patch.txt",
+                "Improve styling for select and add styling to select[multiple]": "patches/drupal/core/2491725-31-multiple-select.patch.txt"
             },
             "drush/drush": {
-                "Support utf8mb4 on drush site-install": "patches/drush/drush/4810.patch"
+                "Support utf8mb4 on drush site-install": "patches/drush/drush/4810.patch.txt"
             },
             "drupal/backup_migrate": {
-                "Don't try to read directory entries as files during backup": "patches/drupal/backup_migrate/bam_empty_dirs.patch"
+                "Don't try to read directory entries as files during backup": "patches/drupal/backup_migrate/bam_empty_dirs.patch.txt"
             },
             "drupal/rules": {
-                "Integrate Typed Data Widgets": "patches/drupal/rules/2471481-146.integrate-typed-data-widgets.patch",
-                "Support upcasting entity IDs to full entity contexts": "patches/drupal/rules/2800749-88.upcast.patch"
+                "Integrate Typed Data Widgets": "patches/drupal/rules/2471481-146.integrate-typed-data-widgets.patch.txt",
+                "Support upcasting entity IDs to full entity contexts": "patches/drupal/rules/2800749-88.upcast.patch.txt"
             },
             "drupal/contact_storage": {
-                "Error while field storage definition": "patches/drupal/contact_storage/3053497-8.patch"
+                "Error while field storage definition": "patches/drupal/contact_storage/3053497-8.patch.txt"
             },
             "drupal/readonlymode": {
-                "Got fatal error when running this module: string, not array": "patches/drupal/readonlymode/readonlymode-string_not_array-3115119-9.patch"
+                "Got fatal error when running this module: string, not array": "patches/drupal/readonlymode/readonlymode-string_not_array-3115119-9.patch.txt"
             }
         }
     }
