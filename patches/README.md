@@ -5,7 +5,8 @@ Here are the sources of the patches specified in `composer.json`.
         "patches": {
             "drupal/core": {
                 "On tracker pages, add space between link and status": "https://www.drupal.org/files/issues/2020-05-06/3095533-18.patch",
-                "Improve styling for select and add styling to select[multiple]": "https://www.drupal.org/files/issues/2020-08-19/2491725-31-multiple-select.patch"
+                "Improve styling for select and add styling to select[multiple]": "https://www.drupal.org/files/issues/2020-08-19/2491725-31-multiple-select.patch",
+                "Image styles fails with absolute path in $settings['file_public_path']": "https://www.drupal.org/files/issues/2021-08-27/image_styles-new.patch"
             },
             "drush/drush": {
                 "Support utf8mb4 on drush site-install": "https://github.com/drush-ops/drush/pull/4810.patch"

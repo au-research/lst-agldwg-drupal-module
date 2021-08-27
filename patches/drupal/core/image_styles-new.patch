@@ -1,0 +1,71 @@
+diff --git orig/core/modules/image/src/PathProcessor/PathProcessorImageStyles.php mods/core/modules/image/src/PathProcessor/PathProcessorImageStyles.php
+index f40d083..c7bb084 100644
+--- orig/core/modules/image/src/PathProcessor/PathProcessorImageStyles.php
++++ mods/core/modules/image/src/PathProcessor/PathProcessorImageStyles.php
+@@ -3,6 +3,7 @@
+ namespace Drupal\image\PathProcessor;
+ 
+ use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
++use Drupal\Core\Site\Settings;
+ use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
+ use Symfony\Component\HttpFoundation\Request;
+ 
+@@ -44,9 +45,20 @@ class PathProcessorImageStyles implements InboundPathProcessorInterface {
+    * {@inheritdoc}
+    */
+   public function processInbound($path, Request $request) {
+-    $directory_path = $this->streamWrapperManager->getViaScheme('public')->getDirectoryPath();
+-    if (strpos($path, '/' . $directory_path . '/styles/') === 0) {
+-      $path_prefix = '/' . $directory_path . '/styles/';
++    $directory_path = NULL;
++    $files_base_url = Settings::get('file_public_base_url', '');
++    if ($files_base_url) {
++      $url_parts = parse_url($files_base_url);
++      if (isset($url_parts['path'])) {
++        $directory_path = $url_parts['path'];
++      }
++    }
++    if (!$directory_path) {
++      $directory_path = '/' . $this->streamWrapperManager->getViaScheme('public')->getDirectoryPath();
++    }
++
++    if (strpos($path, $directory_path . '/styles/') === 0) {
++      $path_prefix = $directory_path . '/styles/';
+     }
+     // Check if the string '/system/files/styles/' exists inside the path,
+     // that means we have a case of private file's image style.
+diff --git orig/core/modules/image/src/Routing/ImageStyleRoutes.php mods/core/modules/image/src/Routing/ImageStyleRoutes.php
+index ed414e2..fd68d1a 100644
+--- orig/core/modules/image/src/Routing/ImageStyleRoutes.php
++++ mods/core/modules/image/src/Routing/ImageStyleRoutes.php
+@@ -3,6 +3,7 @@
+ namespace Drupal\image\Routing;
+ 
+ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
++use Drupal\Core\Site\Settings;
+ use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ use Symfony\Component\Routing\Route;
+@@ -50,10 +51,20 @@ class ImageStyleRoutes implements ContainerInjectionInterface {
+     // disabled image derivatives will always be served through the menu system.
+     // If clean URLs are enabled and the image derivative already exists, PHP
+     // will be bypassed.
+-    $directory_path = $this->streamWrapperManager->getViaScheme('public')->getDirectoryPath();
++    $directory_path = NULL;
++    $files_base_url = Settings::get('file_public_base_url', '');
++    if ($files_base_url) {
++      $url_parts = parse_url($files_base_url);
++      if (isset($url_parts['path'])) {
++        $directory_path = $url_parts['path'];
++      }
++    }
++    if (!$directory_path) {
++      $directory_path = '/' . $this->streamWrapperManager->getViaScheme('public')->getDirectoryPath();
++    }
+ 
+     $routes['image.style_public'] = new Route(
+-      '/' . $directory_path . '/styles/{image_style}/{scheme}',
++      $directory_path . '/styles/{image_style}/{scheme}',
+       [
+         '_controller' => 'Drupal\image\Controller\ImageStyleDownloadController::deliver',
+       ],
