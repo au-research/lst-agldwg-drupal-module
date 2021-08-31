@@ -1,6 +1,6 @@
 {
-    "name": "ardc/x1-custom-module-x1",
-    "description": "X1 AGLDWG Custom Module X1",
+    "name": "ardc/lst-agldwg",
+    "description": "LinkStitcher AGLDWG",
     "type": "drupal-custom-module",
     "license": "Apache-2.0",
     "authors": [
@@ -28,32 +28,32 @@
         "drupal/contact_storage": "^1.1",
         "drupal/readonlymode": "^1.1",
         "drupal/token_filter": "^1.2",
-        "ardc/x1-custom-theme-agldwg": ">=0.1",
-        "ardc/x1-custom-module-x1-block-content": ">=0.1"
+        "ardc/lst-agldwg-theme": ">=1.1",
+        "ardc/lst-agldwg-block-content": ">=1.1"
     },
     "extra": {
         "patches": {
             "drupal/core": {
-                "On tracker pages, add space between link and status": "web/modules/custom/x1-custom-module-x1/patches/drupal/core/3095533-18.patch.txt",
-                "Improve styling for select and add styling to select[multiple]": "web/modules/custom/x1-custom-module-x1/patches/drupal/core/2491725-31-multiple-select.patch.txt",
-                "Image styles fails with absolute path in $settings['file_public_path']": "web/modules/custom/x1-custom-module-x1/patches/drupal/core/image_styles-new.patch"
+                "On tracker pages, add space between link and status": "web/modules/custom/lst-agldwg/patches/drupal/core/3095533-18.patch.txt",
+                "Improve styling for select and add styling to select[multiple]": "web/modules/custom/lst-agldwg/patches/drupal/core/2491725-31-multiple-select.patch.txt",
+                "Image styles fails with absolute path in $settings['file_public_path']": "web/modules/custom/lst-agldwg/patches/drupal/core/image_styles-new.patch"
 
             },
             "drush/drush": {
-                "Support utf8mb4 on drush site-install": "web/modules/custom/x1-custom-module-x1/patches/drush/drush/4810.patch.txt"
+                "Support utf8mb4 on drush site-install": "web/modules/custom/lst-agldwg/patches/drush/drush/4810.patch.txt"
             },
             "drupal/backup_migrate": {
-                "Don't try to read directory entries as files during backup": "web/modules/custom/x1-custom-module-x1/patches/drupal/backup_migrate/bam_empty_dirs.patch.txt"
+                "Don't try to read directory entries as files during backup": "web/modules/custom/lst-agldwg/patches/drupal/backup_migrate/bam_empty_dirs.patch.txt"
             },
             "drupal/rules": {
-                "Integrate Typed Data Widgets": "web/modules/custom/x1-custom-module-x1/patches/drupal/rules/2471481-146.integrate-typed-data-widgets.patch.txt",
-                "Support upcasting entity IDs to full entity contexts": "web/modules/custom/x1-custom-module-x1/patches/drupal/rules/2800749-88.upcast.patch.txt"
+                "Integrate Typed Data Widgets": "web/modules/custom/lst-agldwg/patches/drupal/rules/2471481-146.integrate-typed-data-widgets.patch.txt",
+                "Support upcasting entity IDs to full entity contexts": "web/modules/custom/lst-agldwg/patches/drupal/rules/2800749-88.upcast.patch.txt"
             },
             "drupal/contact_storage": {
-                "Error while field storage definition": "web/modules/custom/x1-custom-module-x1/patches/drupal/contact_storage/3053497-8.patch.txt"
+                "Error while field storage definition": "web/modules/custom/lst-agldwg/patches/drupal/contact_storage/3053497-8.patch.txt"
             },
             "drupal/readonlymode": {
-                "Got fatal error when running this module: string, not array": "web/modules/custom/x1-custom-module-x1/patches/drupal/readonlymode/readonlymode-string_not_array-3115119-9.patch.txt"
+                "Got fatal error when running this module: string, not array": "web/modules/custom/lst-agldwg/patches/drupal/readonlymode/readonlymode-string_not_array-3115119-9.patch.txt"
             }
         }
     }

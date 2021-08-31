@@ -5,7 +5,7 @@ dependencies:
     - node
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: dcat_resource
 label: 'DCAT Resource'
 type: 'canonical_entities:node'

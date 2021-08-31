@@ -13,7 +13,7 @@ dependencies:
     - user
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: pending_requests
 label: 'Pending Requests'
 module: views

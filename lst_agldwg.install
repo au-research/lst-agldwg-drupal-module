@@ -2,15 +2,15 @@
 
 /**
  * @file
- * Install, update, and uninstall hook functions for X1.
+ * Install, update, and uninstall hook functions for lst_agldwg.
  *
- * @ingroup x1
+ * @ingroup lst_agldwg
  */
 
 /**
  * Implements hook_install().
  */
-function x1_install($is_syncing) {
+function lst_agldwg_install($is_syncing) {
     // For my info: this is invoked after the module's custom
     // configuration has been imported.
     if ($is_syncing) {
@@ -127,7 +127,7 @@ function x1_install($is_syncing) {
 /**
  * Implements hook_uninstall().
  */
-function x1_uninstall($is_syncing) {
+function lst_agldwg_uninstall($is_syncing) {
     if ($is_syncing) {
         // For sync, nothing to do.
     } else {

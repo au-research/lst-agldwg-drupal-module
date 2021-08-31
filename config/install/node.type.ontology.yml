@@ -5,7 +5,7 @@ dependencies:
     - menu_ui
   enforced:
     module:
-      - x1
+      - lst_agldwg
 third_party_settings:
   menu_ui:
     available_menus:

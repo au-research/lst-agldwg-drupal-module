@@ -7,7 +7,7 @@ dependencies:
     - ckeditor
   enforced:
     module:
-      - x1
+      - lst_agldwg
 format: full_html_email
 editor: ckeditor
 settings:

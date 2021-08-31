@@ -3,7 +3,7 @@ status: true
 dependencies:
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: daily_db_backup
 label: 'Daily DB backup'
 enabled: true
@@ -11,5 +11,5 @@ keep: 7
 period: 86400
 cron: null
 source_id: default_db
-destination_id: x1_backups
+destination_id: lst_backups
 settings_profile_id: null

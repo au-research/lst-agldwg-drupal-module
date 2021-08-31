@@ -3,7 +3,7 @@ status: true
 dependencies:
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: workflow
 label: Workflow
 target_entity_type_id: node

@@ -3,7 +3,7 @@ status: true
 dependencies:
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: weekly_files_backup
 label: 'Weekly files backup'
 enabled: true
@@ -11,5 +11,5 @@ keep: 7
 period: 604800
 cron: null
 source_id: entire_site
-destination_id: x1_backups
+destination_id: lst_backups
 settings_profile_id: null

@@ -6,7 +6,7 @@ dependencies:
     - taxonomy
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: registry_item_status_
 label: 'Registry item status '
 type: 'canonical_entities:taxonomy_term'

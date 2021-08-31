@@ -5,7 +5,7 @@ dependencies:
     - node
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: node.field_creator
 field_name: field_creator
 entity_type: node

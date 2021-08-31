@@ -7,7 +7,7 @@ dependencies:
     - user
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: node.field_reviewer
 field_name: field_reviewer
 entity_type: node

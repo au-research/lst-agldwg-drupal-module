@@ -5,7 +5,7 @@ dependencies:
     - node
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: page
 label: Page
 type: 'canonical_entities:node'

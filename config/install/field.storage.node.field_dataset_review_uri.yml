@@ -6,7 +6,7 @@ dependencies:
     - node
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: node.field_dataset_review_uri
 field_name: field_dataset_review_uri
 entity_type: node

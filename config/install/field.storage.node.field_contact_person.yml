@@ -6,7 +6,7 @@ dependencies:
     - user
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: node.field_contact_person
 field_name: field_contact_person
 entity_type: node

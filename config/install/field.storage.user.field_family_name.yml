@@ -5,7 +5,7 @@ dependencies:
     - user
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: user.field_family_name
 field_name: field_family_name
 entity_type: user

@@ -6,7 +6,7 @@ dependencies:
     - node
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: node.field_was_derived_from
 field_name: field_was_derived_from
 entity_type: node

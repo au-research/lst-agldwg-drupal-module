@@ -3,9 +3,9 @@ status: true
 dependencies:
   enforced:
     module:
-      - x1
-id: x1_backups
-label: 'X1 backups directory'
+      - lst_agldwg
+id: lst_backups
+label: 'LinkStitcher backups directory'
 type: Directory
 config:
   directory: /set/me/to/a/suitable/value

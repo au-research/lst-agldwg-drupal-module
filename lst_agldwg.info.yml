@@ -1,5 +1,5 @@
-name: X1 Module
-description: Node types for the X1 project.
+name: LinkStitcher AGLDWG
+description: Node types and other customizations for the LinkStitcher AGLDWG project.
 package: Custom
 
 type: module

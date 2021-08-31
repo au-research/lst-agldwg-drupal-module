@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\x1\Plugin\TypedDataFilter;
+namespace Drupal\lst_agldwg\Plugin\TypedDataFilter;
 
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\TypedData\DataDefinition;

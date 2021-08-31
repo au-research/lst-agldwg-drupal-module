@@ -5,7 +5,7 @@ dependencies:
     - editor
   enforced:
     module:
-      - x1
+      - lst_agldwg
 name: 'Full HTML email'
 format: full_html_email
 weight: 3

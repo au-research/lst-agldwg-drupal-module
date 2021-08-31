@@ -6,7 +6,7 @@ dependencies:
     - node
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: node.field_ror_identifier
 field_name: field_ror_identifier
 entity_type: node

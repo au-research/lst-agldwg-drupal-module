@@ -6,7 +6,7 @@ dependencies:
     - node
   enforced:
     module:
-      - x1
+      - lst_agldwg
 id: node.field_ontology_file
 field_name: field_ontology_file
 entity_type: node

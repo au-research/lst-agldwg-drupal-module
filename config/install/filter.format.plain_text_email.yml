@@ -3,7 +3,7 @@ status: true
 dependencies:
   enforced:
     module:
-      - x1
+      - lst_agldwg
 name: 'Plain text email'
 format: plain_text_email
 weight: 4
