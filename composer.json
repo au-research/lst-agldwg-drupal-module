@@ -28,6 +28,7 @@
         "drupal/contact_storage": "^1.1",
         "drupal/readonlymode": "^1.1",
         "drupal/token_filter": "^1.2",
+        "drupal/eme": "1.0.0-alpha10",
         "ardc/lst-agldwg-theme": ">=1.1",
         "ardc/lst-agldwg-block-content": ">=1.1"
     },
@@ -54,6 +55,9 @@
             },
             "drupal/readonlymode": {
                 "Got fatal error when running this module: string, not array": "web/modules/custom/lst-agldwg/patches/drupal/readonlymode/readonlymode-string_not_array-3115119-9.patch.txt"
+            },
+            "drupal/eme": {
+                "Optionally allow exporting all entity revisions, not just the default one and the default translations": "web/modules/custom/lst-agldwg/patches/drupal/eme/eme-alpha10-with-revisions-3.patch.txt"
             }
         }
     }

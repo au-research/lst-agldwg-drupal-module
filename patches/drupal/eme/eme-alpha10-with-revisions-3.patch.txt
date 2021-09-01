@@ -1,0 +1,113 @@
+diff --git a/src/Export/ExportPluginBase.php b/src/Export/ExportPluginBase.php
+index a1cc13b..5313302 100644
+--- a/src/Export/ExportPluginBase.php
++++ b/src/Export/ExportPluginBase.php
+@@ -136,6 +136,7 @@ abstract class ExportPluginBase extends PluginBase implements ExportPluginInterf
+   public function __construct(array $configuration, string $plugin_id, $plugin_definition, LockBackendInterface $lock, EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, FileSystemInterface $file_system, ModuleExtensionList $module_list, DiscoveryPluginManagerInterface $discovery_plugin_manager, MemoryCacheInterface $entity_memory_cache) {
+     $configuration += [
+       'types' => [],
++      'all-revisions' => ['node' => TRUE],
+       'module' => Eme::getModuleName(),
+       'name' => Eme::getModuleHumanName(),
+       'id-prefix' => Eme::getDefaultId(),
+@@ -259,7 +260,13 @@ abstract class ExportPluginBase extends PluginBase implements ExportPluginInterf
+ 
+       $context['results']['relations'][$eme_relation_id] = $context['results']['relations'][$eme_relation_id] ?? [];
+ 
+-      $entity = $this->entityTypeManager->getStorage($entity_type_id)->load($entity_id);
++      $all_revisions = $this->configuration['all-revisions'];
++      if (!empty($all_revisions[$entity_type_id])) {
++        $entity = $this->entityTypeManager->getStorage($entity_type_id)->loadRevision($entity_id);
++      }
++      else {
++        $entity = $this->entityTypeManager->getStorage($entity_type_id)->load($entity_id);
++      }
+       $related_entities = $this->getRelatedContentEntities($entity);
+ 
+       // Add discovered referenced entities to the export array.
+@@ -547,6 +554,7 @@ abstract class ExportPluginBase extends PluginBase implements ExportPluginInterf
+    *   List of content entity IDs.
+    */
+   protected function loadEntitiesByType($entity_type): array {
++    $all_revisions = $this->configuration['all-revisions'];
+     if (in_array($entity_type, Eme::getExcludedTypes(), TRUE)) {
+       return [];
+     }
+@@ -559,11 +567,21 @@ abstract class ExportPluginBase extends PluginBase implements ExportPluginInterf
+     $entity_storage = $this->entityTypeManager->getStorage($entity_type);
+     assert($entity_storage instanceof EntityStorageInterface);
+     // @todo Add real permission checks for this module.
+-    $entity_ids = $entity_storage->getQuery()
++    $query = $entity_storage->getQuery();
++    if (!empty($all_revisions[$entity_type])) {
++      $query = $query->allRevisions();
++    }
++    $entity_ids = $query
+       ->accessCheck(FALSE)
+       ->execute();
+ 
+-    $entity_eme_ids = self::getEmeIds($entity_storage->loadMultiple($entity_ids));
++    if (!empty($all_revisions[$entity_type])) {
++      $loaded_entities = $entity_storage->loadMultipleRevisions(array_keys($entity_ids));
++    }
++    else {
++      $loaded_entities = $entity_storage->loadMultiple($entity_ids);
++    }
++    $entity_eme_ids = self::getEmeIds($loaded_entities, $this->configuration['all-revisions']);
+     return array_combine($entity_eme_ids, $entity_eme_ids);
+   }
+ 
+@@ -596,7 +614,7 @@ abstract class ExportPluginBase extends PluginBase implements ExportPluginInterf
+     }
+ 
+     foreach ($related_entities as $type => $related_entities_per_type) {
+-      $unique_eme_ids = self::getEmeIds($related_entities_per_type);
++      $unique_eme_ids = self::getEmeIds($related_entities_per_type, $this->configuration['all-revisions']);
+       $related_entities[$type] = array_combine($unique_eme_ids, $unique_eme_ids);
+     }
+ 
+@@ -608,18 +626,20 @@ abstract class ExportPluginBase extends PluginBase implements ExportPluginInterf
+    *
+    * @param \Drupal\Core\Entity\EntityInterface[] $entities
+    *   The entities.
++   * @param array $all_revisions
++   *   The value of the configuration's 'all-revisions' parameter.
+    *
+    * @return string[]
+    *   The EME IDs.
+    */
+-  protected static function getEmeIds(array $entities): array {
+-    $entity_eme_ids = array_reduce($entities, function (array $carry, EntityInterface $entity) {
++  protected static function getEmeIds(array $entities, array $all_revisions): array {
++    $entity_eme_ids = array_reduce($entities, function (array $carry, EntityInterface $entity) use ($all_revisions) {
+       if (!$entity instanceof ContentEntityInterface) {
+         return $carry;
+       }
+       $id_parts = [
+         'type' => $entity->getEntityTypeId(),
+-        'id' => $entity->id(),
++        'id' => (!empty($all_revisions[$entity->getEntityTypeId()]) ? $entity->getRevisionId() : $entity->id()),
+       ];
+       if (
+         $entity->getEntityType()->getKey('bundle') &&
+diff --git a/src/Plugin/Eme/Export/JsonFiles.php b/src/Plugin/Eme/Export/JsonFiles.php
+index 7ff5648..5644a14 100644
+--- a/src/Plugin/Eme/Export/JsonFiles.php
++++ b/src/Plugin/Eme/Export/JsonFiles.php
+@@ -91,8 +91,14 @@ class JsonFiles extends ExportPluginBase {
+     ] = explode(':', $current);
+ 
+     // Get the entity.
+-    $entity = $this->entityTypeManager->getStorage($entity_type_id)
+-      ->load($entity_id);
++    if (!empty($this->configuration['all-revisions'][$entity_type_id])) {
++      $entity = $this->entityTypeManager->getStorage($entity_type_id)
++        ->loadRevision($entity_id);
++    }
++    else {
++      $entity = $this->entityTypeManager->getStorage($entity_type_id)
++        ->load($entity_id);
++    }
+     assert($entity instanceof ContentEntityInterface);
+     $bundle = $entity->getEntityType()
+       ->getKey('bundle') && $entity->getEntityType()->getBundleEntityType()
