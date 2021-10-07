@@ -33,12 +33,12 @@ function lst_agldwg_form_contact_message_feedback_form_alter(&$form,
 }
 
 /**
- * Implements hook_form_alter to support limiting allowed
- * reviewers to members of the Administrator and Control body roles,
- * and any existing value for the field.
- * It also increases the height of the select list to 10,
+ * Implements hook_form_alter for content types.
+ * Limit allowed reviewers to members of the Administrator and
+ * Control body roles, and any existing value for the field.
+ * Increase the height of the select list to 10,
  * so that users don't need to scroll to see all of the allowed values.
- * TODO: remove comment settings for non-admin users.
+ * Remove comment settings for non-administrator users.
  */
 function lst_agldwg_form_alter(&$form, $form_state, $form_id) {
     // \Drupal::logger('agldwg module')->notice('in form alter');
@@ -78,10 +78,15 @@ function lst_agldwg_form_alter(&$form, $form_state, $form_id) {
         // And while we're here, make the select list bigger, so that you
         // don't need to scroll to see all the options.
         $form['field_reviewer']['widget']['#size'] = 10;
-        // TODO: remove comment settings
-        //  $form['comment_settings']['#access'] =
-        //     user_access('...');
-
+    }
+    // Only modify forms that have a "field_workflow" field.
+    if (!empty($form['field_workflow'])) {
+        // If the current user is not an administrator,
+        // remove the comment settings.
+        if (!\Drupal::currentUser()->hasPermission(
+            'administer site configuration')) {
+            unset($form['field_workflow']);
+        }
     }
 }
 
