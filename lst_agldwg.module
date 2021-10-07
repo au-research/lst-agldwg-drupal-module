@@ -24,10 +24,85 @@ function lst_agldwg_mail_alter(&$message) {
  * on the contact form when a query parameter 'subject' is supplied.
  */
 function lst_agldwg_form_contact_message_feedback_form_alter(&$form,
-                                                     $form_state,
-                                                     $form_id) {
+                                                             $form_state,
+                                                             $form_id) {
     if (!empty($_GET['subject'])) {
         $form['subject']['widget'][0]['value']['#default_value'] =
             $_GET['subject'];
     }
+}
+
+/**
+ * Implements hook_form_alter to support limiting allowed
+ * reviewers to members of the Administrator and Control body roles,
+ * and any existing value for the field.
+ * It also increases the height of the select list to 10,
+ * so that users don't need to scroll to see all of the allowed values.
+ * TODO: remove comment settings for non-admin users.
+ */
+function lst_agldwg_form_alter(&$form, $form_state, $form_id) {
+    // \Drupal::logger('agldwg module')->notice('in form alter');
+    // Only modify forms that have a "field_reviewer" field.
+    if (!empty($form['field_reviewer'])) {
+        // The array of options (i.e., all users) is:
+        //   $form['field_reviewer']['widget']['#options']
+        //      =>
+        //        array (
+        //        0 => 'Anonymous',
+        //        1 => 'admin',
+        //        ...)
+        // The array of current values of the field is:
+        //   $form['field_reviewer']['widget']['#default_value']
+        //      =>
+        //        array (
+        //        0 => '6',
+        //        )
+        // The allowed users are those who are in the administrator
+        // and control body roles, _and_ those who are already set
+        // as reviewers of this node. (This allows for someone to continue
+        // to be a reviewer who _was_ in the control body, but is no longer.)
+        $allowed_users = lst_agldwg_get_admin_and_control_body_uids();
+        // Add in the current values:
+        if (!empty($form['field_reviewer']['widget']['#default_value'])) {
+            foreach ($form['field_reviewer']['widget']['#default_value']
+                     as $r) {
+                $allowed_users[$r] = $r;
+            }
+        }
+        $not_allowed_users = array_diff_key(
+            $form['field_reviewer']['widget']['#options'],
+            $allowed_users);
+        $form['field_reviewer']['widget']['#options'] =
+            array_diff($form['field_reviewer']['widget']['#options'],
+                       $not_allowed_users);
+        // And while we're here, make the select list bigger, so that you
+        // don't need to scroll to see all the options.
+        $form['field_reviewer']['widget']['#size'] = 10;
+        // TODO: remove comment settings
+        //  $form['comment_settings']['#access'] =
+        //     user_access('...');
+
+    }
+}
+
+/**
+ * Helper function to get the uids of all users who are members
+ * of either the Administrator or Control Body roles.
+ */
+function lst_agldwg_get_admin_and_control_body_uids() {
+    $query = \Drupal::entityTypeManager()->getStorage('user')->getQuery();
+    $uids = $query
+        ->condition('status', '1')
+        ->condition('roles', array('administrator', 'control_body'), 'IN')
+        ->execute();
+    return $uids;
+    // The return value looks like:
+    //   array (
+    //   1 => '1',
+    //   9 => '9',
+    //   10 => '10',
+    //   11 => '11',
+    //   34 => '34',
+    //   50 => '50',
+    //   )
 }
