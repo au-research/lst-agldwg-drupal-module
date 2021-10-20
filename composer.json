@@ -19,6 +19,7 @@
         "drupal/diff": "^1.0",
         "drupal/structure_sync": "^2.0",
         "drupal/environment_indicator": "^4.0",
+        "drupal/coi": "^3.0",
         "drush/drush": "^10.3",
         "drupal/mimemail": "^1.0",
         "drupal/typed_data": "^1.0",

@@ -12,6 +12,7 @@ dependencies:
   - field_permissions:field_permissions
   - diff:diff
   - environment_indicator:environment_indicator
+  - coi:coi
   - mimemail:mimemail
   - rules:rules
   - tr_rulez:tr_rulez
