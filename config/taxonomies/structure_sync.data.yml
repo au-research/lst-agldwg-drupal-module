@@ -10,6 +10,8 @@ taxonomies:
       weight: '0'
       parent: '0'
       uuid: 62894a33-4dc9-4544-8ddb-c9a99fb7709b
+      path: /taxonomy/term/1
+      alias: /reg-status/accepted
     -
       vid: registry_item_status
       tid: '2'
@@ -20,6 +22,8 @@ taxonomies:
       weight: '0'
       parent: '1'
       uuid: 8e4a56dd-be4d-47e6-8aed-b89d26c8c2a9
+      path: /taxonomy/term/2
+      alias: /reg-status/deprecated
     -
       vid: registry_item_status
       tid: '3'
@@ -30,6 +34,8 @@ taxonomies:
       weight: '0'
       parent: '2'
       uuid: 7347f795-294d-4b1f-bb95-5b2a3013dca7
+      path: /taxonomy/term/3
+      alias: /reg-status/retired
     -
       vid: registry_item_status
       tid: '4'
@@ -40,6 +46,8 @@ taxonomies:
       weight: '1'
       parent: '2'
       uuid: d2d8bc98-f709-49b7-8c4e-7953e1fca0d6
+      path: /taxonomy/term/4
+      alias: /reg-status/superseded
     -
       vid: registry_item_status
       tid: '5'
@@ -50,6 +58,8 @@ taxonomies:
       weight: '1'
       parent: '1'
       uuid: 10a6300e-d8df-474d-86c6-53ec39a80cf8
+      path: /taxonomy/term/5
+      alias: /reg-status/valid
     -
       vid: registry_item_status
       tid: '6'
@@ -60,6 +70,8 @@ taxonomies:
       weight: '0'
       parent: '5'
       uuid: e2487d5b-c085-4c36-8b2a-4530c1a026fa
+      path: /taxonomy/term/6
+      alias: /reg-status/experimental
     -
       vid: registry_item_status
       tid: '7'
@@ -70,6 +82,8 @@ taxonomies:
       weight: '1'
       parent: '5'
       uuid: a511d578-565e-40bd-8f33-df8f06b15c7f
+      path: /taxonomy/term/7
+      alias: /reg-status/stable
     -
       vid: registry_item_status
       tid: '8'
@@ -80,6 +94,8 @@ taxonomies:
       weight: '8'
       parent: '0'
       uuid: 34908ea1-963b-4698-9930-cb155bf724f7
+      path: /taxonomy/term/8
+      alias: /reg-status/notAccepted
     -
       vid: registry_item_status
       tid: '9'
@@ -90,6 +106,8 @@ taxonomies:
       weight: '0'
       parent: '8'
       uuid: 7d3cdf2b-0673-4f9c-8d08-4162f89082ba
+      path: /taxonomy/term/9
+      alias: /reg-status/invalid
     -
       vid: registry_item_status
       tid: '10'
@@ -100,6 +118,8 @@ taxonomies:
       weight: '1'
       parent: '8'
       uuid: 2c862b5e-d069-4c67-aa59-2125e8951681
+      path: /taxonomy/term/10
+      alias: /reg-status/reserved
     -
       vid: registry_item_status
       tid: '11'
@@ -110,4 +130,6 @@ taxonomies:
       weight: '2'
       parent: '8'
       uuid: 0ba03a46-b3af-4721-af0c-7e59b46881e7
+      path: /taxonomy/term/11
+      alias: /reg-status/submitted
   tags: {  }

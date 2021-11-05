@@ -1,0 +1,90 @@
+diff --git a/src/Controller/TaxonomiesController.php b/src/Controller/TaxonomiesController.php
+old mode 100755
+new mode 100644
+index 910e6d1..f642379
+--- a/src/Controller/TaxonomiesController.php
++++ b/src/Controller/TaxonomiesController.php
+@@ -3,6 +3,8 @@
+ namespace Drupal\structure_sync\Controller;
+ 
+ use Drupal\Core\Controller\ControllerBase;
++use Drupal\path_alias\AliasManager;
++use Drupal\path_alias\Entity\PathAlias;
+ use Drupal\structure_sync\StructureSyncHelper;
+ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\taxonomy\Entity\Term;
+@@ -137,7 +139,18 @@ class TaxonomiesController extends ControllerBase {
+           }
+         }
+ 
++        // Export paths and aliasses of taxonomy terms.
++        /**
++         * @var AliasManager $aliasManager
++         */
++        $aliasManager = \Drupal::service('path_alias.manager');
++        $path = '/taxonomy/term/'.$entity->id();
++        $alias = $aliasManager->getAliasByPath($path);
++        $entity_fields['path'] = $path;
++        $entity_fields['alias'] = $alias;
++
+         $taxonomies[] = $entity_properties + $entity_fields;
++
+       }
+ 
+       // Save the retrieved taxonomies to the config.
+@@ -418,6 +431,19 @@ class TaxonomiesController extends ControllerBase {
+               ];
+ 
+               Term::create($entity_properties + $entity_fields)->save();
++
++              // Create path_alias.
++              /** @var array $path_alias */
++              $path_alias = \Drupal::entityTypeManager()->getStorage('path_alias')->create(
++                [
++                  'path' => $taxonomy['path'],
++                  'langcode' => $taxonomy['langcode'],
++                  'alias' => $taxonomy['alias'],
++                  'status' => 1
++                ]
++              );
++              $path_alias->save();
++
+             }
+             else {
+               foreach ($entities as $entity) {
+@@ -439,6 +465,22 @@ class TaxonomiesController extends ControllerBase {
+                     }
+ 
+                     $term->save();
++
++                    // Get path alias entity for update.
++                    /** @var array $path_alias */
++                    $path_alias = \Drupal::entityTypeManager()->getStorage('path_alias')->loadByProperties(
++                      [
++                        'path' => $taxonomy['path'],
++                        'langcode' => $taxonomy['langcode']
++                      ]
++                    );
++                    if (empty($path_alias) === FALSE) {
++                      /** @var PathAlias $alias */
++                      foreach ($path_alias as $alias) {
++                        $alias->setAlias($taxonomy['alias']);
++                        $alias->save();
++                      }
++                    }
+                   }
+                 }
+               }
+diff --git a/structure_sync.info.yml b/structure_sync.info.yml
+old mode 100755
+new mode 100644
+index b1a6b79..571d250
+--- a/structure_sync.info.yml
++++ b/structure_sync.info.yml
+@@ -7,5 +7,6 @@ dependencies:
+   - drupal:taxonomy
+   - drupal:menu_link_content
+   - drupal:block
++  - drupal:path_alias
+ package: Structure
+ type: module
