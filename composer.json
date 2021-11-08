@@ -60,7 +60,7 @@
                 "Optionally allow exporting all entity revisions, not just the default one and the default translations": "web/modules/custom/lst-agldwg/patches/drupal/eme/eme-alpha10-with-revisions-3.patch.txt"
             },
             "drupal/structure_sync": {
-                "URL Alias of Taxonomy term is not exported": "web/modules/custom/lst-agldwg/patches/drupal/structure_sync/structure_sync-export-import-taxonomy-term-aliasses-3074288-14.patch"
+                "URL Alias of Taxonomy term is not exported": "web/modules/custom/lst-agldwg/patches/drupal/structure_sync/structure_sync-export-import-taxonomy-terms-force-mode.patch"
             }
         }
     }

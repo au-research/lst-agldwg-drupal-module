@@ -1,7 +1,7 @@
 diff --git a/src/Controller/TaxonomiesController.php b/src/Controller/TaxonomiesController.php
 old mode 100755
 new mode 100644
-index 910e6d1..f642379
+index 910e6d1..b04d456
 --- a/src/Controller/TaxonomiesController.php
 +++ b/src/Controller/TaxonomiesController.php
 @@ -3,6 +3,8 @@
@@ -75,6 +75,33 @@ index 910e6d1..f642379
                    }
                  }
                }
+@@ -705,6 +747,7 @@ class TaxonomiesController extends ControllerBase {
+ 
+               $entity_properties = [
+                 'vid' => $vid,
++                'tid' => $taxonomy['tid'],
+                 'langcode' => $taxonomy['langcode'],
+                 'name' => $taxonomy['name'],
+                 'description' => [
+@@ -761,6 +804,18 @@ class TaxonomiesController extends ControllerBase {
+ 
+               Term::create($entity_properties + $entity_fields)->save();
+ 
++              // Create path_alias.
++              /** @var array $path_alias */
++              $path_alias = \Drupal::entityTypeManager()->getStorage('path_alias')->create(
++                [
++                  'path' => $taxonomy['path'],
++                  'langcode' => $taxonomy['langcode'],
++                  'alias' => $taxonomy['alias'],
++                  'status' => 1
++                ]
++              );
++              $path_alias->save();
++
+               $query = StructureSyncHelper::getEntityQuery('taxonomy_term');
+               $query->condition('vid', $vid);
+               $query->condition('name', $taxonomy['name']);
 diff --git a/structure_sync.info.yml b/structure_sync.info.yml
 old mode 100755
 new mode 100644
