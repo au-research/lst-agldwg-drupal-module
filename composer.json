@@ -47,8 +47,7 @@
                 "Don't try to read directory entries as files during backup": "web/modules/custom/lst-agldwg/patches/drupal/backup_migrate/bam_empty_dirs.patch.txt"
             },
             "drupal/rules": {
-                "Integrate Typed Data Widgets": "web/modules/custom/lst-agldwg/patches/drupal/rules/2471481-146.integrate-typed-data-widgets.patch.txt",
-                "Support upcasting entity IDs to full entity contexts": "web/modules/custom/lst-agldwg/patches/drupal/rules/2800749-88.upcast.patch.txt"
+                "Integrate Typed Data Widgets": "web/modules/custom/lst-agldwg/patches/drupal/rules/2471481-163.integrate-typed-data-widgets.patch.txt"
             },
             "drupal/contact_storage": {
                 "Error while field storage definition": "web/modules/custom/lst-agldwg/patches/drupal/contact_storage/3053497-8.patch.txt"

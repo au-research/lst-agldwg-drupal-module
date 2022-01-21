@@ -242,7 +242,7 @@ index c9f41bc6..7e7b135a 100644
 +
  }
 diff --git a/src/Context/Form/ContextFormTrait.php b/src/Context/Form/ContextFormTrait.php
-index e8b19768..a74be64e 100644
+index 2b24f439..ed386d3e 100644
 --- a/src/Context/Form/ContextFormTrait.php
 +++ b/src/Context/Form/ContextFormTrait.php
 @@ -6,25 +6,20 @@ use Drupal\Core\Form\FormStateInterface;
@@ -462,8 +462,8 @@ index e8b19768..a74be64e 100644
 -            //
              // Additionally, we want to remove leading and trailing whitespace
              // from each line, and discard any empty lines.
--            $values = preg_split('/\s*\R\s*/', $value['setting'], NULL, PREG_SPLIT_NO_EMPTY);
-+            $values = preg_split('/\s*\R\s*/', $input, NULL, PREG_SPLIT_NO_EMPTY);
+-            $values = preg_split('/\s*\R\s*/', $value['setting'], 0, PREG_SPLIT_NO_EMPTY);
++            $values = preg_split('/\s*\R\s*/', $input, 0, PREG_SPLIT_NO_EMPTY);
              $context_config->setValue($context_name, $values);
            }
            else {
@@ -509,11 +509,50 @@ index 18108ff2..54b4d01c 100644
  
      // Rename provided variables, if any.
      if ($provided_variables = $form_state->getValue('provides')) {
+diff --git a/src/Plugin/Condition/PathAliasExists.php b/src/Plugin/Condition/PathAliasExists.php
+index 213c6112..10beb50a 100644
+--- a/src/Plugin/Condition/PathAliasExists.php
++++ b/src/Plugin/Condition/PathAliasExists.php
+@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+  *       label = @Translation("Path alias"),
+  *       description = @Translation("Specify the path alias to check for. For example, '/about' for an about page.")
+  *     ),
+- *     "language" = @ContextDefinition("language",
++ *     "language" = @ContextDefinition("entity:configurable_language",
+  *       label = @Translation("Language"),
+  *       description = @Translation("If specified, the language for which the URL alias applies."),
+  *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
+diff --git a/src/Plugin/Condition/PathHasAlias.php b/src/Plugin/Condition/PathHasAlias.php
+index 3ca95b0c..f49dadff 100644
+--- a/src/Plugin/Condition/PathHasAlias.php
++++ b/src/Plugin/Condition/PathHasAlias.php
+@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+  *       label = @Translation("Path"),
+  *       description = @Translation("Specifies the existing path you wish to check. For example, '/node/28' or '/forum/1'.")
+  *     ),
+- *     "language" = @ContextDefinition("language",
++ *     "language" = @ContextDefinition("entity:configurable_language",
+  *       label = @Translation("Language"),
+  *       description = @Translation("If specified, the language for which the URL alias applies."),
+  *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
+diff --git a/src/Plugin/RulesAction/PathAliasCreate.php b/src/Plugin/RulesAction/PathAliasCreate.php
+index 8af883c3..750538ae 100644
+--- a/src/Plugin/RulesAction/PathAliasCreate.php
++++ b/src/Plugin/RulesAction/PathAliasCreate.php
+@@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+  *       label = @Translation("Path alias"),
+  *       description = @Translation("Specify an alternative path by which this data can be accessed. For example, '/about' for an about page. Use an absolute path and do not add a trailing slash.")
+  *     ),
+- *     "language" = @ContextDefinition("language",
++ *     "language" = @ContextDefinition("entity:configurable_language",
+  *       label = @Translation("Language"),
+  *       description = @Translation("If specified, the language for which the path alias applies."),
+  *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
 diff --git a/src/Plugin/RulesAction/SystemEmailToUsersOfRole.php b/src/Plugin/RulesAction/SystemEmailToUsersOfRole.php
-index d19fd3a3..deec39bf 100644
+index 2c92f5d7..50e78f0b 100644
 --- a/src/Plugin/RulesAction/SystemEmailToUsersOfRole.php
 +++ b/src/Plugin/RulesAction/SystemEmailToUsersOfRole.php
-@@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+@@ -30,7 +30,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
   *       label = @Translation("Subject"),
   *       description = @Translation("The email's subject.")
   *     ),
@@ -522,60 +561,58 @@ index d19fd3a3..deec39bf 100644
   *       label = @Translation("Message"),
   *       description = @Translation("The email's message body. Drupal will by default remove all HTML tags. If you want to use HTML you must override this behavior by installing a contributed module such as Mime Mail.")
   *     ),
+@@ -40,7 +40,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+  *       default_value = NULL,
+  *       required = FALSE
+  *     ),
+- *     "language" = @ContextDefinition("language",
++ *     "language" = @ContextDefinition("entity:configurable_language",
+  *       label = @Translation("Language"),
+  *       description = @Translation("If specified, the language object (not language code) used for getting the email message and subject."),
+  *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
 diff --git a/src/Plugin/RulesAction/SystemSendEmail.php b/src/Plugin/RulesAction/SystemSendEmail.php
-index 5fff718b..602917f4 100644
+index 677f36bc..a91b30ca 100644
 --- a/src/Plugin/RulesAction/SystemSendEmail.php
 +++ b/src/Plugin/RulesAction/SystemSendEmail.php
-@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
-  *       label = @Translation("Subject"),
-  *       description = @Translation("The email's subject.")
-  *     ),
-- *     "message" = @ContextDefinition("string",
-+ *     "message" = @ContextDefinition("text",
-  *       label = @Translation("Message"),
-  *       description = @Translation("The email's message body. Drupal will by default remove all HTML tags. If you want to use HTML you must override this behavior by installing a contributed module such as Mime Mail.")
-  *     ),
-@@ -45,7 +45,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
-  *   }
-  * )
+@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+ /**
+  * Provides "Send email" rules action.
   *
 - * @todo Define that message Context should be textarea comparing with textfield Subject
   * @todo Add access callback information from Drupal 7.
-  */
- class SystemSendEmail extends RulesActionBase implements ContainerFactoryPluginInterface {
+  *
+  * @RulesAction(
+@@ -29,7 +28,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+  *       label = @Translation("Subject"),
+  *       description = @Translation("The email's subject.")
+  *     ),
+- *     "message" = @ContextDefinition("string",
++ *     "message" = @ContextDefinition("text",
+  *       label = @Translation("Message"),
+  *       description = @Translation("The email's message body. Drupal will by default remove all HTML tags. If you want to use HTML you must override this behavior by installing a contributed module such as Mime Mail.")
+  *     ),
+@@ -39,7 +38,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+  *       default_value = NULL,
+  *       required = FALSE
+  *     ),
+- *     "language" = @ContextDefinition("language",
++ *     "language" = @ContextDefinition("entity:configurable_language",
+  *       label = @Translation("Language"),
+  *       description = @Translation("If specified, the language used for getting the email message and subject."),
+  *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
 diff --git a/tests/src/Functional/ActionsFormTest.php b/tests/src/Functional/ActionsFormTest.php
-index 79f47f00..bb0afb70 100644
+index 6cb1c66b..68dc042a 100644
 --- a/tests/src/Functional/ActionsFormTest.php
 +++ b/tests/src/Functional/ActionsFormTest.php
-@@ -53,6 +53,9 @@ class ActionsFormTest extends RulesBrowserTestBase {
-       'administer site configuration',
-     ]);
-     $this->drupalLogin($this->account);
-+
-+    // Create a named role for use in conditions and actions.
-+    $this->createRole(['administer nodes'], 'test-editor', 'Test Editor');
-   }
- 
-   /**
-@@ -64,7 +67,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
-    *
-    * @dataProvider dataActionsFormWidgets
-    */
--  public function testActionsFormWidgets($id, $values = [], $widgets = [], $selectors = []) {
-+  public function testActionsFormWidgets($id, $required = [], $defaulted = [], $widgets = [], $selectors = [], $provides = []) {
-     $expressionManager = $this->container->get('plugin.manager.rules_expression');
-     $storage = $this->container->get('entity_type.manager')->getStorage('rules_reaction_rule');
- 
-@@ -77,7 +80,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
-     $action = $expressionManager->createAction($id);
-     $rule->addExpressionObject($action);
-     // Save the configuration.
--    $expr_id = 'test_action_' . str_replace(':', '_', $id);
-+    $expr_id = 'action_' . str_replace(':', '_', $id);
-     $config_entity = $storage->create([
-       'id' => $expr_id,
-       'expression' => $rule->getConfiguration(),
-@@ -90,8 +93,15 @@ class ActionsFormTest extends RulesBrowserTestBase {
+@@ -15,6 +15,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
+   protected static $modules = [
+     'node',
+     'ban',
++    'config_translation',
+     'path_alias',
+     'rules',
+     'typed_data',
+@@ -93,6 +94,13 @@ class ActionsFormTest extends RulesBrowserTestBase {
      $assert->statusCodeEquals(200);
      $assert->pageTextContains('Edit ' . $action->getLabel());
  
@@ -587,379 +624,52 @@ index 79f47f00..bb0afb70 100644
 +    }
 +
      // If any field values have been specified then fill in the form and save.
--    if (!empty($values)) {
-+    if (!empty($required) || !empty($defaulted)) {
+     if (!empty($required) || !empty($defaulted)) {
  
-       // Switch to data selector if required by the test settings.
-       if (!empty($selectors)) {
-@@ -102,9 +112,16 @@ class ActionsFormTest extends RulesBrowserTestBase {
+@@ -113,7 +121,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
+         $assert->pageTextContains('field is required');
+         // Fill each required field with the value provided.
+         foreach ($required as $name => $value) {
+-          $this->fillField('edit-context-definitions-' . $name . '-setting', $value);
++          $this->fillField('edit-context-definitions-' . $name . '-value', $value);
          }
        }
  
--      // Fill each given field with the value provided.
--      foreach ($values as $name => $value) {
--        $this->fillField('edit-context-definitions-' . $name . '-setting', $value);
-+      // Try to save the form before entering the required values.
-+      if (!empty($required)) {
-+        $this->pressButton('Save');
-+        // Check that the form has not been saved.
-+        $assert->pageTextContains('Error message');
-+        $assert->pageTextContains('field is required');
-+        // Fill each required field with the value provided.
-+        foreach ($required as $name => $value) {
+@@ -131,7 +139,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
+       if (!empty($defaulted) || !empty($provides)) {
+         // Fill each previously defaulted field with the value provided.
+         foreach ($defaulted as $name => $value) {
+-          $this->fillField('edit-context-definitions-' . $name . '-setting', $value);
 +          $this->fillField('edit-context-definitions-' . $name . '-value', $value);
-+        }
-       }
- 
-       // Check that the action can be saved.
-@@ -118,6 +135,16 @@ class ActionsFormTest extends RulesBrowserTestBase {
- 
-       // Check that re-edit and re-save works OK.
-       $this->clickLink('Edit');
-+      if (!empty($defaulted) || !empty($provides)) {
-+        // Fill each previously defaulted field with the value provided.
-+        foreach ($defaulted as $name => $value) {
-+          $this->fillField('edit-context-definitions-' . $name . '-value', $value);
-+        }
-+        foreach ($provides as $name => $value) {
-+          $this->fillField('edit-provides-' . $name . '-name', $value);
-+        }
-+      }
-+
-       $this->pressButton('Save');
-       $assert->pageTextNotContains('Error message');
-       $assert->addressMatches('#admin/config/workflow/rules/reactions/edit/' . $expr_id . '(\?uuid=' . $action->getUuid() . '|)$#');
-@@ -136,47 +163,63 @@ class ActionsFormTest extends RulesBrowserTestBase {
-    *   The test data array. The top level keys are free text but should be short
-    *   and relate to the test case. The values are ordered arrays of test case
-    *   data with elements that must appear in the following order:
--   *   - Machine name of the condition being tested.
--   *   - (optional) Values to enter on the Context form. This is an associative
-+   *   - Machine name of the action being tested.
-+   *   - (optional) Required values to enter on the Context form. This is an
-+   *     associative array with keys equal to the field names and values equal
-+   *     to the required field values.
-+   *   - (optional) Values for fields that have defaults. This is an associative
-    *     array with keys equal to the field names and values equal to the field
--   *     values.
-+   *     values. These are used on the second edit, to alter the fields that
-+   *     have been saved with their default value.
-    *   - (optional) Widget types we expect to see on the Context form. This is
-    *     an associative array with keys equal to the field names as above, and
-    *     values equal to expected widget type.
-    *   - (optional) Names of fields for which the selector/direct input button
-    *     needs pressing to 'data selection' before the field value is entered.
-+   *   - (optional) Provides values. This is an associative array with keys
-+   *     equal to the field names and values equal to values to set.
-    */
-   public function dataActionsFormWidgets() {
-     // Instead of directly returning the full set of test data, create variable
-     // $data to hold it. This allows for manipulation before the final return.
-     $data = [
-+      // Data.
-       'Data calculate value' => [
-         // Machine name.
-         'rules_data_calculate_value',
--        // Values.
-+        // Required values.
-         [
-           'input-1' => '3',
-           'operator' => '*',
-           'input-2' => '4',
-         ],
-+        // Defaulted values.
-+        [],
-         // Widgets.
-         [
-           'input-1' => 'text-input',
-           'operator' => 'text-input',
-           'input-2' => 'text-input',
-         ],
-+        // Selectors.
-+        [],
-+        // Provides.
-+        ['result' => 'new_named_variable'],
-       ],
-       'Data convert' => [
-         'rules_data_convert',
-         ['value' => 'node.uid', 'target-type' => 'string'],
-+        ['rounding-behavior' => '?'],
-       ],
-       'List item add' => [
-         'rules_list_item_add',
-         [
-           'list' => 'node.uid.entity.roles',
-           'item' => '1',
-+        ],
-+        [
-           'unique' => TRUE,
--          'position' => 'start',
-+          'position' => 'validated? start',
-         ],
-       ],
-       'List item remove' => [
-@@ -185,26 +228,25 @@ class ActionsFormTest extends RulesBrowserTestBase {
-       ],
-       'Data set - direct' => [
-         'rules_data_set',
--        ['data' => 'node.title', 'value' => 'abc'],
-+        ['data' => 'node.title'],
-+        ['value' => 'abc'],
-       ],
-       'Data set - selector' => [
--        // Machine name.
-         'rules_data_set',
--        // Values.
--        ['data' => 'node.title', 'value' => '@user.current_user_context:current_user.name.value'],
--        // Widgets.
-+        [
-+          'data' => 'node.title',
-+          'value' => '@user.current_user_context:current_user.name.value',
-+        ],
-+        [],
-         [],
--        // Selectors.
-         ['value'],
-       ],
--      'Entity create node' => [
--        'rules_entity_create:node',
--        ['type' => 'article', 'title' => 'abc'],
--      ],
--      'Entity create user' => [
--        'rules_entity_create:user',
--        ['name' => 'fred'],
-+      'Variable add' => [
-+        'rules_variable_add',
-+        ['type' => 'integer', 'value' => 'node.nid'],
-       ],
-+
-+      // Entity.
-       'Entity delete' => [
-         'rules_entity_delete',
-         ['entity' => 'node'],
-@@ -212,6 +254,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
-       'Entity fetch by field - selector' => [
-         'rules_entity_fetch_by_field',
-         ['type' => 'node', 'field-name' => 'abc', 'field-value' => 'node.uid'],
-+        ['limit' => 5],
-         [],
-         ['field-value'],
-       ],
-@@ -219,13 +262,16 @@ class ActionsFormTest extends RulesBrowserTestBase {
-         'rules_entity_fetch_by_id',
-         ['type' => 'node', 'entity-id' => 123],
-       ],
--      'Entity path alias create' => [
--        'rules_entity_path_alias_create:entity:node',
--        ['entity' => 'node', 'alias' => 'abc'],
--      ],
-       'Entity save' => [
-         'rules_entity_save',
--        ['entity' => 'node', 'immediate' => TRUE],
-+        ['entity' => 'node'],
-+        ['immediate' => TRUE],
-+      ],
-+
-+      // Content.
-+      'Entity create node' => [
-+        'rules_entity_create:node',
-+        ['type' => 'article', 'title' => 'abc'],
-       ],
-       'Node make sticky' => [
-         'rules_node_make_sticky',
-@@ -251,9 +297,16 @@ class ActionsFormTest extends RulesBrowserTestBase {
-         'rules_node_unpromote',
-         ['node' => 'node'],
-       ],
-+
-+      // Path.
-       'Path alias create' => [
-         'rules_path_alias_create',
-         ['source' => '/node/1', 'alias' => 'abc'],
-+        ['language' => '?'],
-+      ],
-+      'Entity path alias create' => [
-+        'rules_entity_path_alias_create:entity:node',
-+        ['entity' => 'node', 'alias' => 'abc'],
-       ],
-       'Path alias delete by alias' => [
-         'rules_path_alias_delete_by_alias',
-@@ -263,22 +316,26 @@ class ActionsFormTest extends RulesBrowserTestBase {
-         'rules_path_alias_delete_by_path',
-         ['path' => '/node/1'],
-       ],
-+
-+      // System.
-       'Page redirect' => [
-         'rules_page_redirect',
-         ['url' => '/node/1'],
-       ],
--      'Send account email' => [
--        'rules_send_account_email',
--        ['user' => 'node.uid', 'email-type' => 'abc'],
--      ],
--      'Email to all users of role' => [
-+      'Email to users of role' => [
-         'rules_email_to_users_of_role',
--        ['roles' => 'editor', 'subject' => 'Hello', 'message' => 'Some text'],
-+        [
-+          'roles' => 'test-editor',
-+          'subject' => 'Hello',
-+          'message' => "Some text\nLine two",
-+        ],
-+        ['reply' => 'test@example.com', 'language' => '?'],
-         ['message' => 'textarea'],
-       ],
-       'System message' => [
-         'rules_system_message',
-         ['message' => 'Some text'],
-+        ['type' => 'warning', 'repeat' => 0],
-       ],
-       'Send email - direct input' => [
-         'rules_send_email',
-@@ -287,6 +344,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
-           'subject' => 'Some testing subject',
-           'message' => 'Test with direct input of recipients',
-         ],
-+        ['reply' => 'test@example.com', 'language' => '?'],
-         ['message' => 'textarea'],
-       ],
-       'Send email - data selector for address' => [
-@@ -296,53 +354,92 @@ class ActionsFormTest extends RulesBrowserTestBase {
-           'subject' => 'Some testing subject',
-           'message' => 'Test with selector input of node author',
-         ],
-+        ['reply' => 'test@example.com', 'language' => '?'],
-         ['message' => 'textarea'],
-         ['to'],
-       ],
-+
-+      // User.
-+      'Entity create user' => [
-+        'rules_entity_create:user',
-+        // The name should be required, but can save with blank name.
-+        // @todo fix this. Then move 'name' into the required array.
-+        [],
-+        ['name' => 'fred'],
-+      ],
-+      'Send account email' => [
-+        'rules_send_account_email',
-+        ['user' => 'node.uid', 'email-type' => 'abc'],
-+      ],
-       'User block' => [
-         'rules_user_block',
-         ['user' => '@user.current_user_context:current_user'],
-         [],
-+        [],
-         ['user'],
-       ],
-       'User role add' => [
-         'rules_user_role_add',
--        ['user' => '@user', 'roles' => 'Editor'],
-+        [
-+          'user' => '@user.current_user_context:current_user',
-+          'roles' => 'test-editor',
-+        ],
-+        [],
-+        [],
-+        ['user'],
-       ],
-       'User role remove' => [
-         'rules_user_role_remove',
--        ['user' => '@user', 'roles' => 'Editor'],
-+        [
-+          'user' => '@user.current_user_context:current_user',
-+          'roles' => 'test-editor',
-+        ],
-+        [],
-+        [],
-+        ['user'],
-       ],
-       'Unblock user' => [
-         'rules_user_unblock',
--        ['user' => '@user'],
--      ],
--      'Variable add' => [
--        'rules_variable_add',
--        ['type' => 'integer', 'value' => 'node.nid'],
-+        ['user' => '@user.current_user_context:current_user'],
-+        [],
-+        [],
-+        ['user'],
-       ],
-+
-+      // Ban.
-       'Ban IP - empty' => [
-         'rules_ban_ip',
-+        [],
-         ['ip' => ''],
-       ],
-       'Ban IP - value' => [
-         'rules_ban_ip',
-+        [],
-         ['ip' => '192.0.2.1'],
-       ],
-       'Unban IP' => [
-         'rules_unban_ip',
-+        [],
-         ['ip' => '192.0.2.1'],
+         }
+         foreach ($provides as $name => $value) {
+           $this->fillField('edit-provides-' . $name . '-name', $value);
+@@ -420,6 +428,12 @@ class ActionsFormTest extends RulesBrowserTestBase {
        ],
      ];
-+
-     // Selecting the 'to' email address using data selector will not work until
-     // single data selector values with multiple = True are converted to arrays.
-+    // Error "Expected a list data type ... but got a email data type instead".
-     // @see https://www.drupal.org/project/rules/issues/2723259
-     // @todo Delete this unset() when the above issue is fixed.
-     unset($data['Send email - data selector for address']);
  
 +    // Two list actions fail with "Cannot set a list with a non-array value".
 +    // These run OK without the widget integration.
 +    // @todo Needs investigation.
-+    unset($data['List item add']);
-+    unset($data['List item remove']);
++    unset($data['3. List item add']);
++    unset($data['4. List item remove']);
 +
-     // Use unset $data['The key to remove']; to remove a temporarily unwanted
--    // item, use return [$data['The key to test']]; to selectively test just one
--    // item, or have return $data; to test everything.
-+    // item, use return [$data['Key to test'], $data['Another']]; to selectively
-+    // test some items, or use return $data; to test everything.
-     return $data;
-   }
- 
+     // Selecting the 'to' email address using data selector will not work until
+     // single data selector values with multiple = True are converted to arrays.
+     // Error "Expected a list data type ... but got a email data type instead".
 diff --git a/tests/src/Functional/ConditionsFormTest.php b/tests/src/Functional/ConditionsFormTest.php
-index 1fee608a..61ea522a 100644
+index ab9de167..27116822 100644
 --- a/tests/src/Functional/ConditionsFormTest.php
 +++ b/tests/src/Functional/ConditionsFormTest.php
-@@ -53,6 +53,9 @@ class ConditionsFormTest extends RulesBrowserTestBase {
-       'administer site configuration',
-     ]);
-     $this->drupalLogin($this->account);
-+
-+    // Create a named role for use in conditions and actions.
-+    $this->createRole(['administer nodes'], 'test-editor', 'Test Editor');
-   }
- 
-   /**
-@@ -64,7 +67,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
-    *
-    * @dataProvider dataConditionsFormWidgets
-    */
--  public function testConditionsFormWidgets($id, $values = [], $widgets = [], $selectors = []) {
-+  public function testConditionsFormWidgets($id, $required = [], $defaulted = [], $widgets = [], $selectors = []) {
-     $expressionManager = $this->container->get('plugin.manager.rules_expression');
-     $storage = $this->container->get('entity_type.manager')->getStorage('rules_reaction_rule');
- 
-@@ -77,7 +80,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
-     $condition = $expressionManager->createCondition($id);
-     $rule->addExpressionObject($condition);
-     // Save the configuration.
--    $expr_id = 'test_condition_' . $id;
-+    $expr_id = 'condition_' . str_replace(':', '_', $id);
-     $config_entity = $storage->create([
-       'id' => $expr_id,
-       'expression' => $rule->getConfiguration(),
-@@ -90,8 +93,15 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+@@ -15,6 +15,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+   protected static $modules = [
+     'node',
+     'ban',
++    'config_translation',
+     'path_alias',
+     'rules',
+     'typed_data',
+@@ -93,6 +94,13 @@ class ConditionsFormTest extends RulesBrowserTestBase {
      $assert->statusCodeEquals(200);
      $assert->pageTextContains('Edit ' . $condition->getLabel());
  
@@ -971,214 +681,44 @@ index 1fee608a..61ea522a 100644
 +    }
 +
      // If any field values have been specified then fill in the form and save.
--    if (!empty($values)) {
-+    if (!empty($required) || !empty($defaulted)) {
+     if (!empty($required) || !empty($defaulted)) {
  
-       // Switch to data selector where required.
-       if (!empty($selectors)) {
-@@ -102,9 +112,16 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+@@ -113,7 +121,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+         $assert->pageTextContains('field is required');
+         // Fill each required field with the value provided.
+         foreach ($required as $name => $value) {
+-          $this->fillField('edit-context-definitions-' . $name . '-setting', $value);
++          $this->fillField('edit-context-definitions-' . $name . '-value', $value);
          }
        }
  
--      // Fill each given field with the value provided.
--      foreach ($values as $name => $value) {
--        $this->fillField('edit-context-definitions-' . $name . '-setting', $value);
-+      // Try to save the form before entering the required values.
-+      if (!empty($required)) {
-+        $this->pressButton('Save');
-+        // Check that the form has not been saved.
-+        $assert->pageTextContains('Error message');
-+        $assert->pageTextContains('field is required');
-+        // Fill each required field with the value provided.
-+        foreach ($required as $name => $value) {
+@@ -131,7 +139,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+       if (!empty($defaulted)) {
+         // Fill each previously defaulted field with the value provided.
+         foreach ($defaulted as $name => $value) {
+-          $this->fillField('edit-context-definitions-' . $name . '-setting', $value);
 +          $this->fillField('edit-context-definitions-' . $name . '-value', $value);
-+        }
+         }
        }
  
-       // Check that the condition can be saved.
-@@ -118,6 +135,13 @@ class ConditionsFormTest extends RulesBrowserTestBase {
- 
-       // Check that re-edit and re-save works OK.
-       $this->clickLink('Edit');
-+      if (!empty($defaulted)) {
-+        // Fill each previously defaulted field with the value provided.
-+        foreach ($defaulted as $name => $value) {
-+          $this->fillField('edit-context-definitions-' . $name . '-value', $value);
-+        }
-+      }
-+
-       $this->pressButton('Save');
-       $assert->pageTextNotContains('Error message');
-       $assert->addressMatches('#admin/config/workflow/rules/reactions/edit/' . $expr_id . '(\?uuid=' . $condition->getUuid() . '|)$#');
-@@ -136,9 +160,13 @@ class ConditionsFormTest extends RulesBrowserTestBase {
-    *   and relate to the test case. The values are ordered arrays of test case
-    *   data with elements that must appear in the following order:
-    *   - Machine name of the condition being tested.
--   *   - (optional) Values to enter on the Context form. This is an associative
-+   *   - (optional) Required values to enter on the Context form. This is an
-+   *     associative array with keys equal to the field names and values equal
-+   *     to the required field values.
-+   *   - (optional) Values for fields that have defaults. This is an associative
-    *     array with keys equal to the field names and values equal to the field
--   *     values.
-+   *     values. These are used on the second edit, to alter the fields that
-+   *     have been saved with their default value.
-    *   - (optional) Widget types we expect to see on the Context form. This is
-    *     an associative array with keys equal to the field names as above, and
-    *     values equal to expected widget type.
-@@ -149,22 +177,24 @@ class ConditionsFormTest extends RulesBrowserTestBase {
-     // Instead of directly returning the full set of test data, create variable
-     // $data to hold it. This allows for manipulation before the final return.
-     $data = [
-+
-+      // Data.
-       'Data comparison' => [
-         // Machine name.
-         'rules_data_comparison',
--        // Values.
-+        // Required values.
-         [
-           'data' => 'node.title.value',
--          'operation' => '=this=is-not-validated=yet=',
-           'value' => 'node_unchanged.title.value',
-         ],
-+        // Defaulted values.
-+        ['operation' => '=this=is-not-validated=yet='],
+@@ -184,7 +192,6 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+         ['operation' => 'contains'],
          // Widgets.
          [
 -          'data' => 'text-input',
            'operation' => 'text-input',
            'value' => 'text-input',
          ],
--        // Selectors.
-+        // Press the 'Switch to data selection' button for these items.
-         ['value'],
-       ],
-       'Data is empty' => [
-@@ -174,33 +204,50 @@ class ConditionsFormTest extends RulesBrowserTestBase {
-       'List contains' => [
+@@ -198,8 +205,6 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+       '3. List contains' => [
          'rules_list_contains',
          ['list' => 'node.uid.entity.roles', 'item' => 'abc'],
+-        [],
 -        ['list' => 'textarea'],
        ],
--      'List Count' => [
-+      'List count is' => [
+       '4. List count is' => [
          'rules_list_count_is',
-         [
-           'list' => 'node.uid.entity.roles',
--          'operator' => 'not * validated * yet',
-           'value' => 2,
-         ],
-+        ['operator' => 'not * validated * yet'],
-       ],
-+      'Text comparison - direct' => [
-+        'rules_text_comparison',
-+        ['text' => 'node.title.value', 'match' => 'abc'],
-+      ],
-+      'Text comparison - selector' => [
-+        'rules_text_comparison',
-+        [
-+          'text' => 'node.title.value',
-+          'match' => 'node.uid.entity.name.value',
-+        ],
-+        ['operator' => 'not * validated * yet'],
-+        [],
-+        ['match'],
-+      ],
-+
-+      // Entity.
-       'Entity has field' => [
-         'rules_entity_has_field',
--        ['entity' => 'node', 'field' => 'abc'],
-+        ['entity' => 'node', 'field' => 'login'],
-       ],
-       'Entity is new' => [
-         'rules_entity_is_new',
-         ['entity' => 'node'],
-       ],
--      'Entity is bundle' => [
-+      'Entity is of bundle' => [
-         'rules_entity_is_of_bundle',
-         ['entity' => 'node', 'type' => 'node', 'bundle' => 'article'],
-       ],
--      'Entity is type' => [
-+      'Entity is of type' => [
-         'rules_entity_is_of_type',
--        ['entity' => 'node', 'type' => 'article'],
-+        ['entity' => 'node', 'type' => 'path_alias'],
-       ],
--      'Node is type' => [
-+
-+      // Content.
-+      'Node is of type' => [
-         'rules_node_is_of_type',
-         ['node' => 'node', 'types' => 'article'],
-       ],
-@@ -216,52 +263,67 @@ class ConditionsFormTest extends RulesBrowserTestBase {
-         'rules_node_is_sticky',
-         ['node' => 'node'],
-       ],
-+
-+      // Path.
-       'Path alias exists' => [
-         'rules_path_alias_exists',
-         ['alias' => '/abc'],
-+        ['language' => '?'],
-       ],
-       'Path has alias' => [
-         'rules_path_has_alias',
-         ['path' => '/node/1'],
-+        ['language' => '?'],
-       ],
--      'Text comparison - direct' => [
--        'rules_text_comparison',
--        ['text' => 'node.title.value', 'match' => 'abc'],
--      ],
--      'Text comparison - selector' => [
--        'rules_text_comparison',
--        ['text' => 'node.title.value', 'match' => 'node.uid.entity.name.value'],
--        [],
--        ['match'],
--      ],
-+
-+      // User.
-       'Entity field access' => [
-         'rules_entity_field_access',
-         [
-           'entity' => 'node',
--          'field' => 'abc',
-+          'field' => 'timezone',
-+        ],
-+        [
-           'user' => '@user.current_user_context:current_user',
-+          'operation' => 'not * validated * yet',
-         ],
-       ],
--      'Uer has role' => [
-+      'User has role' => [
-         'rules_user_has_role',
-         [
-           'user' => '@user.current_user_context:current_user',
--          'roles' => 'Developer',
-+          'roles' => 'test-editor',
-         ],
-+        ['operation' => 'OR'],
-+        [],
-+        ['user'],
-       ],
-       'User is blocked' => [
-         'rules_user_is_blocked',
-         ['user' => '@user.current_user_context:current_user'],
-+        [],
-+        [],
-+        ['user'],
-       ],
-+
-+      // Ban.
-       'Ip is banned' => [
-         'rules_ip_is_banned',
-+        [],
-         ['ip' => '192.0.2.1'],
+@@ -308,6 +313,13 @@ class ConditionsFormTest extends RulesBrowserTestBase {
        ],
      ];
  
@@ -1186,31 +726,26 @@ index 1fee608a..61ea522a 100644
 +    // and "Warning: explode() expects parameter 2 to be string, array given"
 +    // These run OK without the widget integration.
 +    // @todo Needs investigation.
-+    unset($data['List contains']);
-+    unset($data['List count is']);
++    unset($data['3. List contains']);
++    unset($data['4. List count is']);
 +
      // Use unset $data['The key to remove']; to remove a temporarily unwanted
--    // item, use return [$data['The key to test']]; to selectively test just one
--    // item, or use return $data; to test everything.
-+    // item, use return [$data['Key to test'], $data['Another']]; to selectively
-+    // test some items, or use return $data; to test everything.
-     return $data;
-   }
- 
+     // item, use return [$data['The key to test']]; to selectively test just one
+     // item, or use return $data; to test everything.
 diff --git a/tests/src/Functional/ConfigureAndExecuteTest.php b/tests/src/Functional/ConfigureAndExecuteTest.php
-index ec2359e8..061f8ceb 100644
+index 54aaa70f..deca20ab 100644
 --- a/tests/src/Functional/ConfigureAndExecuteTest.php
 +++ b/tests/src/Functional/ConfigureAndExecuteTest.php
-@@ -16,7 +16,7 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
-    *
-    * @var array
+@@ -15,7 +15,7 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+   /**
+    * {@inheritdoc}
     */
--  protected static $modules = ['node', 'rules'];
-+  protected static $modules = ['node', 'rules', 'typed_data'];
+-  protected static $modules = ['rules'];
++  protected static $modules = ['rules', 'typed_data', 'config_translation'];
  
    /**
     * We use the minimal profile because we want to test local action links.
-@@ -76,16 +76,16 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+@@ -116,16 +116,16 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
      $this->fillField('Condition', 'rules_data_comparison');
      $this->pressButton('Continue');
  
@@ -1231,7 +766,7 @@ index ec2359e8..061f8ceb 100644
      $this->pressButton('Save');
  
      // One more save to permanently store the rule.
-@@ -240,7 +240,7 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+@@ -388,7 +388,7 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
      $message1updated = 'RULE ONE has a new message.';
      $this->drupalGet('admin/config/workflow/rules/reactions/edit/rule1');
      $this->clickLink('Edit', 1);
@@ -1240,12 +775,9 @@ index ec2359e8..061f8ceb 100644
      // Save the action then save the rule.
      $this->pressButton('Save');
      $this->pressButton('Save');
-@@ -300,15 +300,16 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
-     $this->fillField('Condition', 'rules_node_is_of_type');
+@@ -447,13 +447,14 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+     $this->fillField('Action', 'rules_send_email');
      $this->pressButton('Continue');
- 
--    $this->fillField('context_definitions[node][setting]', 'node');
-+    $this->fillField('context_definitions[node][value]', 'node');
  
 +    // Maximum allowed length of string input is 255 characters.
      $suboptimal_user_input = [
@@ -1260,19 +792,25 @@ index ec2359e8..061f8ceb 100644
        "0\r\n",
        "0.0\r\n",
        "128\r\n",
-@@ -319,9 +320,9 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+@@ -464,13 +465,13 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
        "two empty lines\n\r\n\r",
        "terminator n\n",
        "terminator nr\n\r",
 -      "whitespace at end of input\r\n        \r\n",
 +      "whitespace at end of input\r\n    \r\n",
      ];
--    $this->fillField('context_definitions[types][setting]', implode($suboptimal_user_input));
-+    $this->fillField('context_definitions[types][value]', implode($suboptimal_user_input));
+-    $this->fillField('context_definitions[to][setting]', implode($suboptimal_user_input));
++    $this->fillField('context_definitions[to][value]', implode($suboptimal_user_input));
+ 
+     // Set the other required fields. These play no part in the test.
+-    $this->fillField('context_definitions[subject][setting]', 'Hello');
+-    $this->fillField('context_definitions[message][setting]', 'Dear Heart');
++    $this->fillField('context_definitions[subject][value]', 'Hello');
++    $this->fillField('context_definitions[message][value]', 'Dear Heart');
+ 
      $this->pressButton('Save');
  
-     // One more save to permanently store the rule.
-@@ -331,12 +332,12 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+@@ -481,12 +482,12 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
      // and that blank lines, leading and trailing whitespace, and wrong line
      // terminators were removed.
      $expected_config_value = [
@@ -1287,41 +825,80 @@ index ec2359e8..061f8ceb 100644
        "0",
        "0.0",
        "128",
-@@ -400,25 +401,25 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
-     // that the default entry field is regular text entry not a selector.
-     $this->drupalGet('admin/config/workflow/rules/reactions/edit/test_rule/edit/' . $condition1->getUuid());
+@@ -552,13 +553,13 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+     // Check that a switch button is not shown for 'data' and that the field is
+     // an autocomplete selector field not plain text entry.
+     $assert->buttonNotExists('edit-context-definitions-data-switch-button');
+-    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-data-setting" and contains(@class, "rules-autocomplete")]');
++    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-data-value" and contains(@class, "rules-autocomplete")]');
+     // Check that a switch button is not shown for 'operation'.
+     $assert->buttonNotExists('edit-context-definitions-operation-switch-button');
+     // Check that a switch button is shown for 'value' and that the default
+     // field is plain text entry not an autocomplete selector field.
      $assert->buttonExists('edit-context-definitions-value-switch-button');
 -    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-value-setting" and not(contains(@class, "rules-autocomplete"))]');
 +    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-value-value" and not(contains(@class, "rules-autocomplete"))]');
  
-     // Edit condition 2, assert that the switch button is NOT shown for node
-     // and that the entry field is a selector with class rules-autocomplete.
-     $this->drupalGet('admin/config/workflow/rules/reactions/edit/test_rule/edit/' . $condition2->getUuid());
-     $assert->buttonNotExists('edit-context-definitions-node-switch-button');
--    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-node-setting" and contains(@class, "rules-autocomplete")]');
-+    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-node-value" and contains(@class, "rules-autocomplete")]');
- 
-     // Edit action 1, assert that the switch button is shown for message and
-     // that the default entry field is a regular text entry not a selector.
+     // Edit the action and assert that page loads correctly.
      $this->drupalGet('admin/config/workflow/rules/reactions/edit/test_rule/edit/' . $action1->getUuid());
+@@ -566,7 +567,7 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+     // Check that a switch button is shown for 'message' and that the field is a
+     // plain text entry field not an autocomplete selector field.
      $assert->buttonExists('edit-context-definitions-message-switch-button');
 -    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-message-setting" and not(contains(@class, "rules-autocomplete"))]');
 +    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-message-value" and not(contains(@class, "rules-autocomplete"))]');
+     // Check that a switch button is shown for 'type'.
+     $assert->buttonExists('edit-context-definitions-type-switch-button');
+     // Check that a switch button is not shown for 'repeat'.
+diff --git a/tests/src/Functional/RulesComponentListBuilderTest.php b/tests/src/Functional/RulesComponentListBuilderTest.php
+index 79098bf3..70ac916d 100644
+--- a/tests/src/Functional/RulesComponentListBuilderTest.php
++++ b/tests/src/Functional/RulesComponentListBuilderTest.php
+@@ -12,7 +12,7 @@ class RulesComponentListBuilderTest extends RulesBrowserTestBase {
+   /**
+    * {@inheritdoc}
+    */
+-  protected static $modules = ['rules', 'rules_test'];
++  protected static $modules = ['rules', 'rules_test', 'config_translation'];
  
-     // Edit action 2, assert that the switch button is NOT shown for type and
-     // that the entry field is a regular text entry not a selector.
-     $this->drupalGet('admin/config/workflow/rules/reactions/edit/test_rule/edit/' . $action2->getUuid());
-     $assert->buttonNotExists('edit-context-definitions-type-switch-button');
--    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-type-setting" and not(contains(@class, "rules-autocomplete"))]');
-+    $assert->elementExists('xpath', '//input[@id="edit-context-definitions-type-value" and not(contains(@class, "rules-autocomplete"))]');
-   }
+   /**
+    * We use the minimal profile because we want to test local action links.
+@@ -83,7 +83,7 @@ class RulesComponentListBuilderTest extends RulesBrowserTestBase {
+     $this->fillField('Condition', 'rules_user_is_blocked');
+     $this->pressButton('Continue');
  
- }
+-    $this->fillField('context_definitions[user][setting]', '@user:current_user_context:current_user');
++    $this->fillField('context_definitions[user][value]', '@user:current_user_context:current_user');
+     $this->pressButton('Save');
+ 
+     $assert->statusCodeEquals(200);
+@@ -104,7 +104,7 @@ class RulesComponentListBuilderTest extends RulesBrowserTestBase {
+     $this->fillField('Condition', 'rules_user_is_blocked');
+     $this->pressButton('Continue');
+ 
+-    $this->fillField('context_definitions[user][setting]', '@user:current_user_context:current_user');
++    $this->fillField('context_definitions[user][value]', '@user:current_user_context:current_user');
+     $this->pressButton('Save');
+ 
+     /** @var \Drupal\Tests\WebAssert $assert */
+@@ -198,9 +198,9 @@ class RulesComponentListBuilderTest extends RulesBrowserTestBase {
+     $this->pressButton('Switch to data selection');
+     $this->pressButton('Switch to the direct input mode');
+ 
+-    $this->fillField('context_definitions[to][setting]', 'klausi@example.com');
+-    $this->fillField('context_definitions[subject][setting]', 'subject');
+-    $this->fillField('context_definitions[message][setting]', 'message');
++    $this->fillField('context_definitions[to][value]', 'klausi@example.com');
++    $this->fillField('context_definitions[subject][value]', 'subject');
++    $this->fillField('context_definitions[message][value]', 'message');
+     $this->pressButton('Save');
+ 
+     /** @var \Drupal\Tests\WebAssert $assert */
 diff --git a/tests/src/Functional/RulesUiEmbedTest.php b/tests/src/Functional/RulesUiEmbedTest.php
-index 0f3b4b9f..3d5355ba 100644
+index 857b1954..7559916f 100644
 --- a/tests/src/Functional/RulesUiEmbedTest.php
 +++ b/tests/src/Functional/RulesUiEmbedTest.php
-@@ -31,8 +31,8 @@ class RulesUiEmbedTest extends RulesBrowserTestBase {
+@@ -29,8 +29,8 @@ class RulesUiEmbedTest extends RulesBrowserTestBase {
      $this->clickLink('Add condition');
      $this->fillField('Condition', 'rules_data_comparison');
      $this->pressButton('Continue');
@@ -1332,7 +909,7 @@ index 0f3b4b9f..3d5355ba 100644
      $this->pressButton('Save');
  
      // Now the condition should be listed. Try editing it.
-@@ -40,9 +40,9 @@ class RulesUiEmbedTest extends RulesBrowserTestBase {
+@@ -38,9 +38,9 @@ class RulesUiEmbedTest extends RulesBrowserTestBase {
      $assert = $this->assertSession();
      $assert->pageTextContains('Data comparison');
      $this->clickLink('Edit');
@@ -1346,10 +923,10 @@ index 0f3b4b9f..3d5355ba 100644
      $assert->pageTextContains('Data comparison');
  
 diff --git a/tests/src/Functional/TempStorageTest.php b/tests/src/Functional/TempStorageTest.php
-index 6bdd0ce4..13f37065 100644
+index 931b5d28..c8fca6bc 100644
 --- a/tests/src/Functional/TempStorageTest.php
 +++ b/tests/src/Functional/TempStorageTest.php
-@@ -43,7 +43,7 @@ class TempStorageTest extends RulesBrowserTestBase {
+@@ -41,7 +41,7 @@ class TempStorageTest extends RulesBrowserTestBase {
      $this->fillField('Condition', 'rules_node_is_promoted');
      $this->pressButton('Continue');
  
@@ -1359,10 +936,19 @@ index 6bdd0ce4..13f37065 100644
  
      /** @var \Drupal\Tests\WebAssert $assert */
 diff --git a/tests/src/Functional/UiPageTest.php b/tests/src/Functional/UiPageTest.php
-index c2518671..0d8e0d8e 100644
+index 75a08993..398ac61c 100644
 --- a/tests/src/Functional/UiPageTest.php
 +++ b/tests/src/Functional/UiPageTest.php
-@@ -66,7 +66,7 @@ class UiPageTest extends RulesBrowserTestBase {
+@@ -14,7 +14,7 @@ class UiPageTest extends RulesBrowserTestBase {
+   /**
+    * {@inheritdoc}
+    */
+-  protected static $modules = ['rules', 'rules_test'];
++  protected static $modules = ['rules', 'rules_test', 'config_translation'];
+ 
+   /**
+    * We use the minimal profile because we want to test local action links.
+@@ -88,7 +88,7 @@ class UiPageTest extends RulesBrowserTestBase {
      $this->fillField('Condition', 'rules_node_is_promoted');
      $this->pressButton('Continue');
  
@@ -1371,7 +957,7 @@ index c2518671..0d8e0d8e 100644
      $this->pressButton('Save');
  
      $assert->statusCodeEquals(200);
-@@ -107,7 +107,7 @@ class UiPageTest extends RulesBrowserTestBase {
+@@ -279,7 +279,7 @@ class UiPageTest extends RulesBrowserTestBase {
      $this->fillField('Condition', 'rules_node_is_promoted');
      $this->pressButton('Continue');
  
@@ -1380,7 +966,7 @@ index c2518671..0d8e0d8e 100644
      $this->pressButton('Save');
  
      /** @var \Drupal\Tests\WebAssert $assert */
-@@ -203,9 +203,9 @@ class UiPageTest extends RulesBrowserTestBase {
+@@ -373,9 +373,9 @@ class UiPageTest extends RulesBrowserTestBase {
      $this->pressButton('Switch to data selection');
      $this->pressButton('Switch to the direct input mode');
  
@@ -1393,8 +979,50 @@ index c2518671..0d8e0d8e 100644
      $this->pressButton('Save');
  
      /** @var \Drupal\Tests\WebAssert $assert */
+diff --git a/tests/src/Unit/Integration/Condition/PathAliasExistsTest.php b/tests/src/Unit/Integration/Condition/PathAliasExistsTest.php
+index 3d4de5c9..77b9e85f 100644
+--- a/tests/src/Unit/Integration/Condition/PathAliasExistsTest.php
++++ b/tests/src/Unit/Integration/Condition/PathAliasExistsTest.php
+@@ -3,14 +3,14 @@
+ namespace Drupal\Tests\rules\Unit\Integration\Condition;
+ 
+ use Drupal\Core\Language\LanguageInterface;
+-use Drupal\Tests\rules\Unit\Integration\RulesIntegrationTestBase;
++use Drupal\Tests\rules\Unit\Integration\RulesEntityIntegrationTestBase;
+ use Drupal\path_alias\AliasManagerInterface;
+ 
+ /**
+  * @coversDefaultClass \Drupal\rules\Plugin\Condition\PathAliasExists
+  * @group RulesCondition
+  */
+-class PathAliasExistsTest extends RulesIntegrationTestBase {
++class PathAliasExistsTest extends RulesEntityIntegrationTestBase {
+ 
+   /**
+    * The condition to be tested.
+diff --git a/tests/src/Unit/Integration/Condition/PathHasAliasTest.php b/tests/src/Unit/Integration/Condition/PathHasAliasTest.php
+index 8d5a8a84..6f31d292 100644
+--- a/tests/src/Unit/Integration/Condition/PathHasAliasTest.php
++++ b/tests/src/Unit/Integration/Condition/PathHasAliasTest.php
+@@ -3,14 +3,14 @@
+ namespace Drupal\Tests\rules\Unit\Integration\Condition;
+ 
+ use Drupal\Core\Language\LanguageInterface;
+-use Drupal\Tests\rules\Unit\Integration\RulesIntegrationTestBase;
++use Drupal\Tests\rules\Unit\Integration\RulesEntityIntegrationTestBase;
+ use Drupal\path_alias\AliasManagerInterface;
+ 
+ /**
+  * @coversDefaultClass \Drupal\rules\Plugin\Condition\PathHasAlias
+  * @group RulesCondition
+  */
+-class PathHasAliasTest extends RulesIntegrationTestBase {
++class PathHasAliasTest extends RulesEntityIntegrationTestBase {
+ 
+   /**
+    * The condition to be tested.
 diff --git a/tests/src/Unit/Integration/Engine/IntegrityCheckTest.php b/tests/src/Unit/Integration/Engine/IntegrityCheckTest.php
-index 89f55869..1db59925 100644
+index 13ee1442..d84f396a 100644
 --- a/tests/src/Unit/Integration/Engine/IntegrityCheckTest.php
 +++ b/tests/src/Unit/Integration/Engine/IntegrityCheckTest.php
 @@ -227,8 +227,8 @@ class IntegrityCheckTest extends RulesEntityIntegrationTestBase {
@@ -1455,3 +1083,21 @@ index 1c59ce50..84145178 100644
      $this->mailManager = $this->prophesize(MailManagerInterface::class);
      $this->container->set('plugin.manager.mail', $this->mailManager->reveal());
  
+diff --git a/tests/src/Unit/Integration/RulesEntityIntegrationTestBase.php b/tests/src/Unit/Integration/RulesEntityIntegrationTestBase.php
+index 44706125..896433e1 100644
+--- a/tests/src/Unit/Integration/RulesEntityIntegrationTestBase.php
++++ b/tests/src/Unit/Integration/RulesEntityIntegrationTestBase.php
+@@ -88,6 +88,13 @@ abstract class RulesEntityIntegrationTestBase extends RulesIntegrationTestBase {
+           'bundle' => 'path_alias',
+         ],
+       ],
++      'configurable_language' => [
++        'id' => 'configurable_language',
++        'label' => 'Configurable Language',
++        'entity_keys' => [
++          'bundle' => 'dummy',
++        ],
++      ],
+     ];
+ 
+     $type_array = [];
