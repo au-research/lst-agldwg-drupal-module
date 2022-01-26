@@ -4,10 +4,10 @@ taxonomies:
       vid: registry_item_status
       tid: '1'
       langcode: en
-      name: accepted
+      name: Accepted
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/accepted</p>\r\n"
       description__format: basic_html
-      weight: '0'
+      weight: '3'
       parent: '0'
       uuid: 62894a33-4dc9-4544-8ddb-c9a99fb7709b
       path: /taxonomy/term/1
@@ -16,7 +16,7 @@ taxonomies:
       vid: registry_item_status
       tid: '2'
       langcode: en
-      name: deprecated
+      name: Deprecated
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/deprecated</p>\r\n"
       description__format: basic_html
       weight: '0'
@@ -28,7 +28,7 @@ taxonomies:
       vid: registry_item_status
       tid: '3'
       langcode: en
-      name: retired
+      name: Retired
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/retired</p>\r\n"
       description__format: basic_html
       weight: '0'
@@ -40,7 +40,7 @@ taxonomies:
       vid: registry_item_status
       tid: '4'
       langcode: en
-      name: superseded
+      name: Superseded
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/superseded</p>\r\n"
       description__format: basic_html
       weight: '1'
@@ -52,7 +52,7 @@ taxonomies:
       vid: registry_item_status
       tid: '5'
       langcode: en
-      name: valid
+      name: Valid
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/valid</p>\r\n"
       description__format: basic_html
       weight: '1'
@@ -64,7 +64,7 @@ taxonomies:
       vid: registry_item_status
       tid: '6'
       langcode: en
-      name: experimental
+      name: Experimental
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/experimental</p>\r\n"
       description__format: basic_html
       weight: '0'
@@ -76,7 +76,7 @@ taxonomies:
       vid: registry_item_status
       tid: '7'
       langcode: en
-      name: stable
+      name: Stable
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/stable</p>\r\n"
       description__format: basic_html
       weight: '1'
@@ -88,10 +88,10 @@ taxonomies:
       vid: registry_item_status
       tid: '8'
       langcode: en
-      name: 'not accepted'
+      name: 'Not Accepted'
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/notAccepted</p>\r\n"
       description__format: basic_html
-      weight: '8'
+      weight: '12'
       parent: '0'
       uuid: 34908ea1-963b-4698-9930-cb155bf724f7
       path: /taxonomy/term/8
@@ -100,7 +100,7 @@ taxonomies:
       vid: registry_item_status
       tid: '9'
       langcode: en
-      name: invalid
+      name: Invalid
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/invalid</p>\r\n"
       description__format: basic_html
       weight: '0'
@@ -112,7 +112,7 @@ taxonomies:
       vid: registry_item_status
       tid: '10'
       langcode: en
-      name: reserved
+      name: Reserved
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/reserved</p>\r\n"
       description__format: basic_html
       weight: '1'
@@ -124,7 +124,7 @@ taxonomies:
       vid: registry_item_status
       tid: '11'
       langcode: en
-      name: submitted
+      name: Submitted
       description__value: "<p>https://linked.data.gov.au/def/reg-statuses/submitted</p>\r\n"
       description__format: basic_html
       weight: '2'
@@ -132,4 +132,16 @@ taxonomies:
       uuid: 0ba03a46-b3af-4721-af0c-7e59b46881e7
       path: /taxonomy/term/11
       alias: /reg-statuses/submitted
+    -
+      vid: registry_item_status
+      tid: '13'
+      langcode: en
+      name: Unstable
+      description__value: "<p>https://linked.data.gov.au/def/reg-statuses/unstable</p>\r\n"
+      description__format: basic_html
+      weight: '2'
+      parent: '2'
+      uuid: 22c47c53-e00b-41a9-929f-8013a7df9a81
+      path: /taxonomy/term/13
+      alias: /reg-statuses/unstable
   tags: {  }
