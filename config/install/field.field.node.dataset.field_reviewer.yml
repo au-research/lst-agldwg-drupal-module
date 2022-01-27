@@ -11,7 +11,7 @@ field_name: field_reviewer
 entity_type: node
 bundle: dataset
 label: Reviewer
-description: 'An AGLDWG member who reviewed this Resource before a status of "accepted" was conferred. When first submittd, just set to "admin".'
+description: 'Suggest an AGLDWG member to review this request.'
 required: true
 translatable: true
 default_value:

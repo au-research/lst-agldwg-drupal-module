@@ -7,5 +7,4 @@ dependencies:
 name: 'Registry Item Status'
 vid: registry_item_status
 description: 'The status of acceptance of items registered in a catalogue or elsewhere'
-hierarchy: 0
 weight: 0

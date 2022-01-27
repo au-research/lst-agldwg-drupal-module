@@ -11,12 +11,12 @@ field_name: field_was_derived_from
 entity_type: node
 bundle: dataset
 label: 'Was Derived From'
-description: "This Resource was derived from another catalogued resource. Was Derived From is taken from the Provenance Ontology (https://www.w3.org/TR/prov-o/).\r\n\r\nhttp://www.w3.org/ns/prov#wasDerivedFrom"
+description: "If this resource is derived from another catalogued resource, please indicate the link for that other resource. Perhaps you have made a Semantic Web version of something in data.gov.au...\r\n\r\nhttp://www.w3.org/ns/prov#wasDerivedFrom"
 required: false
 translatable: false
 default_value: {}
 default_value_callback: ''
 settings:
   link_type: 17
-  title: 1
+  title: 0
 field_type: link

@@ -11,11 +11,12 @@ field_name: body
 entity_type: node
 bundle: dataset
 label: Description
-description: "A free-text account of the item.\r\n\r\ndct:description"
+description: "A free-text account of the item. Suggested things to cover in the description are both what the dataset is, conceptually, and where/how it does, or will, appear online.\r\n\r\ndct:description"
 required: true
 translatable: true
 default_value: {}
 default_value_callback: ''
 settings:
   display_summary: true
+  required_summary: false
 field_type: text_with_summary
