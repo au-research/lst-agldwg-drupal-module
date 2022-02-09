@@ -13,6 +13,9 @@ dependencies:
   - diff:diff
   - environment_indicator:environment_indicator
   - mimemail:mimemail
+  # When using the "Integrate typed data widgets" patch for rules,
+  # the language module is also required.
+  - language:language
   - rules:rules
   - tr_rulez:tr_rulez
   - require_revision_log_message:require_revision_log_message
