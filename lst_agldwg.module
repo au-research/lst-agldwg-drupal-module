@@ -21,14 +21,48 @@ function lst_agldwg_mail_alter(&$message) {
 
 /**
  * Implements hook_form_FORM_ID_alter to support prefilling subject
+ * (and possibly also the message)
  * on the contact form when a query parameter 'subject' is supplied.
  */
 function lst_agldwg_form_contact_message_feedback_form_alter(&$form,
                                                              $form_state,
                                                              $form_id) {
     if (!empty($_GET['subject'])) {
+        $subject = $_GET['subject'];
         $form['subject']['widget'][0]['value']['#default_value'] =
-            $_GET['subject'];
+            $subject;
+        // Support prefilling of the message field for the
+        // subject "Organisation+registration+request".
+        if ($subject == 'Organisation registration request') {
+            $form['message']['widget'][0]['value']['#default_value'] =
+                'Request for new Organisation Register Item
+
+Please complete the following form.
+A member of the AGLDWG will contact you if further information is required.
+
+
+Name of organisation:
+
+Alternative names (e.g., acronyms, prior names of the organisation):
+
+Is the organisation a unit/section of another organisation?
+If so, please specify:
+
+Organisation homepage URL:
+
+Identifiers, if available:
+
+AGOR:
+
+CRS:
+
+GRID:
+
+ROR:
+
+';
+
+        }
     }
 }
 
