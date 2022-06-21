@@ -1,8 +1,8 @@
 diff --git a/src/Context/ContextDefinition.php b/src/Context/ContextDefinition.php
-index 91432bbf..ec78ed45 100644
+index 7950b8c6..6b0249f9 100644
 --- a/src/Context/ContextDefinition.php
 +++ b/src/Context/ContextDefinition.php
-@@ -108,6 +108,13 @@ class ContextDefinition extends ContextDefinitionCore implements ContextDefiniti
+@@ -118,6 +118,13 @@ class ContextDefinition extends ContextDefinitionCore implements ContextDefiniti
     */
    protected $assignmentRestriction = NULL;
  
@@ -16,7 +16,7 @@ index 91432bbf..ec78ed45 100644
    /**
     * {@inheritdoc}
     */
-@@ -182,4 +189,80 @@ class ContextDefinition extends ContextDefinitionCore implements ContextDefiniti
+@@ -206,4 +213,80 @@ class ContextDefinition extends ContextDefinitionCore implements ContextDefiniti
      return $this;
    }
  
@@ -98,10 +98,10 @@ index 91432bbf..ec78ed45 100644
 +
  }
 diff --git a/src/Context/ContextDefinitionInterface.php b/src/Context/ContextDefinitionInterface.php
-index db91a049..f1112845 100644
+index db91a049..2bccc9f9 100644
 --- a/src/Context/ContextDefinitionInterface.php
 +++ b/src/Context/ContextDefinitionInterface.php
-@@ -20,6 +20,13 @@ interface ContextDefinitionInterface extends ContextDefinitionInterfaceCore {
+@@ -20,6 +20,20 @@ interface ContextDefinitionInterface extends ContextDefinitionInterfaceCore {
    const ASSIGNMENT_RESTRICTION_INPUT = 'input';
    const ASSIGNMENT_RESTRICTION_SELECTOR = 'selector';
  
@@ -112,10 +112,17 @@ index db91a049..f1112845 100644
 +   */
 +  const BROKEN_WIDGET_ID = 'broken';
 +
++  /**
++   * Constant for "do not use a widget".
++   *
++   * @see ::getWidgetId()
++   */
++  const DONT_USE_WIDGET = 'do_not_use_a_widget';
++
    /**
     * Determines if the context value is allowed to be NULL.
     *
-@@ -70,4 +77,24 @@ interface ContextDefinitionInterface extends ContextDefinitionInterfaceCore {
+@@ -70,4 +84,24 @@ interface ContextDefinitionInterface extends ContextDefinitionInterfaceCore {
     */
    public function toArray();
  
@@ -242,7 +249,7 @@ index c9f41bc6..7e7b135a 100644
 +
  }
 diff --git a/src/Context/Form/ContextFormTrait.php b/src/Context/Form/ContextFormTrait.php
-index 2b24f439..ed386d3e 100644
+index 2b24f439..ba12cead 100644
 --- a/src/Context/Form/ContextFormTrait.php
 +++ b/src/Context/Form/ContextFormTrait.php
 @@ -6,25 +6,20 @@ use Drupal\Core\Form\FormStateInterface;
@@ -284,7 +291,7 @@ index 2b24f439..ed386d3e 100644
      if (isset($configuration['context_values'][$context_name])) {
        $default_value = $configuration['context_values'][$context_name];
      }
-@@ -53,17 +51,87 @@ trait ContextFormTrait {
+@@ -53,17 +51,111 @@ trait ContextFormTrait {
      else {
        $default_value = $context_definition->getDefaultValue();
      }
@@ -293,7 +300,9 @@ index 2b24f439..ed386d3e 100644
 -      '#title' => $title,
 -      '#required' => $context_definition->isRequired(),
 -      '#default_value' => $default_value,
-+
+-    ];
+ 
+-    $element = &$form['context_definitions'][$context_name]['setting'];
 +    // Temporary fix: Cast default value to an array if context definition has
 +    // 'multiple = TRUE' so that the action can be edited without a fatal error.
 +    // @todo Remove when integrity check prevents the wrong type being saved.
@@ -305,7 +314,13 @@ index 2b24f439..ed386d3e 100644
 +    // Derive the widget id using the context definition data type. Take only
 +    // the first word before : so that entity:user gives entity.
 +    $dataType = explode(':', $context_definition->getDataType())[0];
-+    $widget_id = $context_definition->getWidgetId($dataType);
++    if (in_array($dataType, ['language', 'language_reference'])) {
++      // Language input in Rules forms are better without using a form widget.
++      $widget_id = ContextDefinitionInterface::DONT_USE_WIDGET;
++    }
++    else {
++      $widget_id = $context_definition->getWidgetId($dataType);
++    }
 +
 +    if ($widget_id === ContextDefinitionInterface::BROKEN_WIDGET_ID) {
 +      // The datatype is unknown and/or the typed-data widget has not been coded
@@ -317,58 +332,75 @@ index 2b24f439..ed386d3e 100644
 +      ]));
 +    }
 +
-+    // Create the widget using the widget_id.
-+    $widget = $this->getFormWidgetManager()->createInstance($widget_id);
-+
-+    $dataManager = $context_definition->getTypedDataManager();
-+    $dataDefinition = $context_definition->getDataDefinition();
-+    $typed_data = $dataManager->create($dataDefinition);
-+
-+    // Set default before building the form, so that widget->form() can use it.
-+    $typed_data->setValue($default_value);
-+
-+    // Create the widget sub-form.
-+    $sub_form = [];
-+    $sub_form_state = SubformState::createForSubform($sub_form, $form, $form_state);
-+    $widget_form = $widget->form($typed_data, $sub_form_state);
-+
-+    // Add the widget form into the full $form and save the widget_id.
-+    $form['context_definitions'][$context_name] = $widget_form + [
-+      '#widget_id' => $widget_id,
-     ];
-+    // If mode is input (not selector) then add a widget class.
-+    if ($mode == ContextDefinitionInterface::ASSIGNMENT_RESTRICTION_INPUT) {
-+      $form['context_definitions'][$context_name]['#attributes']['class'][] = 'widget-' . str_replace('_', '-', $widget_id);
-+    }
-+
-+    // Get the names of the data item input fields in the widget. Mostly there
-+    // is only one input field and often it will be called 'value', but some
-+    // datatypes, for example timespan, define two inputs. Remove all array keys
-+    // that start with # and this will leave just the input field names.
-+    // @todo Could this information be provided more easily, say by calling
-+    // $widget->getInputNames() ?
-+    $widget_input_names = array_keys($widget_form);
-+    $widget_input_names = array_filter($widget_input_names, function ($k) {
-+      return substr($k, 0, 1) !== '#';
-+    });
-+
-+    if (isset($widget_form['#theme_wrappers']) && $widget_form['#theme_wrappers'][0] == 'fieldset') {
-+      // @todo Is checking #theme_wrappers = fieldset the best way to do it?
-+      // Should we count the number of input items? What if the widget had two
-+      // or more inputs but was badly formed with no fieldset theme_wrapper?
-+      $input_name = end($widget_input_names);
-+    }
-+    else {
-+      // The widget form is simple, so we need to add more of the form here.
-+      $form['context_definitions'][$context_name] += [
++    if ($widget_id == ContextDefinitionInterface::DONT_USE_WIDGET) {
++      $input_name = 'value';
++      $form['context_definitions'][$context_name] = [
 +        '#type' => 'fieldset',
 +        '#title' => $context_definition->getLabel(),
++        '#widget_id' => $widget_id,
 +      ];
-+      $input_name = reset($widget_input_names);
-+      $form['context_definitions'][$context_name][$input_name]['#title'] = $title;
++
++      $form['context_definitions'][$context_name][$input_name] = [
++        '#type' => 'textfield',
++        '#title' => $title,
++        '#description' => $context_definition->getDescription(),
++        '#required' => $context_definition->isRequired(),
++        '#default_value' => $default_value,
++      ];
 +    }
- 
--    $element = &$form['context_definitions'][$context_name]['setting'];
++    else {
++      // Create the widget using the widget_id.
++      $widget = $this->getFormWidgetManager()->createInstance($widget_id);
++
++      $dataManager = $context_definition->getTypedDataManager();
++      $dataDefinition = $context_definition->getDataDefinition();
++      $typed_data = $dataManager->create($dataDefinition);
++
++      // Set default before building form, so that widget->form() can use it.
++      $typed_data->setValue($default_value);
++
++      // Create the widget sub-form.
++      $sub_form = [];
++      $sub_form_state = SubformState::createForSubform($sub_form, $form, $form_state);
++      $widget_form = $widget->form($typed_data, $sub_form_state);
++
++      // Add the widget form into the full $form and save the widget_id.
++      $form['context_definitions'][$context_name] = $widget_form + [
++        '#widget_id' => $widget_id,
++      ];
++      // If mode is input (not data-selector) then add a widget class.
++      if ($mode == ContextDefinitionInterface::ASSIGNMENT_RESTRICTION_INPUT) {
++        $form['context_definitions'][$context_name]['#attributes']['class'][] = 'widget-' . str_replace('_', '-', $widget_id);
++      }
++
++      // Get the names of the data item input fields in the widget. Mostly there
++      // is only one input field and often it will be called 'value', but some
++      // datatypes, for example timespan, define two inputs. Remove all array
++      // keys that start with # and this will leave just the input field names.
++      // @todo Could this information be provided more easily, say by calling
++      // $widget->getInputNames() ?
++      $widget_input_names = array_keys($widget_form);
++      $widget_input_names = array_filter($widget_input_names, function ($k) {
++        return substr($k, 0, 1) !== '#';
++      });
++
++      if (isset($widget_form['#theme_wrappers']) && $widget_form['#theme_wrappers'][0] == 'fieldset') {
++        // @todo Is checking #theme_wrappers = fieldset the best way to do it?
++        // Should we count the number of input items? What if the widget had two
++        // or more inputs but was badly formed with no fieldset theme_wrapper?
++        $input_name = end($widget_input_names);
++      }
++      else {
++        // The widget form is simple, so we need to add more of the form here.
++        $form['context_definitions'][$context_name] += [
++          '#type' => 'fieldset',
++          '#title' => $context_definition->getLabel(),
++        ];
++        $input_name = reset($widget_input_names);
++        $form['context_definitions'][$context_name][$input_name]['#title'] = $title;
++      }
++    }
++
 +    // Extract the (last) element we have just added.
 +    $element = &$form['context_definitions'][$context_name][$input_name];
  
@@ -379,7 +411,7 @@ index 2b24f439..ed386d3e 100644
          ':url' => 'https://www.drupal.org/node/1300042',
        ]);
  
-@@ -74,18 +142,18 @@ trait ContextFormTrait {
+@@ -74,18 +166,18 @@ trait ContextFormTrait {
      }
      elseif ($context_definition->isMultiple()) {
        $element['#type'] = 'textarea';
@@ -404,7 +436,7 @@ index 2b24f439..ed386d3e 100644
        $value = $mode == ContextDefinitionInterface::ASSIGNMENT_RESTRICTION_SELECTOR ? $this->t('Switch to the direct input mode') : $this->t('Switch to data selection');
        $form['context_definitions'][$context_name]['switch_button'] = [
          '#type' => 'submit',
-@@ -132,6 +200,8 @@ trait ContextFormTrait {
+@@ -132,6 +224,8 @@ trait ContextFormTrait {
    /**
     * Creates a context config object from the submitted form values.
     *
@@ -413,7 +445,7 @@ index 2b24f439..ed386d3e 100644
     * @param \Drupal\Core\Form\FormStateInterface $form_state
     *   The form state containing the submitted values.
     * @param \Drupal\Core\Plugin\Context\ContextDefinitionInterface[] $context_definitions
-@@ -140,27 +210,53 @@ trait ContextFormTrait {
+@@ -140,27 +234,58 @@ trait ContextFormTrait {
     * @return \Drupal\rules\Context\ContextConfig
     *   The context config object populated with context mappings/values.
     */
@@ -424,22 +456,25 @@ index 2b24f439..ed386d3e 100644
        foreach ($form_state->getValue('context_definitions') as $context_name => $value) {
 +        $context_definition = $context_definitions[$context_name];
 +
-+        if ($context_definition->isMultiple()) {
-+          // Remove the switch button then get the input directly. This is not
-+          // the right way. The problem is that Rules uses 'multiple = TRUE' for
++        $widget_id = $form['context_definitions'][$context_name]['#widget_id'];
++        if ($context_definition->isMultiple() || $widget_id == ContextDefinitionInterface::DONT_USE_WIDGET) {
++          // If the element does not use a Typed Data widget then get the input
++          // directly from $value. We also use this workaround when isMultiple()
++          // is set, because Rules uses 'multiple = TRUE' combined with a
 +          // textarea to allow multiple entry items. However, they have to be
 +          // in an array for the TypedData setValue to work without throwing
 +          // InvalidArgumentException: Cannot set a list with a non-array value.
-+          // @todo Fix this.
++          // @todo This could be changed when issue 2847804 is complete.
 +          // @see https://www.drupal.org/project/typed_data/issues/2847804
++          // Remove the 'switch_button' then get the first value, whatever it is
++          // called. Use ?: to convert an empty string to NULL, this is
++          // necessary if the context is given by a data-selector.
 +          unset($value['switch_button']);
-+          $input = reset($value);
++          $input = reset($value) ?: NULL;
 +        }
 +        else {
-+          // Get the input the 'proper' way.
 +          // Create an instance of the widget that was used in this context so
 +          // that we can use extractFormValues() to get the entered data.
-+          $widget_id = $form['context_definitions'][$context_name]['#widget_id'];
 +          $widget = $this->getFormWidgetManager()->createInstance($widget_id);
 +          $data = $context_definition->getTypedDataManager()
 +            ->create($context_definition->getDataDefinition());
@@ -448,6 +483,8 @@ index 2b24f439..ed386d3e 100644
 +          $input = $data->getValue();
 +        }
 +
++        // If the context value has been supplied by a data-selector then store
++        // the mapped value.
          if ($form_state->get("context_$context_name") == ContextDefinitionInterface::ASSIGNMENT_RESTRICTION_SELECTOR) {
 -          $context_config->map($context_name, $value['setting']);
 +          $context_config->map($context_name, $input);
@@ -455,7 +492,7 @@ index 2b24f439..ed386d3e 100644
          else {
 -          // Each line of the textarea is one value for 'multiple' contexts.
 -          if ($context_definitions[$context_name]->isMultiple()) {
-+          // Not selector, so it must be input.
++          // Not data-selector, so it must be input.
 +          if ($context_definition->isMultiple()) {
              // Textareas should always have \r\n line breaks, but for more
              // robust parsing we should also accommodate just \n or just \r.
@@ -474,7 +511,7 @@ index 2b24f439..ed386d3e 100644
            // For now, always add in the token context processor if it's present.
            // @todo Improve this in https://www.drupal.org/node/2804035.
            if ($this->getDataProcessorManager()->getDefinition('rules_tokens')) {
-@@ -174,7 +270,7 @@ trait ContextFormTrait {
+@@ -174,7 +299,7 @@ trait ContextFormTrait {
    }
  
    /**
@@ -510,7 +547,7 @@ index 18108ff2..54b4d01c 100644
      // Rename provided variables, if any.
      if ($provided_variables = $form_state->getValue('provides')) {
 diff --git a/src/Plugin/Condition/PathAliasExists.php b/src/Plugin/Condition/PathAliasExists.php
-index 213c6112..10beb50a 100644
+index 213c6112..3980b3ae 100644
 --- a/src/Plugin/Condition/PathAliasExists.php
 +++ b/src/Plugin/Condition/PathAliasExists.php
 @@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -518,12 +555,12 @@ index 213c6112..10beb50a 100644
   *       description = @Translation("Specify the path alias to check for. For example, '/about' for an about page.")
   *     ),
 - *     "language" = @ContextDefinition("language",
-+ *     "language" = @ContextDefinition("entity:configurable_language",
++ *     "language" = @ContextDefinition("language_reference",
   *       label = @Translation("Language"),
   *       description = @Translation("If specified, the language for which the URL alias applies."),
   *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
 diff --git a/src/Plugin/Condition/PathHasAlias.php b/src/Plugin/Condition/PathHasAlias.php
-index 3ca95b0c..f49dadff 100644
+index 3ca95b0c..0b084cb6 100644
 --- a/src/Plugin/Condition/PathHasAlias.php
 +++ b/src/Plugin/Condition/PathHasAlias.php
 @@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -531,12 +568,12 @@ index 3ca95b0c..f49dadff 100644
   *       description = @Translation("Specifies the existing path you wish to check. For example, '/node/28' or '/forum/1'.")
   *     ),
 - *     "language" = @ContextDefinition("language",
-+ *     "language" = @ContextDefinition("entity:configurable_language",
++ *     "language" = @ContextDefinition("language_reference",
   *       label = @Translation("Language"),
   *       description = @Translation("If specified, the language for which the URL alias applies."),
   *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
 diff --git a/src/Plugin/RulesAction/PathAliasCreate.php b/src/Plugin/RulesAction/PathAliasCreate.php
-index 8af883c3..750538ae 100644
+index 8af883c3..32f0c3f4 100644
 --- a/src/Plugin/RulesAction/PathAliasCreate.php
 +++ b/src/Plugin/RulesAction/PathAliasCreate.php
 @@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -544,12 +581,12 @@ index 8af883c3..750538ae 100644
   *       description = @Translation("Specify an alternative path by which this data can be accessed. For example, '/about' for an about page. Use an absolute path and do not add a trailing slash.")
   *     ),
 - *     "language" = @ContextDefinition("language",
-+ *     "language" = @ContextDefinition("entity:configurable_language",
++ *     "language" = @ContextDefinition("language_reference",
   *       label = @Translation("Language"),
   *       description = @Translation("If specified, the language for which the path alias applies."),
   *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
 diff --git a/src/Plugin/RulesAction/SystemEmailToUsersOfRole.php b/src/Plugin/RulesAction/SystemEmailToUsersOfRole.php
-index 2c92f5d7..50e78f0b 100644
+index 2c92f5d7..7d483623 100644
 --- a/src/Plugin/RulesAction/SystemEmailToUsersOfRole.php
 +++ b/src/Plugin/RulesAction/SystemEmailToUsersOfRole.php
 @@ -30,7 +30,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -566,12 +603,12 @@ index 2c92f5d7..50e78f0b 100644
   *       required = FALSE
   *     ),
 - *     "language" = @ContextDefinition("language",
-+ *     "language" = @ContextDefinition("entity:configurable_language",
++ *     "language" = @ContextDefinition("language_reference",
   *       label = @Translation("Language"),
   *       description = @Translation("If specified, the language object (not language code) used for getting the email message and subject."),
   *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
 diff --git a/src/Plugin/RulesAction/SystemSendEmail.php b/src/Plugin/RulesAction/SystemSendEmail.php
-index 677f36bc..a91b30ca 100644
+index 677f36bc..f2f2cad9 100644
 --- a/src/Plugin/RulesAction/SystemSendEmail.php
 +++ b/src/Plugin/RulesAction/SystemSendEmail.php
 @@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -596,23 +633,15 @@ index 677f36bc..a91b30ca 100644
   *       required = FALSE
   *     ),
 - *     "language" = @ContextDefinition("language",
-+ *     "language" = @ContextDefinition("entity:configurable_language",
++ *     "language" = @ContextDefinition("language_reference",
   *       label = @Translation("Language"),
   *       description = @Translation("If specified, the language used for getting the email message and subject."),
   *       options_provider = "\Drupal\rules\TypedData\Options\LanguageOptions",
 diff --git a/tests/src/Functional/ActionsFormTest.php b/tests/src/Functional/ActionsFormTest.php
-index 6cb1c66b..68dc042a 100644
+index 6cb1c66b..b5afabef 100644
 --- a/tests/src/Functional/ActionsFormTest.php
 +++ b/tests/src/Functional/ActionsFormTest.php
-@@ -15,6 +15,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
-   protected static $modules = [
-     'node',
-     'ban',
-+    'config_translation',
-     'path_alias',
-     'rules',
-     'typed_data',
-@@ -93,6 +94,13 @@ class ActionsFormTest extends RulesBrowserTestBase {
+@@ -93,6 +93,13 @@ class ActionsFormTest extends RulesBrowserTestBase {
      $assert->statusCodeEquals(200);
      $assert->pageTextContains('Edit ' . $action->getLabel());
  
@@ -626,7 +655,7 @@ index 6cb1c66b..68dc042a 100644
      // If any field values have been specified then fill in the form and save.
      if (!empty($required) || !empty($defaulted)) {
  
-@@ -113,7 +121,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
+@@ -113,7 +120,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
          $assert->pageTextContains('field is required');
          // Fill each required field with the value provided.
          foreach ($required as $name => $value) {
@@ -635,7 +664,7 @@ index 6cb1c66b..68dc042a 100644
          }
        }
  
-@@ -131,7 +139,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
+@@ -131,7 +138,7 @@ class ActionsFormTest extends RulesBrowserTestBase {
        if (!empty($defaulted) || !empty($provides)) {
          // Fill each previously defaulted field with the value provided.
          foreach ($defaulted as $name => $value) {
@@ -644,7 +673,42 @@ index 6cb1c66b..68dc042a 100644
          }
          foreach ($provides as $name => $value) {
            $this->fillField('edit-provides-' . $name . '-name', $value);
-@@ -420,6 +428,12 @@ class ActionsFormTest extends RulesBrowserTestBase {
+@@ -341,7 +348,8 @@ class ActionsFormTest extends RulesBrowserTestBase {
+         ['message' => 'Some text'],
+         ['type' => 'warning', 'repeat' => 0],
+       ],
+-      '27. Send email - direct input' => [
++      '27a. Send email' => [
++        // Direct input for all fields.
+         'rules_send_email',
+         [
+           'to' => 'test@example.com',
+@@ -351,7 +359,23 @@ class ActionsFormTest extends RulesBrowserTestBase {
+         ['reply' => 'test@example.com', 'language' => 'en'],
+         ['message' => 'textarea'],
+       ],
+-      '28. Send email - data selector for address' => [
++      '27b. Send email - direct input' => [
++        // Data selector for language.
++        'rules_send_email',
++        [
++          'to' => 'test@example.com',
++          'subject' => 'Some testing subject',
++          'message' => 'Test with direct input of recipients',
++        ],
++        [
++          'reply' => 'test@example.com',
++          'language' => '@user.current_user_context:current_user.preferred_langcode.language',
++        ],
++        ['message' => 'textarea'],
++        ['language'],
++      ],
++      '27c. Send email' => [
++        // Data selector for address.
+         'rules_send_email',
+         [
+           'to' => 'node.uid.entity.mail.value',
+@@ -420,12 +444,18 @@ class ActionsFormTest extends RulesBrowserTestBase {
        ],
      ];
  
@@ -657,19 +721,18 @@ index 6cb1c66b..68dc042a 100644
      // Selecting the 'to' email address using data selector will not work until
      // single data selector values with multiple = True are converted to arrays.
      // Error "Expected a list data type ... but got a email data type instead".
+     // @see https://www.drupal.org/project/rules/issues/2723259
+     // @todo Delete this unset() when the above issue is fixed.
+-    unset($data['28. Send email - data selector for address']);
++    unset($data['27c. Send email']);
+ 
+     // Use unset $data['The key to remove']; to remove a temporarily unwanted
+     // item, use return [$data['Key to test'], $data['Another']]; to selectively
 diff --git a/tests/src/Functional/ConditionsFormTest.php b/tests/src/Functional/ConditionsFormTest.php
-index ab9de167..27116822 100644
+index ab9de167..520821e5 100644
 --- a/tests/src/Functional/ConditionsFormTest.php
 +++ b/tests/src/Functional/ConditionsFormTest.php
-@@ -15,6 +15,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
-   protected static $modules = [
-     'node',
-     'ban',
-+    'config_translation',
-     'path_alias',
-     'rules',
-     'typed_data',
-@@ -93,6 +94,13 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+@@ -93,6 +93,13 @@ class ConditionsFormTest extends RulesBrowserTestBase {
      $assert->statusCodeEquals(200);
      $assert->pageTextContains('Edit ' . $condition->getLabel());
  
@@ -683,7 +746,7 @@ index ab9de167..27116822 100644
      // If any field values have been specified then fill in the form and save.
      if (!empty($required) || !empty($defaulted)) {
  
-@@ -113,7 +121,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+@@ -113,7 +120,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
          $assert->pageTextContains('field is required');
          // Fill each required field with the value provided.
          foreach ($required as $name => $value) {
@@ -692,7 +755,7 @@ index ab9de167..27116822 100644
          }
        }
  
-@@ -131,7 +139,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+@@ -131,7 +138,7 @@ class ConditionsFormTest extends RulesBrowserTestBase {
        if (!empty($defaulted)) {
          // Fill each previously defaulted field with the value provided.
          foreach ($defaulted as $name => $value) {
@@ -701,7 +764,7 @@ index ab9de167..27116822 100644
          }
        }
  
-@@ -184,7 +192,6 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+@@ -184,7 +191,6 @@ class ConditionsFormTest extends RulesBrowserTestBase {
          ['operation' => 'contains'],
          // Widgets.
          [
@@ -709,7 +772,7 @@ index ab9de167..27116822 100644
            'operation' => 'text-input',
            'value' => 'text-input',
          ],
-@@ -198,8 +205,6 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+@@ -198,8 +204,6 @@ class ConditionsFormTest extends RulesBrowserTestBase {
        '3. List contains' => [
          'rules_list_contains',
          ['list' => 'node.uid.entity.roles', 'item' => 'abc'],
@@ -718,7 +781,29 @@ index ab9de167..27116822 100644
        ],
        '4. List count is' => [
          'rules_list_count_is',
-@@ -308,6 +313,13 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+@@ -261,11 +265,20 @@ class ConditionsFormTest extends RulesBrowserTestBase {
+       ],
+ 
+       // Path.
+-      '15. Path alias exists' => [
++      '15a. Path alias exists' => [
++        // Using direct input for language.
+         'rules_path_alias_exists',
+         ['alias' => '/abc'],
+         ['language' => 'und'],
+       ],
++      '15b. Path alias exists' => [
++        // Using data selector for language.
++        'rules_path_alias_exists',
++        ['alias' => '/abc'],
++        ['language' => '@user.current_user_context:current_user.preferred_langcode.language'],
++        [],
++        ['language'],
++      ],
+       '16. Path has alias' => [
+         'rules_path_has_alias',
+         ['path' => '/node/1'],
+@@ -308,6 +321,13 @@ class ConditionsFormTest extends RulesBrowserTestBase {
        ],
      ];
  
@@ -733,7 +818,7 @@ index ab9de167..27116822 100644
      // item, use return [$data['The key to test']]; to selectively test just one
      // item, or use return $data; to test everything.
 diff --git a/tests/src/Functional/ConfigureAndExecuteTest.php b/tests/src/Functional/ConfigureAndExecuteTest.php
-index 54aaa70f..deca20ab 100644
+index f8d9abf2..b3b6432c 100644
 --- a/tests/src/Functional/ConfigureAndExecuteTest.php
 +++ b/tests/src/Functional/ConfigureAndExecuteTest.php
 @@ -15,7 +15,7 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
@@ -741,7 +826,7 @@ index 54aaa70f..deca20ab 100644
     * {@inheritdoc}
     */
 -  protected static $modules = ['rules'];
-+  protected static $modules = ['rules', 'typed_data', 'config_translation'];
++  protected static $modules = ['rules', 'typed_data'];
  
    /**
     * We use the minimal profile because we want to test local action links.
@@ -825,7 +910,7 @@ index 54aaa70f..deca20ab 100644
        "0",
        "0.0",
        "128",
-@@ -552,13 +553,13 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+@@ -549,13 +550,13 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
      // Check that a switch button is not shown for 'data' and that the field is
      // an autocomplete selector field not plain text entry.
      $assert->buttonNotExists('edit-context-definitions-data-switch-button');
@@ -841,7 +926,7 @@ index 54aaa70f..deca20ab 100644
  
      // Edit the action and assert that page loads correctly.
      $this->drupalGet('admin/config/workflow/rules/reactions/edit/test_rule/edit/' . $action1->getUuid());
-@@ -566,7 +567,7 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
+@@ -563,7 +564,7 @@ class ConfigureAndExecuteTest extends RulesBrowserTestBase {
      // Check that a switch button is shown for 'message' and that the field is a
      // plain text entry field not an autocomplete selector field.
      $assert->buttonExists('edit-context-definitions-message-switch-button');
@@ -851,18 +936,9 @@ index 54aaa70f..deca20ab 100644
      $assert->buttonExists('edit-context-definitions-type-switch-button');
      // Check that a switch button is not shown for 'repeat'.
 diff --git a/tests/src/Functional/RulesComponentListBuilderTest.php b/tests/src/Functional/RulesComponentListBuilderTest.php
-index 79098bf3..70ac916d 100644
+index 79098bf3..7fe6eba6 100644
 --- a/tests/src/Functional/RulesComponentListBuilderTest.php
 +++ b/tests/src/Functional/RulesComponentListBuilderTest.php
-@@ -12,7 +12,7 @@ class RulesComponentListBuilderTest extends RulesBrowserTestBase {
-   /**
-    * {@inheritdoc}
-    */
--  protected static $modules = ['rules', 'rules_test'];
-+  protected static $modules = ['rules', 'rules_test', 'config_translation'];
- 
-   /**
-    * We use the minimal profile because we want to test local action links.
 @@ -83,7 +83,7 @@ class RulesComponentListBuilderTest extends RulesBrowserTestBase {
      $this->fillField('Condition', 'rules_user_is_blocked');
      $this->pressButton('Continue');
@@ -936,18 +1012,9 @@ index 931b5d28..c8fca6bc 100644
  
      /** @var \Drupal\Tests\WebAssert $assert */
 diff --git a/tests/src/Functional/UiPageTest.php b/tests/src/Functional/UiPageTest.php
-index 75a08993..398ac61c 100644
+index 75a08993..efbd15d3 100644
 --- a/tests/src/Functional/UiPageTest.php
 +++ b/tests/src/Functional/UiPageTest.php
-@@ -14,7 +14,7 @@ class UiPageTest extends RulesBrowserTestBase {
-   /**
-    * {@inheritdoc}
-    */
--  protected static $modules = ['rules', 'rules_test'];
-+  protected static $modules = ['rules', 'rules_test', 'config_translation'];
- 
-   /**
-    * We use the minimal profile because we want to test local action links.
 @@ -88,7 +88,7 @@ class UiPageTest extends RulesBrowserTestBase {
      $this->fillField('Condition', 'rules_node_is_promoted');
      $this->pressButton('Continue');
@@ -1022,12 +1089,12 @@ index 8d5a8a84..6f31d292 100644
    /**
     * The condition to be tested.
 diff --git a/tests/src/Unit/Integration/Engine/IntegrityCheckTest.php b/tests/src/Unit/Integration/Engine/IntegrityCheckTest.php
-index 13ee1442..d84f396a 100644
+index 7cb6f04c..c5478df1 100644
 --- a/tests/src/Unit/Integration/Engine/IntegrityCheckTest.php
 +++ b/tests/src/Unit/Integration/Engine/IntegrityCheckTest.php
 @@ -227,8 +227,8 @@ class IntegrityCheckTest extends RulesEntityIntegrationTestBase {
        ->checkIntegrity();
-     $this->assertEquals(1, iterator_count($violation_list));
+     $this->assertCount(1, $violation_list);
      $this->assertEquals(
 -      'Expected a string data type for context <em class="placeholder">Text to compare</em> but got a list data type instead.',
 -      (string) $violation_list[0]->getMessage()
@@ -1038,7 +1105,7 @@ index 13ee1442..d84f396a 100644
    }
 @@ -252,8 +252,8 @@ class IntegrityCheckTest extends RulesEntityIntegrationTestBase {
        ->checkIntegrity();
-     $this->assertEquals(1, iterator_count($violation_list));
+     $this->assertCount(1, $violation_list);
      $this->assertEquals(
 -      'Expected a list data type for context <em class="placeholder">Content types</em> but got a entity:node data type instead.',
 -      (string) $violation_list[0]->getMessage()
@@ -1049,7 +1116,7 @@ index 13ee1442..d84f396a 100644
    }
 @@ -277,8 +277,8 @@ class IntegrityCheckTest extends RulesEntityIntegrationTestBase {
        ->checkIntegrity();
-     $this->assertEquals(1, iterator_count($violation_list));
+     $this->assertCount(1, $violation_list);
      $this->assertEquals(
 -      'Expected a entity:node data type for context <em class="placeholder">Node</em> but got a list data type instead.',
 -      (string) $violation_list[0]->getMessage()
@@ -1083,21 +1150,3 @@ index 1c59ce50..84145178 100644
      $this->mailManager = $this->prophesize(MailManagerInterface::class);
      $this->container->set('plugin.manager.mail', $this->mailManager->reveal());
  
-diff --git a/tests/src/Unit/Integration/RulesEntityIntegrationTestBase.php b/tests/src/Unit/Integration/RulesEntityIntegrationTestBase.php
-index 44706125..896433e1 100644
---- a/tests/src/Unit/Integration/RulesEntityIntegrationTestBase.php
-+++ b/tests/src/Unit/Integration/RulesEntityIntegrationTestBase.php
-@@ -88,6 +88,13 @@ abstract class RulesEntityIntegrationTestBase extends RulesIntegrationTestBase {
-           'bundle' => 'path_alias',
-         ],
-       ],
-+      'configurable_language' => [
-+        'id' => 'configurable_language',
-+        'label' => 'Configurable Language',
-+        'entity_keys' => [
-+          'bundle' => 'dummy',
-+        ],
-+      ],
-     ];
- 
-     $type_array = [];

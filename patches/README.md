@@ -15,7 +15,7 @@ Here are the sources of the patches specified in `composer.json`.
                 "Don't try to read directory entries as files during backup": "https://www.drupal.org/files/issues/2021-08-24/bam_empty_dirs.patch"
             },
             "drupal/rules": {
-                "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2022-01-10/2471481-163.integrate-typed-data-widgets.patch"
+                "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2022-03-04/2471481-174.integrate-typed-data-widgets.patch"
             },
             "drupal/contact_storage": {
                 "Error while field storage definition": "https://www.drupal.org/files/issues/2020-09-28/3053497-8.patch"
