@@ -119,9 +119,21 @@ function lst_agldwg_install($is_syncing) {
         $config->set('hidden', $hiddenConfig);
         $config->save();
 
-       // TODO: install views into the system menu.
+        // TODO: install views into the system menu.
         // TODO: hmm, install status vocab terms here?
-   }
+
+        // Require revision log entries for all content types.
+        $config = $config_factory->getEditable(
+            'require_revision_log_message.adminsettings');
+        $types = [];
+        $contentTypes = \Drupal::entityTypeManager()
+            ->getStorage('node_type')->loadMultiple();
+        foreach ($contentTypes as $contentType) {
+            $types[$contentType->id()] = $contentType->id();
+        }
+        $config->set('content_types', $types);
+        $config->save();
+    }
 }
 
 /**
