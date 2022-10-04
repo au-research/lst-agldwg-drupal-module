@@ -1,0 +1,13 @@
+diff --git a/core/lib/Drupal/Core/DependencyInjection/Compiler/RegisterEventSubscribersPass.php b/core/lib/Drupal/Core/DependencyInjection/Compiler/RegisterEventSubscribersPass.php
+index c2c28b38e77..5eb1b255d14 100644
+--- a/core/lib/Drupal/Core/DependencyInjection/Compiler/RegisterEventSubscribersPass.php
++++ b/core/lib/Drupal/Core/DependencyInjection/Compiler/RegisterEventSubscribersPass.php
+@@ -34,7 +37,7 @@ public function process(ContainerBuilder $container) {
+       }
+ 
+       // Get all subscribed events.
+-      foreach ($class::getSubscribedEvents() as $event_name => $params) {
++      foreach ($class::getSubscribedEvents($container) as $event_name => $params) {
+         if (is_string($params)) {
+           $priority = 0;
+           $event_subscriber_info[$event_name][$priority][] = ['service' => [$id, $params]];

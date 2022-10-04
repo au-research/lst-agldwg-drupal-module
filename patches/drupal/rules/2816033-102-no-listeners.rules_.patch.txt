@@ -1,0 +1,32 @@
+diff --git a/src/EventSubscriber/GenericEventSubscriber.php b/src/EventSubscriber/GenericEventSubscriber.php
+index ead2cecf..d9a71778 100644
+--- a/src/EventSubscriber/GenericEventSubscriber.php
++++ b/src/EventSubscriber/GenericEventSubscriber.php
+@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+ use Symfony\Component\EventDispatcher\GenericEvent;
+ use Symfony\Component\EventDispatcher\Event as SymfonyComponentEvent;
+ use Symfony\Contracts\EventDispatcher\Event as SymfonyContractsEvent;
++use Symfony\Component\DependencyInjection\ContainerBuilder;
+ 
+ /**
+  * Subscribes to Symfony events and maps them to Rules events.
+@@ -68,7 +69,7 @@ class GenericEventSubscriber implements EventSubscriberInterface {
+   /**
+    * {@inheritdoc}
+    */
+-  public static function getSubscribedEvents() {
++  public static function getSubscribedEvents(ContainerBuilder $container = NULL) {
+     // Register this listener for every event that is used by a reaction rule.
+     $events = [];
+     $callback = ['onRulesEvent', 100];
+@@ -76,8 +77,8 @@ class GenericEventSubscriber implements EventSubscriberInterface {
+     // If there is no state service there is nothing we can do here. This static
+     // method could be called early when the container is built, so the state
+     // service might not always be available.
+-    if (!\Drupal::hasService('state')) {
+-      return [];
++    if (!\Drupal::hasContainer()) {
++      \Drupal::setContainer($container);
+     }
+ 
+     // Since we cannot access the reaction rule config storage here we have to

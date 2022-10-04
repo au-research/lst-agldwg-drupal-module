@@ -6,7 +6,8 @@ Here are the sources of the patches specified in `composer.json`.
             "drupal/core": {
                 "On tracker pages, add space between link and status": "https://www.drupal.org/files/issues/2020-05-06/3095533-18.patch",
                 "Improve styling for select and add styling to select[multiple]": "https://www.drupal.org/files/issues/2020-08-19/2491725-31-multiple-select.patch",
-                "Image styles fails with absolute path in $settings['file_public_path']": "https://www.drupal.org/files/issues/2021-08-27/image_styles-new.patch"
+                "Image styles fails with absolute path in $settings['file_public_path']": "https://www.drupal.org/files/issues/2021-08-27/image_styles-new.patch",
+                "Rules registers no listeners on rare occasions": "https://www.drupal.org/files/issues/2022-01-31/2816033-102-no-listeners.core_.patch"
             },
             "drush/drush": {
                 "Support utf8mb4 on drush site-install": "https://github.com/drush-ops/drush/pull/4810.patch"
@@ -15,7 +16,8 @@ Here are the sources of the patches specified in `composer.json`.
                 "Don't try to read directory entries as files during backup": "https://www.drupal.org/files/issues/2021-08-24/bam_empty_dirs.patch"
             },
             "drupal/rules": {
-                "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2022-03-04/2471481-174.integrate-typed-data-widgets.patch"
+                "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2022-03-04/2471481-174.integrate-typed-data-widgets.patch",
+                "Rules registers no listeners on rare occasions": "https://www.drupal.org/files/issues/2022-01-31/2816033-102-no-listeners.rules_.patch"
             },
             "drupal/contact_storage": {
                 "Error while field storage definition": "https://www.drupal.org/files/issues/2020-09-28/3053497-8.patch"

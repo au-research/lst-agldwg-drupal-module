@@ -36,8 +36,8 @@
             "drupal/core": {
                 "On tracker pages, add space between link and status": "web/modules/custom/lst-agldwg/patches/drupal/core/3095533-18.patch.txt",
                 "Improve styling for select and add styling to select[multiple]": "web/modules/custom/lst-agldwg/patches/drupal/core/2491725-31-multiple-select.patch.txt",
-                "Image styles fails with absolute path in $settings['file_public_path']": "web/modules/custom/lst-agldwg/patches/drupal/core/image_styles-new.patch"
-
+                "Image styles fails with absolute path in $settings['file_public_path']": "web/modules/custom/lst-agldwg/patches/drupal/core/image_styles-new.patch",
+                "Rules registers no listeners on rare occasions": "web/modules/custom/lst-agldwg/patches/drupal/core/2816033-102-no-listeners.core_.patch.txt"
             },
             "drush/drush": {
                 "Support utf8mb4 on drush site-install": "web/modules/custom/lst-agldwg/patches/drush/drush/4810.patch.txt"
@@ -46,7 +46,8 @@
                 "Don't try to read directory entries as files during backup": "web/modules/custom/lst-agldwg/patches/drupal/backup_migrate/bam_empty_dirs.patch.txt"
             },
             "drupal/rules": {
-                "Integrate Typed Data Widgets": "web/modules/custom/lst-agldwg/patches/drupal/rules/2471481-174.integrate-typed-data-widgets.patch.txt"
+                "Integrate Typed Data Widgets": "web/modules/custom/lst-agldwg/patches/drupal/rules/2471481-174.integrate-typed-data-widgets.patch.txt",
+                "Rules registers no listeners on rare occasions": "web/modules/custom/lst-agldwg/patches/drupal/rules/2816033-102-no-listeners.rules_.patch.txt"
             },
             "drupal/contact_storage": {
                 "Error while field storage definition": "web/modules/custom/lst-agldwg/patches/drupal/contact_storage/3053497-8.patch.txt"
