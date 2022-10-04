@@ -1,6 +1,9 @@
 langcode: en
 status: true
-dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - lst_agldwg
 id: after_update_status_field_invalid
 label: 'After update status field invalid'
 events:

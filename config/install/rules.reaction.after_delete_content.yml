@@ -1,6 +1,9 @@
 langcode: en
 status: true
-dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - lst_agldwg
 id: after_delete_content
 label: 'After delete content'
 events:

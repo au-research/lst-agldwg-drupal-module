@@ -1,6 +1,9 @@
 langcode: en
 status: false
-dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - lst_agldwg
 id: after_save_new_user
 label: 'After save new user'
 events:

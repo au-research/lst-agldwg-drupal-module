@@ -4,6 +4,9 @@ dependencies:
   module:
     - editor
     - token_filter
+  enforced:
+    module:
+      - lst_agldwg
 name: 'Basic HTML tokens'
 format: basic_html_tokens
 weight: 0

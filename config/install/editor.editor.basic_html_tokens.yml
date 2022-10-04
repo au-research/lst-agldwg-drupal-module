@@ -5,6 +5,9 @@ dependencies:
     - filter.format.basic_html_tokens
   module:
     - ckeditor
+  enforced:
+    module:
+      - lst_agldwg
 format: basic_html_tokens
 editor: ckeditor
 settings:
