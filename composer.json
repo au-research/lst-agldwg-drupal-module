@@ -45,6 +45,9 @@
             "drupal/backup_migrate": {
                 "Don't try to read directory entries as files during backup": "web/modules/custom/lst-agldwg/patches/drupal/backup_migrate/bam_empty_dirs.patch.txt"
             },
+            "drupal/mimemail": {
+                "RfcComplianceException: RFC 2822": "web/modules/custom/lst-agldwg/patches/drupal/mimemail/rcf_compliance-3257799-3.patch"
+            },
             "drupal/rules": {
                 "Integrate Typed Data Widgets": "web/modules/custom/lst-agldwg/patches/drupal/rules/2471481-174.integrate-typed-data-widgets.patch.txt",
                 "Rules registers no listeners on rare occasions": "web/modules/custom/lst-agldwg/patches/drupal/rules/2816033-102-no-listeners.rules_.patch.txt"

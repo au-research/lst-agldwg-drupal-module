@@ -1,0 +1,13 @@
+diff --git a/src/Utility/MimeMailFormatHelper.php b/src/Utility/MimeMailFormatHelper.php
+index 2e1f063..6a405c3 100644
+--- a/src/Utility/MimeMailFormatHelper.php
++++ b/src/Utility/MimeMailFormatHelper.php
+@@ -731,7 +731,7 @@ class MimeMailFormatHelper {
+       // This may not work. The MTA may rewrite the Return-Path.
+       if (!isset($headers['Return-Path']) || $headers['Return-Path'] == $default_from) {
+         if (preg_match('/[a-z\d\-\.\+_]+@(?:[a-z\d\-]+\.)+[a-z\d]{2,4}/i', $from, $matches)) {
+-          $headers['Return-Path'] = "<$matches[0]>";
++          $headers['Return-Path'] = "$matches[0]";
+         }
+       }
+     }

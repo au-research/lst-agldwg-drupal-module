@@ -15,6 +15,9 @@ Here are the sources of the patches specified in `composer.json`.
             "drupal/backup_migrate": {
                 "Don't try to read directory entries as files during backup": "https://www.drupal.org/files/issues/2021-08-24/bam_empty_dirs.patch"
             },
+            "drupal/mimemail": {
+                "RfcComplianceException: RFC 2822": "https://www.drupal.org/files/issues/2022-01-10/rcf_compliance-3257799-3.patch"
+            },
             "drupal/rules": {
                 "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2022-03-04/2471481-174.integrate-typed-data-widgets.patch",
                 "Rules registers no listeners on rare occasions": "https://www.drupal.org/files/issues/2022-01-31/2816033-102-no-listeners.rules_.patch"
