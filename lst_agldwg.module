@@ -131,6 +131,7 @@ function lst_agldwg_form_alter(&$form, $form_state, $form_id) {
 function lst_agldwg_get_admin_and_control_body_uids() {
     $query = \Drupal::entityTypeManager()->getStorage('user')->getQuery();
     $uids = $query
+        ->accessCheck(FALSE)
         ->condition('status', '1')
         ->condition('roles', array('administrator', 'control_body'), 'IN')
         ->execute();
