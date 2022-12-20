@@ -12,32 +12,30 @@ format: basic_html_tokens
 editor: ckeditor5
 settings:
   toolbar:
-    rows:
-      - - name: Formatting
-          items:
-            - Bold
-            - Italic
-        - name: Linking
-          items:
-            - DrupalLink
-            - DrupalUnlink
-        - name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-        - name: Media
-          items:
-            - Blockquote
-            - DrupalImage
-        - name: 'Block Formatting'
-          items:
-            - Format
-        - name: Tools
-          items:
-            - Source
+    items:
+      - bold
+      - italic
+      - '|'
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+      - '|'
+      - blockQuote
+      - drupalInsertImage
+      - '|'
+      - heading
+      - code
+      - '|'
+      - sourceEditing
   plugins:
-    stylescombo:
-      styles: ''
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
 image_upload:
   status: false
   scheme: public
