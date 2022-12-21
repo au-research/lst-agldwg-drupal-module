@@ -50,7 +50,8 @@
             },
             "drupal/rules": {
                 "Integrate Typed Data Widgets": "web/modules/custom/lst-agldwg/patches/drupal/rules/2471481-174.integrate-typed-data-widgets.patch.txt",
-                "Rules registers no listeners on rare occasions": "web/modules/custom/lst-agldwg/patches/drupal/rules/2816033-102-no-listeners.rules_.patch.txt"
+                "Rules registers no listeners on rare occasions": "web/modules/custom/lst-agldwg/patches/drupal/rules/2816033-102-no-listeners.rules_.patch.txt",
+                "Deprecated functions after the PHP upgrade to 8.1": "web/modules/custom/lst-agldwg/patches/drupal/rules/rules-deprecated-php-function-with-empty-process-value-3309664.patch"
             },
             "drupal/contact_storage": {
                 "Error while field storage definition": "web/modules/custom/lst-agldwg/patches/drupal/contact_storage/3053497-8.patch.txt"

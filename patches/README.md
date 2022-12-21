@@ -20,7 +20,8 @@ Here are the sources of the patches specified in `composer.json`.
             },
             "drupal/rules": {
                 "Integrate Typed Data Widgets": "https://www.drupal.org/files/issues/2022-03-04/2471481-174.integrate-typed-data-widgets.patch",
-                "Rules registers no listeners on rare occasions": "https://www.drupal.org/files/issues/2022-01-31/2816033-102-no-listeners.rules_.patch"
+                "Rules registers no listeners on rare occasions": "https://www.drupal.org/files/issues/2022-01-31/2816033-102-no-listeners.rules_.patch",
+                "Deprecated functions after the PHP upgrade to 8.1": "https://www.drupal.org/files/issues/2022-09-26/rules-deprecated-php-function-with-empty-process-value-3309664.patch"
             },
             "drupal/contact_storage": {
                 "Error while field storage definition": "https://www.drupal.org/files/issues/2020-09-28/3053497-8.patch"
