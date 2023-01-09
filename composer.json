@@ -57,7 +57,7 @@
                 "Error while field storage definition": "web/modules/custom/lst-agldwg/patches/drupal/contact_storage/3053497-8.patch.txt"
             },
             "drupal/readonlymode": {
-                "Got fatal error when running this module: string, not array": "web/modules/custom/lst-agldwg/patches/drupal/readonlymode/readonlymode-string_not_array-3115119-9.patch.txt"
+                "Fatal error due to saved additional form IDs being strings and not arrays": "web/modules/custom/lst-agldwg/patches/drupal/readonlymode/readonlymode-string_not_array-3115119-9.patch.txt"
             },
             "drupal/eme": {
                 "Optionally allow exporting all entity revisions, not just the default one and the default translations": "web/modules/custom/lst-agldwg/patches/drupal/eme/eme-alpha10-with-revisions-3.patch.txt"

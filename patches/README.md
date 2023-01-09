@@ -27,7 +27,7 @@ Here are the sources of the patches specified in `composer.json`.
                 "Error while field storage definition": "https://www.drupal.org/files/issues/2020-09-28/3053497-8.patch"
             },
             "drupal/readonlymode": {
-                "Got fatal error when running this module: string, not array": "https://www.drupal.org/files/issues/2020-12-23/readonlymode-string_not_array-3115119-9.patch"
+                "Fatal error due to saved additional form IDs being strings and not arrays": "https://www.drupal.org/files/issues/2020-12-23/readonlymode-string_not_array-3115119-9.patch"
             },
             "drupal/eme": {
                 "Optionally allow exporting all entity revisions, not just the default one and the default translations": "https://www.drupal.org/files/issues/2021-08-25/eme-alpha10-with-revisions-3.patch"
