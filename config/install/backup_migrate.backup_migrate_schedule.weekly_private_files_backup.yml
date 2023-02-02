@@ -4,7 +4,7 @@ dependencies:
   enforced:
     module:
       - lst_agldwg
-id: weekly_files_backup
+id: weekly_private_files_backup
 label: 'Weekly private files backup'
 enabled: true
 keep: 7
