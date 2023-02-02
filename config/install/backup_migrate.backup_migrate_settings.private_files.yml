@@ -1,0 +1,171 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - lst_agldwg
+id: private_files
+label: 'Private files'
+config:
+  namer:
+    filename: backup-private-files
+    timestamp: true
+    timestamp_format: Y-m-d\TH-i-s
+  compressor:
+    compression: gzip
+  utils:
+    site_offline: false
+  metadata:
+    description: 'Private files backups'
+  db_exclude:
+    exclude_tables:
+      block_content: block_content
+      block_content__body: block_content__body
+      block_content_field_data: block_content_field_data
+      block_content_field_revision: block_content_field_revision
+      block_content_revision: block_content_revision
+      block_content_revision__body: block_content_revision__body
+      cache_bootstrap: cache_bootstrap
+      cache_config: cache_config
+      cache_container: cache_container
+      cache_data: cache_data
+      cache_default: cache_default
+      cache_discovery: cache_discovery
+      cache_discovery_migration: cache_discovery_migration
+      cache_dynamic_page_cache: cache_dynamic_page_cache
+      cache_entity: cache_entity
+      cache_menu: cache_menu
+      cache_migrate: cache_migrate
+      cache_page: cache_page
+      cache_render: cache_render
+      cache_rest: cache_rest
+      cache_rules: cache_rules
+      cache_toolbar: cache_toolbar
+      cachetags: cachetags
+      comment: comment
+      comment__comment_body: comment__comment_body
+      comment__field_comment_type: comment__field_comment_type
+      comment_entity_statistics: comment_entity_statistics
+      comment_field_data: comment_field_data
+      config: config
+      config_export: config_export
+      config_snapshot: config_snapshot
+      contact_message: contact_message
+      file_managed: file_managed
+      file_usage: file_usage
+      history: history
+      key_value: key_value
+      key_value_expire: key_value_expire
+      maillog: maillog
+      menu_link_content: menu_link_content
+      menu_link_content_data: menu_link_content_data
+      menu_link_content_field_revision: menu_link_content_field_revision
+      menu_link_content_revision: menu_link_content_revision
+      menu_tree: menu_tree
+      migrate_map_lst_agldwg_block_content_block_content_basic: migrate_map_lst_agldwg_block_content_block_content_basic
+      migrate_message_lst_agldwg_block_content_block_content_basic: migrate_message_lst_agldwg_block_content_block_content_basic
+      node: node
+      node__body: node__body
+      node__comment: node__comment
+      node__field_agldwg_identifier: node__field_agldwg_identifier
+      node__field_agor_identifier: node__field_agor_identifier
+      node__field_alternative_names: node__field_alternative_names
+      node__field_contact_person: node__field_contact_person
+      node__field_creator: node__field_creator
+      node__field_crs_identifier: node__field_crs_identifier
+      node__field_dataset_review_uri: node__field_dataset_review_uri
+      node__field_date_accepted: node__field_date_accepted
+      node__field_grid_identifier: node__field_grid_identifier
+      node__field_homepage: node__field_homepage
+      node__field_image: node__field_image
+      node__field_ontology_file: node__field_ontology_file
+      node__field_publisher: node__field_publisher
+      node__field_registry_status: node__field_registry_status
+      node__field_reviewer: node__field_reviewer
+      node__field_ror_identifier: node__field_ror_identifier
+      node__field_tags: node__field_tags
+      node__field_unit_of: node__field_unit_of
+      node__field_was_derived_from: node__field_was_derived_from
+      node__field_workflow: node__field_workflow
+      node_access: node_access
+      node_field_data: node_field_data
+      node_field_revision: node_field_revision
+      node_revision: node_revision
+      node_revision__body: node_revision__body
+      node_revision__comment: node_revision__comment
+      node_revision__field_agldwg_identifier: node_revision__field_agldwg_identifier
+      node_revision__field_agor_identifier: node_revision__field_agor_identifier
+      node_revision__field_alternative_names: node_revision__field_alternative_names
+      node_revision__field_contact_person: node_revision__field_contact_person
+      node_revision__field_creator: node_revision__field_creator
+      node_revision__field_crs_identifier: node_revision__field_crs_identifier
+      node_revision__field_dataset_review_uri: node_revision__field_dataset_review_uri
+      node_revision__field_date_accepted: node_revision__field_date_accepted
+      node_revision__field_grid_identifier: node_revision__field_grid_identifier
+      node_revision__field_homepage: node_revision__field_homepage
+      node_revision__field_image: node_revision__field_image
+      node_revision__field_ontology_file: node_revision__field_ontology_file
+      node_revision__field_publisher: node_revision__field_publisher
+      node_revision__field_registry_status: node_revision__field_registry_status
+      node_revision__field_reviewer: node_revision__field_reviewer
+      node_revision__field_ror_identifier: node_revision__field_ror_identifier
+      node_revision__field_tags: node_revision__field_tags
+      node_revision__field_unit_of: node_revision__field_unit_of
+      node_revision__field_was_derived_from: node_revision__field_was_derived_from
+      node_revision__field_workflow: node_revision__field_workflow
+      path_alias: path_alias
+      path_alias_revision: path_alias_revision
+      queue: queue
+      router: router
+      search_dataset: search_dataset
+      search_index: search_index
+      search_total: search_total
+      semaphore: semaphore
+      sequences: sequences
+      sessions: sessions
+      shortcut: shortcut
+      shortcut_field_data: shortcut_field_data
+      shortcut_set_users: shortcut_set_users
+      taxonomy_index: taxonomy_index
+      taxonomy_term__parent: taxonomy_term__parent
+      taxonomy_term_data: taxonomy_term_data
+      taxonomy_term_field_data: taxonomy_term_field_data
+      taxonomy_term_field_revision: taxonomy_term_field_revision
+      taxonomy_term_revision: taxonomy_term_revision
+      taxonomy_term_revision__parent: taxonomy_term_revision__parent
+      tracker_node: tracker_node
+      tracker_user: tracker_user
+      user__field_family_name: user__field_family_name
+      user__field_given_name: user__field_given_name
+      user__field_member_of: user__field_member_of
+      user__roles: user__roles
+      user__user_picture: user__user_picture
+      users: users
+      users_data: users_data
+      users_field_data: users_field_data
+      watchdog: watchdog
+    nodata_tables:
+      cache_bootstrap: cache_bootstrap
+      cache_config: cache_config
+      cache_container: cache_container
+      cache_data: cache_data
+      cache_default: cache_default
+      cache_discovery: cache_discovery
+      cache_discovery_migration: cache_discovery_migration
+      cache_dynamic_page_cache: cache_dynamic_page_cache
+      cache_entity: cache_entity
+      cache_menu: cache_menu
+      cache_migrate: cache_migrate
+      cache_page: cache_page
+      cache_render: cache_render
+      cache_rest: cache_rest
+      cache_toolbar: cache_toolbar
+      sessions: sessions
+      watchdog: watchdog
+  private_files_exclude:
+    exclude_filepaths:
+      - backup_migrate
+      - backups
+  public_files_exclude:
+    exclude_filepaths:
+      - '*'

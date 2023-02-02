@@ -4,12 +4,12 @@ dependencies:
   enforced:
     module:
       - lst_agldwg
-id: weekly_files_backup
-label: 'Weekly files backup'
+id: weekly_public_files_backup
+label: 'Weekly public files backup'
 enabled: true
 keep: 7
 period: 604800
 cron: null
-source_id: entire_site
+source_id: public_files
 destination_id: lst_backups
-settings_profile_id: null
+settings_profile_id: public_files

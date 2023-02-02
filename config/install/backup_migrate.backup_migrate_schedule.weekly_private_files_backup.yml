@@ -4,12 +4,12 @@ dependencies:
   enforced:
     module:
       - lst_agldwg
-id: daily_db_backup
-label: 'Daily DB backup'
+id: weekly_files_backup
+label: 'Weekly private files backup'
 enabled: true
 keep: 7
-period: 86400
+period: 604800
 cron: null
-source_id: default_db
+source_id: private_files
 destination_id: lst_backups
-settings_profile_id: database
+settings_profile_id: private_files
