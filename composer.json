@@ -26,7 +26,7 @@
         "drupal/require_revision_log_message": "^2.0",
         "drupal/contact_storage": "^1.1",
         "drupal/readonlymode": "^1.1",
-        "drupal/token_filter": "^1.2",
+        "drupal/token_filter": "^2.0",
         "drupal/eme": "1.0.0-alpha11",
         "ardc/lst-agldwg-theme": ">=1.1",
         "ardc/lst-agldwg-block-content": ">=1.1"

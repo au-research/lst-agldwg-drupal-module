@@ -171,5 +171,3 @@ config:
       - css
       - php
       - styles
-      - 'config_*'
-      - .htaccess
