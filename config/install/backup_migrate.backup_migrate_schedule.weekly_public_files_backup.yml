@@ -7,7 +7,7 @@ dependencies:
 id: weekly_public_files_backup
 label: 'Weekly public files backup'
 enabled: true
-keep: 7
+keep: 27
 period: 604800
 cron: null
 source_id: public_files
