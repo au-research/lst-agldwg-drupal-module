@@ -33,7 +33,7 @@ Here are the sources of the patches specified in `composer.json`.
                 "Optionally allow exporting all entity revisions, not just the default one and the default translations": "https://www.drupal.org/files/issues/2021-08-25/eme-alpha10-with-revisions-3.patch"
             },
             "drupal/structure_sync": {
-                "URL Alias of Taxonomy term is not exported": "https://www.drupal.org/files/issues/2024-04-11/structure_sync-3074288-export-import-taxonomy-terms-force-mode-18.patch"
+                "URL Alias of Taxonomy term is not exported": "https://www.drupal.org/files/issues/2024-04-11/structure_sync-3074288-export-import-taxonomy-terms-force-mode-19.patch"
             }
         }
     }
