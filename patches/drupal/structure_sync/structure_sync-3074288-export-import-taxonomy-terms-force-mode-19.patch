@@ -1,7 +1,7 @@
 diff --git a/src/Controller/TaxonomiesController.php b/src/Controller/TaxonomiesController.php
 old mode 100755
 new mode 100644
-index eee265b..ebf418c
+index eee265b..f63337a
 --- a/src/Controller/TaxonomiesController.php
 +++ b/src/Controller/TaxonomiesController.php
 @@ -4,6 +4,8 @@ namespace Drupal\structure_sync\Controller;
@@ -38,7 +38,7 @@ index eee265b..ebf418c
 +
 +              // Create path_alias.
 +              /** @var array $path_alias */
-+              $path_alias = $this->entityTypeManager->getStorage('path_alias')->create(
++              $path_alias = \Drupal::entityTypeManager()->getStorage('path_alias')->create(
 +                [
 +                  'path' => $taxonomy['path'],
 +                  'langcode' => $taxonomy['langcode'],
@@ -58,7 +58,7 @@ index eee265b..ebf418c
 +
 +                    // Get path alias entity for update.
 +                    /** @var array $path_alias */
-+                    $path_alias = $this->entityTypeManager->getStorage('path_alias')->loadByProperties(
++                    $path_alias = \Drupal::entityTypeManager()->getStorage('path_alias')->loadByProperties(
 +                      [
 +                        'path' => $taxonomy['path'],
 +                        'langcode' => $taxonomy['langcode']
@@ -88,7 +88,7 @@ index eee265b..ebf418c
  
 +              // Create path_alias.
 +              /** @var array $path_alias */
-+              $path_alias = $this->entityTypeManager->getStorage('path_alias')->create(
++              $path_alias = \Drupal::entityTypeManager()->getStorage('path_alias')->create(
 +                [
 +                  'path' => $taxonomy['path'],
 +                  'langcode' => $taxonomy['langcode'],
