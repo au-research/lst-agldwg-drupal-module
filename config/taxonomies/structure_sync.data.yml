@@ -14,18 +14,6 @@ taxonomies:
       alias: /reg-statuses/accepted
     -
       vid: registry_item_status
-      tid: '8'
-      langcode: en
-      name: 'Not Accepted'
-      description__value: "<p><a href=\"https://linked.data.gov.au/def/reg-statuses/notAccepted\">https://linked.data.gov.au/def/reg-statuses/notAccepted</a></p>\r\n"
-      description__format: basic_html
-      weight: '12'
-      parent: '0'
-      uuid: 34908ea1-963b-4698-9930-cb155bf724f7
-      path: /taxonomy/term/8
-      alias: /reg-statuses/notAccepted
-    -
-      vid: registry_item_status
       tid: '2'
       langcode: en
       name: Deprecated
@@ -36,18 +24,6 @@ taxonomies:
       uuid: 8e4a56dd-be4d-47e6-8aed-b89d26c8c2a9
       path: /taxonomy/term/2
       alias: /reg-statuses/deprecated
-    -
-      vid: registry_item_status
-      tid: '5'
-      langcode: en
-      name: Valid
-      description__value: "<p><a href=\"https://linked.data.gov.au/def/reg-statuses/valid\">https://linked.data.gov.au/def/reg-statuses/valid</a></p>\r\n"
-      description__format: basic_html
-      weight: '1'
-      parent: '1'
-      uuid: 10a6300e-d8df-474d-86c6-53ec39a80cf8
-      path: /taxonomy/term/5
-      alias: /reg-statuses/valid
     -
       vid: registry_item_status
       tid: '3'
@@ -74,16 +50,16 @@ taxonomies:
       alias: /reg-statuses/superseded
     -
       vid: registry_item_status
-      tid: '13'
+      tid: '5'
       langcode: en
-      name: Unstable
-      description__value: "<p><a href=\"https://linked.data.gov.au/def/reg-statuses/unstable\">https://linked.data.gov.au/def/reg-statuses/unstable</a></p>\r\n"
+      name: Valid
+      description__value: "<p><a href=\"https://linked.data.gov.au/def/reg-statuses/valid\">https://linked.data.gov.au/def/reg-statuses/valid</a></p>\r\n"
       description__format: basic_html
-      weight: '2'
-      parent: '2'
-      uuid: 22c47c53-e00b-41a9-929f-8013a7df9a81
-      path: /taxonomy/term/13
-      alias: /reg-statuses/unstable
+      weight: '1'
+      parent: '1'
+      uuid: 10a6300e-d8df-474d-86c6-53ec39a80cf8
+      path: /taxonomy/term/5
+      alias: /reg-statuses/valid
     -
       vid: registry_item_status
       tid: '6'
@@ -108,6 +84,18 @@ taxonomies:
       uuid: a511d578-565e-40bd-8f33-df8f06b15c7f
       path: /taxonomy/term/7
       alias: /reg-statuses/stable
+    -
+      vid: registry_item_status
+      tid: '8'
+      langcode: en
+      name: 'Not Accepted'
+      description__value: "<p><a href=\"https://linked.data.gov.au/def/reg-statuses/notAccepted\">https://linked.data.gov.au/def/reg-statuses/notAccepted</a></p>\r\n"
+      description__format: basic_html
+      weight: '12'
+      parent: '0'
+      uuid: 34908ea1-963b-4698-9930-cb155bf724f7
+      path: /taxonomy/term/8
+      alias: /reg-statuses/notAccepted
     -
       vid: registry_item_status
       tid: '9'
@@ -144,4 +132,16 @@ taxonomies:
       uuid: 0ba03a46-b3af-4721-af0c-7e59b46881e7
       path: /taxonomy/term/11
       alias: /reg-statuses/submitted
+    -
+      vid: registry_item_status
+      tid: '13'
+      langcode: en
+      name: Unstable
+      description__value: "<p><a href=\"https://linked.data.gov.au/def/reg-statuses/unstable\">https://linked.data.gov.au/def/reg-statuses/unstable</a></p>\r\n"
+      description__format: basic_html
+      weight: '2'
+      parent: '2'
+      uuid: 22c47c53-e00b-41a9-929f-8013a7df9a81
+      path: /taxonomy/term/13
+      alias: /reg-statuses/unstable
   tags: {  }
