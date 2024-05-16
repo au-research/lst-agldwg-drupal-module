@@ -4,8 +4,7 @@ Here are the sources of the patches specified in `composer.json`.
     "extra": {
         "patches": {
             "drupal/core": {
-                "On tracker pages, add space between link and status": "https://www.drupal.org/files/issues/2020-05-06/3095533-18.patch",
-                "Improve styling for select and add styling to select[multiple]": "https://www.drupal.org/files/issues/2020-08-19/2491725-31-multiple-select.patch",
+                "On tracker pages, add space between link and status": "https://www.drupal.org/files/issues/2024-05-13/tracker-3095533-31.patch",
                 "Image styles fails with absolute path in $settings['file_public_path']": "https://www.drupal.org/files/issues/2021-08-27/image_styles-new.patch",
                 "Rules registers no listeners on rare occasions": "https://www.drupal.org/files/issues/2022-01-31/2816033-102-no-listeners.core_.patch"
             },
